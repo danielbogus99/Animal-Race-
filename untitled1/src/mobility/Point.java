@@ -13,4 +13,11 @@ public class Point
     {
         return x == p.x && y == p.y;
     }
+
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
 }
