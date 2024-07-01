@@ -25,14 +25,25 @@ public class Mobile implements ILocatable
     }
     public double move(Point distance)
     {
-       
+       return calcDistance(distance);
     }
     @Override
-    public Point getLocation() {
-        return null;
+    public Point getLocation()
+    {
+        return location;
     }
 
     @Override
-    public boolean setLocation(Point p) {return false;
-    }
+    public boolean setLocation(Point p)
+    {
+        if(p.getX() < 0 || p.getY() < 0)
+        {
+            return false;
+        }
+        double distance=calcDistance(p);
+        addTotalDistance(distance);
+        location.setX(p.getX());
+        location.setY(p.getY());
+        return true;
+     }
 }
