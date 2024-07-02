@@ -11,5 +11,10 @@ public class Whale extends WaterAnimal{
     {
         System.out.println("Splash");
     }
+
+    public String toString() {
+        return STR."Whale \{super.toString()} ,foodType= \{foodType}}";
+    }
+
     private String foodType;
 }

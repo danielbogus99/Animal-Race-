@@ -13,9 +13,9 @@ package Olympics;
             this.type=type;
         }
         public boolean equals(Medal m){
-            return this.tournament.equals(m.tournament) && this.year==m.year;
+            return this.tournament.equals(m.tournament) && this.year==m.year && this.type.equals(m.type);
         }
         public String toString() {
-            return this.tournament + " " + this.year;
+            return this.tournament + "was in the year " + this.year + "and the type " + this.type + ".";
         }
     }

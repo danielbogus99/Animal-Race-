@@ -17,6 +17,12 @@ public class WaterAnimal extends Animal {
         diveDept = diveDept + distanceDive;
         return true;
     }
+
+
+    public String toString() {
+        return STR." {\{super.toString()} ,diveDept = \{diveDept}";
+    }
+
     public void getSound() {}
     private double diveDept;
 }

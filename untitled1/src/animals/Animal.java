@@ -4,14 +4,12 @@ import mobility.Mobile;
 import mobility.Point;
 import Olympics.*;
 
+import java.util.Arrays;
+
 public class Animal extends Mobile {
+    public enum gender {Male, Female, Hermaphrodite}
     private String name;
 
-
-
-   public enum gender {Male, Female, Hermaphrodite}
-
-    ;
     private double weight;
     private double speed;
     private Medal medals[];
@@ -37,11 +35,18 @@ public class Animal extends Mobile {
 
     }
 
+    @Override
+    public String toString() {
+        return STR."\{super.toString()}, Animal name='\{name}\{'\''}, weight=\{weight}, speed=\{speed}, medals=\{Arrays.toString(medals)}, gender=\{gender},";
+
+    }
+
     public String getName(){
         return name;
     }
     public String getGender(){
         return gender.name();
     }
+
 
 }

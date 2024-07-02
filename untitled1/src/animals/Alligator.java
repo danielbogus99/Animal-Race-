@@ -11,5 +11,11 @@ public class Alligator extends WaterAnimal{
     {
         System.out.println("Roar");
     }
+
+    @Override
+    public String toString() {
+        return STR."Alligator{\{super.toString()} ,areaOfLiving=\{AreaOfLiving}}";
+    }
+
     private String AreaOfLiving;
 }

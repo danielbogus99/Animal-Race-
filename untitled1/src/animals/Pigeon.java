@@ -11,5 +11,11 @@ public class Pigeon extends AirAnimal {
     {
         System.out.println("Arr-rar-rar-rar-raah");
     }
+
+    @Override
+    public String toString() {
+        return STR."Pigeon \{super.toString()} ,family= \{family}}";
+    }
+
     private String family;
 }

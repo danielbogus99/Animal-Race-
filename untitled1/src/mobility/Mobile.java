@@ -49,4 +49,9 @@ public class Mobile implements ILocatable
         location.setY(p.getY());
         return true;
      }
+    public String toString() {
+        return
+                "location=" + location +
+                ", totalDistance=" + totalDistance;
+    }
 }

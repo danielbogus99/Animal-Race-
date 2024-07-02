@@ -13,5 +13,10 @@ public class Dolphin extends WaterAnimal{
     }
     public enum WaterType{Sea,Sweet}
 
+
+    public String toString() {
+        return STR."Dolphin \{super.toString()} ,Water Type= \{waterType}}";
+    }
+
     private WaterType waterType;
 }

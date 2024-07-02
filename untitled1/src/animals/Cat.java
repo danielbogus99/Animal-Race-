@@ -11,5 +11,9 @@ public class Cat extends TerrestrialAnimals{
     {
         System.out.println("Meow");
     }
+    public String toString()
+    {
+        return STR."Cat{\{super.toString()} ,Castrated=\{Castrated}}";
+    }
     private boolean Castrated;
 }

@@ -9,6 +9,12 @@ public class AirAnimal extends Animal {
         this.wingspan = wingspan;
     }
     public void getSound() {}
+
+    @Override
+    public String toString() {
+        return STR." {\{super.toString()} ,wingspan=\{wingspan}";
+    }
+
     private double wingspan;
 
 }

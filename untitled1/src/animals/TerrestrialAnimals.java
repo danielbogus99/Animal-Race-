@@ -9,6 +9,12 @@ public class TerrestrialAnimals extends Animal
         super(new Point(0, 20), totalDistance = 0, gender, name, weight, speed, medals);
         this.noLegs = noLegs;
     }
+
+
+    public String toString() {
+        return STR." \{super.toString()} ,noLegs= \{noLegs}";
+    }
+
     public void getSound() {}
     private int noLegs;
 }
