@@ -15,6 +15,8 @@ public class Mobile implements ILocatable
         this.location = location;
         this.totalDistance = totalDistance;
     }
+
+
     public void addTotalDistance(double distance)
     {
         totalDistance = totalDistance + distance;
@@ -25,7 +27,8 @@ public class Mobile implements ILocatable
     }
     public double move(Point distance)
     {
-       return calcDistance(distance);
+
+       return totalDistance;
     }
     @Override
     public Point getLocation()
