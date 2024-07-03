@@ -4,81 +4,27 @@ import mobility.*;
 import animals.*;
 import Olympics.*;
 import java.util.*;
+/**
+ * The Sys class provides functionality to create and manage various types of animals.
+ */
 public class Sys
 {
     public void main(String[] args)
     {
-
         Scanner s = new Scanner(System.in);
         System.out.println("Enter the number of animals you want to create: ");
         int n = s.nextInt();
         Animal[] animals = new Animal[n];
-        boolean continueLoop = true;
-        for (int i = 0; i < n;)
-        {
-            boolean validInput = false;
-            while (!validInput)
-            {
-                System.out.println("Please enter the type of animal you want to create:");
-                System.out.println("1. WaterAnimal");
-                System.out.println("2. AirAnimal");
-                System.out.println("3. TerrestrialAnimal");
-
-                switch (s.nextInt()) {
-                    case 1:
-                        continueLoop=CreateWaterAnimal(i, animals, s);
-                        validInput = true;
-                        break;
-                    case 2:
-                        continueLoop=CreateAirAnimal(i, animals, s);
-                        validInput = true;
-                        break;
-                    case 3:
-                        continueLoop=CreateTerrestrialAnimal(i, animals, s);
-                        validInput = true;
-                        break;
-                    default:
-                        System.out.println("Invalid option");
-                        break;
-                }
-            }
-            if (continueLoop)
-            {
-                i++;
-            }
-        }
-        boolean validInput = false;
-        while (!validInput)
-        {
-            System.out.println("Please enter your choice:");
-            System.out.println("1.Watch info about all the animals");
-            System.out.println("2.Sound of all the animals");
-            System.out.println("3.Exit");
-
-            switch (s.nextInt()) {
-                case 1:
-                {
-                    printAnimalInfo(n,animals);
-                    break;
-                }
-                case 2:
-                {
-                    printAnimalVoices(n,animals);
-                    break;
-                }
-                case 3:
-                {
-                    validInput = true;
-                    break;
-                }
-
-                default:
-                    System.out.println("Invalid option");
-                    break;
-            }
-        }
-
+        CreateAnimals(n,animals);
+        MainMenu(n,animals);
     }
+    /**
+     * Creates a water animal based on user input.
+     * @param size the size of the animals array
+     * @param animals the array of animals
+     * @param s the scanner object for user input
+     * @return true if I created an animal  false otherwise
+     */
     public boolean CreateWaterAnimal(int size,Animal[] animals,Scanner s) {
         boolean validInput = false;
         System.out.println("Please enter the type of water animal you want to create: ");
@@ -115,6 +61,13 @@ public class Sys
         }
         return true;
     }
+    /**
+     * Creates an air animal based on user input.
+     * @param size the size of the animals array
+     * @param animals the array of animals
+     * @param s the scanner object for user input
+     * @return true if I created an animal  false otherwise
+     */
     public boolean CreateAirAnimal(int size,Animal[] animals,Scanner s) {
         boolean validInput = false;
         System.out.println("Please enter the type of Air animal you want to create: ");
@@ -146,6 +99,13 @@ public class Sys
         }
         return true;
     }
+    /**
+     * Creates a terrestrial animal based on user input.
+     * @param size the size of the animals array
+     * @param animals the array of animals
+     * @param s the scanner object for user input
+     * @return true if I created an animal  false otherwise
+     */
     public boolean CreateTerrestrialAnimal(int size,Animal[] animals,Scanner s) {
         System.out.println("Please enter the type of Terrestrial animal you want to create: ");
         System.out.println("1.Dog");
@@ -181,6 +141,11 @@ public class Sys
         }
         return true;
     }
+    /**
+     * Creates a Whale object and adds it to the animals array.
+     * @param size the size of the animals array
+     * @param animals the array of animals
+     */
     public void CreateWhale(int size, Animal[] animals) {
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
@@ -231,11 +196,16 @@ public class Sys
 
         String food_Type;
         System.out.println("Please enter food type of the Whale: ");
-        food_Type = s1.nextLine();
-        s1.nextLine();
+        Scanner s2 = new Scanner(System.in);
+        food_Type = s2.nextLine();
         animals[size] = new Whale(0, gender, name, weight, speed, medals, diveDepth, food_Type);
 
     }
+    /**
+     * Creates an Alligator object and adds it to the animals array.
+     * @param size the size of the animals array
+     * @param animals the array of animals
+     */
     public void CreateAlligator(int size, Animal[] animals) {
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
@@ -289,9 +259,14 @@ public class Sys
         String AreaOfLiving;
         System.out.println("Please enter Area of the Alligator: ");
         AreaOfLiving = s1.nextLine();
-        s1.nextLine();
+        AreaOfLiving=s1.nextLine();
         animals[size] = new Alligator(0, gender, name, weight, speed, medals, diveDepth, AreaOfLiving);
     }
+    /**
+     * Creates a Dolphin object and adds it to the animals array.
+     * @param size the size of the animals array
+     * @param animals the array of animals
+     */
     public void CreateDolphin(int size, Animal[] animals) {
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
@@ -370,6 +345,11 @@ public class Sys
         animals[size] = new Dolphin(0, gender, name, weight, speed, medals, diveDepth, waterType);
 
     }
+    /**
+     * Creates an Eagle object and adds it to the animals array.
+     * @param size the size of the animals array
+     * @param animals the array of animals
+     */
     public void CreateEagle(int size, Animal[] animals) {
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
@@ -422,6 +402,11 @@ public class Sys
         altitudeOfFlight = s1.nextDouble();
         animals[size] = new Eagle(0, gender, name, weight, speed, medals,wingspan, altitudeOfFlight);
     }
+    /**
+     * Creates a Pigeon object and adds it to the animals array.
+     * @param size the size of the animals array
+     * @param animals the array of animals
+     */
     public void CreatePigeon(int size, Animal[] animals) {
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
@@ -471,10 +456,16 @@ public class Sys
         wingspan = s1.nextDouble();
         String family;
         System.out.println("Please enter the family of the pigeon: ");
-        family = s1.nextLine();
-        s1.nextLine();
+        Scanner s2 = new Scanner(System.in);
+        family = s2.nextLine();
+
         animals[size] = new Pigeon(0, gender, name, weight, speed, medals,wingspan, family);
     }
+    /**
+     * Creates a Dog object and adds it to the animals array.
+     * @param size the size of the animals array
+     * @param animals the array of animals
+     */
     public void CreateDog(int size, Animal[] animals){
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
@@ -524,10 +515,16 @@ public class Sys
         noLegs = s1.nextInt();
         String breed;
         System.out.println("Please enter the breed of the Dog: ");
-        breed = s1.nextLine();
-        s1.nextLine();
+        Scanner s2 = new Scanner(System.in);
+        breed = s2.nextLine();
+
         animals[size] = new Pigeon(0, gender, name, weight, speed, medals,noLegs, breed);
     }
+    /**
+     * Creates a Cat object and adds it to the animals array.
+     * @param size the size of the animals array
+     * @param animals the array of animals
+     */
     public void CreateCat(int size, Animal[] animals){
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
@@ -603,6 +600,11 @@ public class Sys
         }
         animals[size] = new Cat(0, gender, name, weight, speed, medals,noLegs,Castrated);
     }
+    /**
+     * Creates a Snake object and adds it to the animals array.
+     * @param size the size of the animals array
+     * @param animals the array of animals
+     */
     public void CreateSnake(int size, Animal[] animals){
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
@@ -681,14 +683,110 @@ public class Sys
         }
         animals[size] = new Snake(0, gender, name, weight, speed, medals,noLegs, poisonous,length);
     }
+    /**
+     * Prints the information of all animals in the zoo.
+     *
+     * @param size the number of animals in the zoo
+     * @param animals the array of animals
+     */
     public void printAnimalInfo(int size, Animal[] animals){
         for (int i = 0; i < size; i++) {
             System.out.println(animals[i]);
         }
     }
+    /**
+     * Prints the sounds made by all animals in the zoo.
+     *
+     * @param size the number of animals in the zoo
+     * @param animals the array of animals
+     */
     public void printAnimalVoices(int size, Animal[] animals){
         for (int i = 0; i < size; i++) {
             animals[i].makeSound();
+        }
+    }
+    /**
+     * Creates animals and adds them to the animals array.
+     * The type of animal to create is determined by user input.
+     *
+     * @param size the number of animals to create
+     * @param animals the array of animals
+     */
+    public void CreateAnimals(int size, Animal[] animals){
+        Scanner s = new Scanner(System.in);
+        boolean continueLoop = true;
+        for (int i = 0; i < size;)
+        {
+            boolean validInput = false;
+            while (!validInput)
+            {
+                System.out.println("Please enter the type of animal you want to create:");
+                System.out.println("1. WaterAnimal");
+                System.out.println("2. AirAnimal");
+                System.out.println("3. TerrestrialAnimal");
+
+                switch (s.nextInt()) {
+                    case 1:
+                        continueLoop=CreateWaterAnimal(i, animals, s);
+                        validInput = true;
+                        break;
+                    case 2:
+                        continueLoop=CreateAirAnimal(i, animals, s);
+                        validInput = true;
+                        break;
+                    case 3:
+                        continueLoop=CreateTerrestrialAnimal(i, animals, s);
+                        validInput = true;
+                        break;
+                    default:
+                        System.out.println("Invalid option");
+                        break;
+                }
+            }
+            if (continueLoop)
+            {
+                i++;
+            }
+        }
+    }
+    /**
+     * Displays the main menu and handles user input to print animal information,
+     * print animal voices, or exit the program.
+     *
+     * @param size the number of animals in the zoo
+     * @param animals the array of animals
+     */
+    public void MainMenu(int size, Animal[] animals){
+        Scanner s = new Scanner(System.in);
+        boolean validInput = false;
+        while (!validInput)
+        {
+            System.out.println("Please enter your choice:");
+            System.out.println("1.Watch info about all the animals");
+            System.out.println("2.Sound of all the animals");
+            System.out.println("3.Exit");
+
+            switch (s.nextInt()) {
+                case 1:
+                {
+                    printAnimalInfo(size,animals);
+                    break;
+                }
+                case 2:
+                {
+                    printAnimalVoices(size,animals);
+                    break;
+                }
+                case 3:
+                {
+                    validInput = true;
+                    break;
+                }
+
+                default:
+                    System.out.println("Invalid option");
+                    break;
+            }
         }
     }
 

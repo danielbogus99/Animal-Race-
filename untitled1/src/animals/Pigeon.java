@@ -2,20 +2,59 @@ package animals;
 
 import Olympics.Medal;
 
+/**
+ * Represents a pigeon, an air-dwelling animal that extends the AirAnimal class.
+ */
 public class Pigeon extends AirAnimal {
-    public Pigeon(double totalDistance, Animal.gender gender, String name, double weight, double speed, Medal[] medals, double wingspan,String family) {
+
+    private String family;
+
+    /**
+     * Constructor to initialize a Pigeon object.
+     *
+     * @param totalDistance The total distance covered by the pigeon.
+     * @param gender        The gender of the pigeon.
+     * @param name          The name of the pigeon.
+     * @param weight        The weight of the pigeon.
+     * @param speed         The speed of the pigeon.
+     * @param medals        The array of medals won by the pigeon.
+     * @param wingspan      The wingspan of the pigeon.
+     * @param family        The family of the pigeon.
+     */
+    public Pigeon(double totalDistance, Animal.gender gender, String name, double weight, double speed, Medal[] medals, double wingspan, String family) {
         super(totalDistance, gender, name, weight, speed, medals, wingspan);
         this.family = family;
     }
-    public void getSound()
-    {
+
+    /**
+     * Method to make the pigeon produce its sound.
+     */
+    public void getSound() {
         System.out.println("Arr-rar-rar-rar-raah");
     }
 
+    /**
+     * Override of the toString method to provide a string representation of the Pigeon object.
+     *
+     * @return A string representation of the Pigeon object.
+     */
     @Override
     public String toString() {
-        return STR."Pigeon \{super.toString()} ,family= \{family}}";
+        return STR."Pigeon\{super.toString()}, family=\{family}}";
     }
 
-    private String family;
+    /**
+     * Override of the equals method to compare if two Pigeon objects are equal.
+     *
+     * @param obj The object to compare with.
+     * @return True if the objects are equal, false otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Pigeon)) return false;
+        Pigeon other = (Pigeon) obj;
+        return super.equals(obj) &&
+                other.family.equals(family);
+    }
 }
