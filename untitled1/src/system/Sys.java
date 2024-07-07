@@ -114,10 +114,8 @@ public class Sys
                     System.out.println("Invalid input");
                     break;
                 }
-
             }
         }
-
         return true;
     }
     /**
@@ -431,7 +429,7 @@ public class Sys
         double weight = 0;
         double speed = 0;
         Medal[] medals = new Medal[size];
-        System.out.println("Please enter the name of the Snake: ");
+        System.out.println("Please enter the name of the pigeon: ");
         name = s1.nextLine();
             validDouble(speed,"speed","pigeon");
             validDouble(weight,"weight","pigeon");
@@ -489,7 +487,7 @@ public class Sys
         double weight = 0;
         double speed = 0;
         Medal[] medals = new Medal[size];
-        System.out.println("Please enter the name of the Snake: ");
+        System.out.println("Please enter the name of the dog: ");
         name = s1.nextLine();
             validDouble(speed,"speed","dog");
             validDouble(weight,"weight","dog");
@@ -551,20 +549,8 @@ public class Sys
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the cat: ");
         name = s1.nextLine();
-
-        while(true)
-        {
             validDouble(speed,"speed","cat");
-            break;
-        }
-        while (true)
-        {
             validDouble(weight,"weight","cat");
-            break;
-        }
-
-
-
         System.out.println("What gender is the cat");
         System.out.println("1. Male");
         System.out.println("2. Female");
@@ -680,7 +666,6 @@ public class Sys
                     break;
             }
         }
-
         int noLegs = 0;
         validInt(noLegs,"noLegs","snake");
         double length = 0;
@@ -837,7 +822,7 @@ public class Sys
                 value = s1.nextDouble();
                 flag = true; // Exit the loop if a valid double is entered
             } catch (Exception e) {
-                System.err.println("Invalid input. Please enter a valid number.");
+                System.out.println("Invalid input. Please enter a valid number.");
                 s1.next(); // Clear the invalid input
             }
         }
@@ -854,7 +839,7 @@ public class Sys
                 value = s1.nextInt();
                 flag = true; // Exit the loop if a valid double is entered
             } catch (Exception e) {
-                System.err.println("Invalid input. Please enter a valid number.");
+                System.out.println("Invalid input. Please enter a valid number.");
                 s1.next(); // Clear the invalid input
             }
         }
