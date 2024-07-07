@@ -5,7 +5,7 @@ import Olympics.Medal;
 /**
  * Represents an alligator, a water-dwelling animal that extends the WaterAnimal class.
  */
-public class Alligator extends WaterAnimal {
+public class Alligator extends WaterAnimal implements IReptile{
 
     private String AreaOfLiving;
 
@@ -61,5 +61,14 @@ public class Alligator extends WaterAnimal {
         Alligator other = (Alligator) obj;
         return super.equals(obj) &&
                 other.AreaOfLiving.equals(AreaOfLiving);
+    }
+
+    public boolean speedUp(int speeds) {
+        if(getSpeed() > Max_SPEED){
+            System.out.println("The speed is over the max speed");
+            return false;
+        }
+        addSpeed(speeds);
+        return true;
     }
 }

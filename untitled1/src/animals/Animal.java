@@ -105,8 +105,11 @@ public abstract class Animal extends Mobile {
      *
      * @return The speed of the animal.
      */
-    public double getSpeed() {
+    protected double getSpeed() {
         return speed;
+    }
+    protected void addSpeed(double speed) {
+        this.speed += speed;
     }
 
     /**

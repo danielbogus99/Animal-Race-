@@ -5,10 +5,20 @@ import Olympics.Medal;
 /**
  * Represents a snake, a terrestrial animal that extends the TerrestrialAnimals class.
  */
-public class Snake extends TerrestrialAnimals {
+public class Snake extends TerrestrialAnimals implements IReptile{
 
     private double length;
     private Poisonous poisonous;
+
+    @Override
+    public boolean speedUp(int speeds) {
+        if(getSpeed() > Max_SPEED){
+            System.out.println("The speed is over the max speed");
+            return false;
+        }
+        addSpeed(speeds);
+        return true;
+    }
 
     /**
      * Enum defining the poisonous status of the snake.

@@ -56,6 +56,7 @@ public abstract class TerrestrialAnimals extends Animal {
                 other.noLegs == noLegs;
     }
 
+
     /**
      * Method to get the sound of the terrestrial animal.
      */
