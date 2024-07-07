@@ -12,45 +12,64 @@ public class Sys
     public void main(String[] args)
     {
         Scanner s = new Scanner(System.in);
-        System.out.println("Enter the number of animals you want to create: ");
-        int n = s.nextInt();
+
+        int n;
+        while (true) {
+            try {
+                System.out.println("Enter the number of animals you want to create: ");
+                n = s.nextInt();
+
+                if (n <= 0) {
+                    System.out.println("The number must be a positive integer. Please try again.");
+                } else {
+                    break;
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a positive integer.");
+                s.next(); // clear the invalid input
+            }
+        }
         Animal[] animals = new Animal[n];
         CreateAnimals(n,animals);
         MainMenu(n,animals);
+        s.close();
     }
     /**
      * Creates a water animal based on user input.
      * @param size the size of the animals array
      * @param animals the array of animals
-     * @param s the scanner object for user input
      * @return true if I created an animal  false otherwise
      */
-    public boolean CreateWaterAnimal(int size,Animal[] animals,Scanner s) {
+    public boolean CreateWaterAnimal(int size,Animal[] animals) {
         boolean validInput = false;
         System.out.println("Please enter the type of water animal you want to create: ");
         System.out.println("1.Whale");
         System.out.println("2.Dolphin");
         System.out.println("3.Alligator ");
         System.out.println("4.Go Back ");
+        Scanner in = new Scanner(System.in);
+
         while (!validInput)
         {
-            switch (s.nextInt()) {
-                case 1: {
+
+            switch (in.nextLine())
+            {
+                case "1": {
                     CreateWhale(size, animals);
                     validInput = true;
                     break;
                 }
-                case 2: {
+                case "2": {
                     CreateDolphin(size, animals);
                     validInput = true;
                     break;
                 }
-                case 3: {
+                case "3": {
                     CreateAlligator(size, animals);
                     validInput = true;
                     break;
                 }
-                case 4: {
+                case "4": {
                     return false;
 
                 }
@@ -59,35 +78,36 @@ public class Sys
 
             }
         }
+
         return true;
     }
     /**
      * Creates an air animal based on user input.
      * @param size the size of the animals array
      * @param animals the array of animals
-     * @param s the scanner object for user input
      * @return true if I created an animal  false otherwise
      */
-    public boolean CreateAirAnimal(int size,Animal[] animals,Scanner s) {
+    public boolean CreateAirAnimal(int size,Animal[] animals) {
         boolean validInput = false;
         System.out.println("Please enter the type of Air animal you want to create: ");
         System.out.println("1.Eagle");
         System.out.println("2.Pigeon");
         System.out.println("3.Go Back ");
+        Scanner in = new Scanner(System.in);
         while (!validInput)
         {
-            switch (s.nextInt()) {
-                case 1: {
+            switch (in.nextLine()) {
+                case "1": {
                     CreateEagle(size, animals);
                     validInput = true;
                     break;
                 }
-                case 2: {
+                case "2": {
                     CreatePigeon(size, animals);
                     validInput = true;
                     break;
                 }
-                case 3: {
+                case "3": {
                     return false;
                 }
                 default: {
@@ -97,41 +117,43 @@ public class Sys
 
             }
         }
+
         return true;
     }
     /**
      * Creates a terrestrial animal based on user input.
      * @param size the size of the animals array
      * @param animals the array of animals
-     * @param s the scanner object for user input
      * @return true if I created an animal  false otherwise
      */
-    public boolean CreateTerrestrialAnimal(int size,Animal[] animals,Scanner s) {
+    public boolean CreateTerrestrialAnimal(int size,Animal[] animals) {
         System.out.println("Please enter the type of Terrestrial animal you want to create: ");
         System.out.println("1.Dog");
         System.out.println("2.Cat");
         System.out.println("3.Snake");
         System.out.println("4.Go Back ");
         boolean validInput = false;
+        Scanner in = new Scanner(System.in);
+
         while (!validInput)
         {
-            switch (s.nextInt()) {
-                case 1: {
+            switch (in.nextLine()) {
+                case "1": {
                     CreateDog(size, animals);
                     validInput = true;
                     break;
                 }
-                case 2: {
+                case "2": {
                     CreateCat(size, animals);
                     validInput = true;
                     break;
                 }
-                case 3: {
+                case "3": {
                     CreateSnake(size, animals);
                     validInput = true;
                     break;
                 }
-                case 4: {
+                case "4": {
                     return false;
                 }
                 default:
@@ -139,6 +161,7 @@ public class Sys
 
             }
         }
+
         return true;
     }
     /**
@@ -166,30 +189,35 @@ public class Sys
         System.out.println("2. Female");
         System.out.println("3. Hermaphrodite");
         boolean validInput = false;
+        Scanner in = new Scanner(System.in);
         while (!validInput)
         {
-        switch (s1.nextInt())
-        {
-            case 1: {
-                gender = Animal.gender.Male;
-                validInput = true;
-                break;
+            switch (in.nextLine())
+            {
+                case "1":
+                {
+                    gender = Animal.gender.Male;
+                    validInput = true;
+                    break;
+                }
+                case "2":
+                {
+                    gender = Animal.gender.Female;
+                    validInput = true;
+                    break;
+                }
+                case "3":
+                {
+                    gender = Animal.gender.Hermaphrodite;
+                    validInput = true;
+                    break;
+                }
+                default:
+                    System.out.println("Invalid input");
+                    break;
             }
-            case 2: {
-                gender = Animal.gender.Female;
-                validInput = true;
-                break;
-            }
-            case 3: {
-                gender = Animal.gender.Hermaphrodite;
-                validInput = true;
-                break;
-            }
-            default:
-                System.out.println("Invalid input");
-                break;
-           }
         }
+
         double diveDepth;
         System.out.println("Please enter dive depth of the Whale: ");
         diveDepth = s1.nextDouble();
@@ -226,23 +254,24 @@ public class Sys
         System.out.println("2. Female");
         System.out.println("3. Hermaphrodite");
         boolean validInput = false;
+        Scanner in = new Scanner(System.in);
         while (!validInput)
         {
-            switch (s1.nextInt())
+            switch (in.nextLine())
             {
-                case 1:
+                case "1":
                 {
                     gender = Animal.gender.Male;
                     validInput = true;
                     break;
                 }
-                case 2:
+                case "2":
                 {
                     gender = Animal.gender.Female;
                     validInput = true;
                     break;
                 }
-                case 3:
+                case "3":
                 {
                     gender = Animal.gender.Hermaphrodite;
                     validInput = true;
@@ -253,13 +282,14 @@ public class Sys
                     break;
             }
         }
+
         double diveDepth;
         System.out.println("Please enter dive depth of the Alligator: ");
         diveDepth = s1.nextDouble();
         String AreaOfLiving;
         System.out.println("Please enter Area of the Alligator: ");
-        AreaOfLiving = s1.nextLine();
-        AreaOfLiving=s1.nextLine();
+        Scanner s2 = new Scanner(System.in);
+        AreaOfLiving = s2.nextLine();
         animals[size] = new Alligator(0, gender, name, weight, speed, medals, diveDepth, AreaOfLiving);
     }
     /**
@@ -288,21 +318,25 @@ public class Sys
         System.out.println("3. Hermaphrodite");
 
         boolean validInput = false;
+        Scanner in = new Scanner(System.in);
         while (!validInput)
         {
-            switch (s1.nextInt())
+            switch (in.nextLine())
             {
-                case 1: {
+                case "1":
+                {
                     gender = Animal.gender.Male;
                     validInput = true;
                     break;
                 }
-                case 2: {
+                case "2":
+                {
                     gender = Animal.gender.Female;
                     validInput = true;
                     break;
                 }
-                case 3: {
+                case "3":
+                {
                     gender = Animal.gender.Hermaphrodite;
                     validInput = true;
                     break;
@@ -312,6 +346,7 @@ public class Sys
                     break;
             }
         }
+
         double diveDepth;
         System.out.println("Please enter dive depth of the Dolphin: ");
         diveDepth = s1.nextDouble();
@@ -320,17 +355,18 @@ public class Sys
         System.out.println("1. Sea");
         System.out.println("2. Sweet");
         validInput = false;
+        Scanner in2 = new Scanner(System.in);
         while (!validInput)
         {
-            switch (s1.nextInt())
+            switch (in2.nextLine())
             {
-                case 1:
+                case "1":
                 {
                     waterType = Dolphin.WaterType.Sea;
                     validInput = true;
                     break;
                 }
-                case 2:
+                case "2":
                 {
                     waterType = Dolphin.WaterType.Sweet;
                     validInput = true;
@@ -341,7 +377,6 @@ public class Sys
                     break;
             }
         }
-
         animals[size] = new Dolphin(0, gender, name, weight, speed, medals, diveDepth, waterType);
 
     }
@@ -370,21 +405,25 @@ public class Sys
         System.out.println("2. Female");
         System.out.println("3. Hermaphrodite");
         boolean validInput = false;
+        Scanner in = new Scanner(System.in);
         while (!validInput)
         {
-            switch (s1.nextInt())
+            switch (in.nextLine())
             {
-                case 1: {
+                case "1":
+                {
                     gender = Animal.gender.Male;
                     validInput = true;
                     break;
                 }
-                case 2: {
+                case "2":
+                {
                     gender = Animal.gender.Female;
                     validInput = true;
                     break;
                 }
-                case 3: {
+                case "3":
+                {
                     gender = Animal.gender.Hermaphrodite;
                     validInput = true;
                     break;
@@ -394,6 +433,7 @@ public class Sys
                     break;
             }
         }
+        in.close();
         double wingspan;
         System.out.println("Please enter the wingspan of the Eagle: ");
         wingspan = s1.nextDouble();
@@ -427,21 +467,25 @@ public class Sys
         System.out.println("2. Female");
         System.out.println("3. Hermaphrodite");
         boolean validInput = false;
+        Scanner in = new Scanner(System.in);
         while (!validInput)
         {
-            switch (s1.nextInt())
+            switch (in.nextLine())
             {
-                case 1: {
+                case "1":
+                {
                     gender = Animal.gender.Male;
                     validInput = true;
                     break;
                 }
-                case 2: {
+                case "2":
+                {
                     gender = Animal.gender.Female;
                     validInput = true;
                     break;
                 }
-                case 3: {
+                case "3":
+                {
                     gender = Animal.gender.Hermaphrodite;
                     validInput = true;
                     break;
@@ -451,6 +495,7 @@ public class Sys
                     break;
             }
         }
+
         double wingspan;
         System.out.println("Please enter the wingspan of the Pigeon: ");
         wingspan = s1.nextDouble();
@@ -486,21 +531,25 @@ public class Sys
         System.out.println("2. Female");
         System.out.println("3. Hermaphrodite");
         boolean validInput = false;
+        Scanner in = new Scanner(System.in);
         while (!validInput)
         {
-            switch (s1.nextInt())
+            switch (in.nextLine())
             {
-                case 1: {
+                case "1":
+                {
                     gender = Animal.gender.Male;
                     validInput = true;
                     break;
                 }
-                case 2: {
+                case "2":
+                {
                     gender = Animal.gender.Female;
                     validInput = true;
                     break;
                 }
-                case 3: {
+                case "3":
+                {
                     gender = Animal.gender.Hermaphrodite;
                     validInput = true;
                     break;
@@ -517,6 +566,7 @@ public class Sys
         System.out.println("Please enter the breed of the Dog: ");
         Scanner s2 = new Scanner(System.in);
         breed = s2.nextLine();
+
 
         animals[size] = new Dog(0, gender, name, weight, speed, medals,noLegs, breed);
     }
@@ -545,21 +595,25 @@ public class Sys
         System.out.println("2. Female");
         System.out.println("3. Hermaphrodite");
         boolean validInput = false;
+        Scanner in = new Scanner(System.in);
         while (!validInput)
         {
-            switch (s1.nextInt())
+            switch (in.nextLine())
             {
-                case 1: {
+                case "1":
+                {
                     gender = Animal.gender.Male;
                     validInput = true;
                     break;
                 }
-                case 2: {
+                case "2":
+                {
                     gender = Animal.gender.Female;
                     validInput = true;
                     break;
                 }
-                case 3: {
+                case "3":
+                {
                     gender = Animal.gender.Hermaphrodite;
                     validInput = true;
                     break;
@@ -569,6 +623,7 @@ public class Sys
                     break;
             }
         }
+
         int noLegs;
         System.out.println("Please enter the number of legs of the Cat: ");
         noLegs = s1.nextInt();
@@ -577,17 +632,18 @@ public class Sys
         System.out.println("1. Castrated");
         System.out.println("2.not Castrated");
         validInput = false;
+        Scanner in2 = new Scanner(System.in);
         while (!validInput)
         {
-            switch (s1.nextInt())
+            switch (in2.nextLine())
             {
-                case 1:
+                case "1":
                 {
                     Castrated = true;
                     validInput = true;
                     break;
                 }
-                case 2:
+                case "2":
                 {
                     Castrated = false;
                     validInput = true;
@@ -598,6 +654,7 @@ public class Sys
                     break;
             }
         }
+
         animals[size] = new Cat(0, gender, name, weight, speed, medals,noLegs,Castrated);
     }
     /**
@@ -608,38 +665,41 @@ public class Sys
     public void CreateSnake(int size, Animal[] animals){
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
+        boolean flag = false;
         String name;
-        double weight;
-        double speed;
+        double weight = 0;
+        double speed = 0;
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the Snake: ");
         name = s1.nextLine();
-        System.out.println("Please enter the weight of the Snake: ");
-        weight = s1.nextDouble();
+        weight = validWeight(weight);
+        speed = validSpeed(speed);
 
-        System.out.println("Please enter the speed of the Snake: ");
-        speed = s1.nextDouble();
-        s1.nextLine();
+
         System.out.println("What gender is the Snake");
         System.out.println("1. Male");
         System.out.println("2. Female");
         System.out.println("3. Hermaphrodite");
         boolean validInput = false;
+        Scanner in = new Scanner(System.in);
         while (!validInput)
         {
-            switch (s1.nextInt())
+            switch (in.nextLine())
             {
-                case 1: {
+                case "1":
+                {
                     gender = Animal.gender.Male;
                     validInput = true;
                     break;
                 }
-                case 2: {
+                case "2":
+                {
                     gender = Animal.gender.Female;
                     validInput = true;
                     break;
                 }
-                case 3: {
+                case "3":
+                {
                     gender = Animal.gender.Hermaphrodite;
                     validInput = true;
                     break;
@@ -649,6 +709,7 @@ public class Sys
                     break;
             }
         }
+
         int noLegs;
         System.out.println("Please enter the number of legs of the Snake: ");
         noLegs = s1.nextInt();
@@ -660,17 +721,18 @@ public class Sys
         System.out.println("1. Yes");
         System.out.println("2. Not");
         validInput = false;
+        Scanner in2 = new Scanner(System.in);
         while (!validInput)
         {
-            switch (s1.nextInt())
+            switch (in2.nextLine())
             {
-                case 1:
+                case "1":
                 {
                     poisonous = Snake.Poisonous.POISONOUS;
                     validInput = true;
                     break;
                 }
-                case 2:
+                case "2":
                 {
                     poisonous = Snake.Poisonous.NON_POISONOUS;
                     validInput = true;
@@ -725,29 +787,31 @@ public class Sys
                 System.out.println("2. AirAnimal");
                 System.out.println("3. TerrestrialAnimal");
 
-                switch (s.nextInt()) {
-                    case 1:
-                        continueLoop=CreateWaterAnimal(i, animals, s);
+                switch (s.nextLine()) {
+                    case "1":
+                        continueLoop=CreateWaterAnimal(i, animals);
                         validInput = true;
                         break;
-                    case 2:
-                        continueLoop=CreateAirAnimal(i, animals, s);
+                    case "2":
+                        continueLoop=CreateAirAnimal(i, animals);
                         validInput = true;
                         break;
-                    case 3:
-                        continueLoop=CreateTerrestrialAnimal(i, animals, s);
+                    case "3":
+                        continueLoop=CreateTerrestrialAnimal(i, animals);
                         validInput = true;
                         break;
                     default:
                         System.out.println("Invalid option");
                         break;
                 }
+
             }
             if (continueLoop)
             {
                 i++;
             }
         }
+
     }
     /**
      * Displays the main menu and handles user input to print animal information,
@@ -758,6 +822,7 @@ public class Sys
      */
     public void MainMenu(int size, Animal[] animals){
         Scanner s = new Scanner(System.in);
+        s.nextLine();
         boolean validInput = false;
         while (!validInput)
         {
@@ -766,18 +831,18 @@ public class Sys
             System.out.println("2.Sound of all the animals");
             System.out.println("3.Exit");
 
-            switch (s.nextInt()) {
-                case 1:
+            switch (s.nextLine()) {
+                case "1":
                 {
                     printAnimalInfo(size,animals);
                     break;
                 }
-                case 2:
+                case "2":
                 {
                     printAnimalVoices(size,animals);
                     break;
                 }
-                case 3:
+                case "3":
                 {
                     validInput = true;
                     break;
@@ -787,9 +852,45 @@ public class Sys
                     System.out.println("Invalid option");
                     break;
             }
-        }
-    }
 
+        }
+
+
+    }
+    public double validSpeed(double speed)
+    {
+        boolean flag = false;
+        Scanner s1 = new Scanner(System.in);
+        while (!flag)
+        {
+            System.out.println("Please enter the speed of the Snake: ");
+            try {
+                speed = s1.nextDouble();
+                flag = true; // Exit the loop if a valid double is entered
+            } catch (Exception e) {
+                System.err.println("Invalid input. Please enter a valid number.");
+                s1.next(); // Clear the invalid input
+            }
+        }
+        return speed;
+    }
+    public double validWeight(double weight)
+    {
+        boolean flag = false;
+        Scanner s1 = new Scanner(System.in);
+        while (!flag)
+        {
+            System.out.println("Please enter the weight of the Snake: ");
+            try {
+                weight = s1.nextDouble();
+                flag = true; // Exit the loop if a valid double is entered
+            } catch (Exception e) {
+                System.err.println("Invalid input. Please enter a valid number.");
+                s1.next(); // Clear the invalid input
+            }
+        }
+        return weight;
+    }
 }
 
 
