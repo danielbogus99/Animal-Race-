@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class Sys
 {
-    public void main(String[] args)
+    public static void main(String[] args)
     {
         Scanner s = new Scanner(System.in);
 
@@ -40,7 +40,7 @@ public class Sys
      * @param animals the array of animals
      * @return true if I created an animal  false otherwise
      */
-    public boolean CreateWaterAnimal(int size,Animal[] animals) {
+    public static boolean CreateWaterAnimal(int size,Animal[] animals) {
         boolean validInput = false;
         System.out.println("Please enter the type of water animal you want to create: ");
         System.out.println("1.Whale");
@@ -87,7 +87,7 @@ public class Sys
      * @param animals the array of animals
      * @return true if I created an animal  false otherwise
      */
-    public boolean CreateAirAnimal(int size,Animal[] animals) {
+    public static boolean CreateAirAnimal(int size,Animal[] animals) {
         boolean validInput = false;
         System.out.println("Please enter the type of Air animal you want to create: ");
         System.out.println("1.Eagle");
@@ -124,7 +124,7 @@ public class Sys
      * @param animals the array of animals
      * @return true if I created an animal  false otherwise
      */
-    public boolean CreateTerrestrialAnimal(int size,Animal[] animals) {
+    public static boolean CreateTerrestrialAnimal(int size,Animal[] animals) {
         System.out.println("Please enter the type of Terrestrial animal you want to create: ");
         System.out.println("1.Dog");
         System.out.println("2.Cat");
@@ -167,7 +167,7 @@ public class Sys
      * @param size the size of the animals array
      * @param animals the array of animals
      */
-    public void CreateWhale(int size, Animal[] animals) {
+    public static void CreateWhale(int size, Animal[] animals) {
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
         String name;
@@ -176,8 +176,8 @@ public class Sys
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the whale: ");
         name = s1.nextLine();
-        validDouble(speed,"speed","whale");
-        validDouble(weight,"weight","whale");
+        speed = validDouble(speed,"speed","whale");
+        weight=validDouble(weight,"weight","whale");
         System.out.println("What gender is the whale");
         System.out.println("1. Male");
         System.out.println("2. Female");
@@ -213,7 +213,7 @@ public class Sys
         }
 
         double diveDepth = 0;
-        validDouble(diveDepth,"diveDepth","whale");
+        diveDepth=validDouble(diveDepth,"diveDepth","whale");
 
         String food_Type;
         System.out.println("Please enter food type of the Whale: ");
@@ -227,7 +227,7 @@ public class Sys
      * @param size the size of the animals array
      * @param animals the array of animals
      */
-    public void CreateAlligator(int size, Animal[] animals) {
+    public static void CreateAlligator(int size, Animal[] animals) {
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
         String name;
@@ -236,8 +236,8 @@ public class Sys
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the alligator: ");
         name = s1.nextLine();
-        validDouble(speed,"speed","alligator");
-        validDouble(weight,"weight","alligator");
+        speed=validDouble(speed,"speed","alligator");
+        weight=validDouble(weight,"weight","alligator");
         System.out.println("What gender is the alligator");
         System.out.println("1. Male");
         System.out.println("2. Female");
@@ -273,7 +273,7 @@ public class Sys
         }
 
         double diveDepth = 0;
-        validDouble(diveDepth,"diveDepth","alligator");
+        diveDepth=validDouble(diveDepth,"diveDepth","alligator");
         String AreaOfLiving;
         System.out.println("Please enter Area of the Alligator: ");
         Scanner s2 = new Scanner(System.in);
@@ -285,7 +285,7 @@ public class Sys
      * @param size the size of the animals array
      * @param animals the array of animals
      */
-    public void CreateDolphin(int size, Animal[] animals) {
+    public static void CreateDolphin(int size, Animal[] animals) {
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
         String name;
@@ -294,8 +294,8 @@ public class Sys
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the dolphin: ");
         name = s1.nextLine();
-        validDouble(speed,"speed","dolphin");
-        validDouble(weight,"weight","dolphin");
+        speed=validDouble(speed,"speed","dolphin");
+        weight=validDouble(weight,"weight","dolphin");
         System.out.println("What gender is the dolphin");
         System.out.println("1. Male");
         System.out.println("2. Female");
@@ -331,7 +331,7 @@ public class Sys
         }
 
         double diveDepth = 0;
-        validDouble(diveDepth,"diveDepth","dolphin");
+        diveDepth=validDouble(diveDepth,"diveDepth","dolphin");
         Dolphin.WaterType waterType = null;
         System.out.println("Enter dolphin water type");
         System.out.println("1. Sea");
@@ -367,7 +367,7 @@ public class Sys
      * @param size the size of the animals array
      * @param animals the array of animals
      */
-    public void CreateEagle(int size, Animal[] animals) {
+    public static void CreateEagle(int size, Animal[] animals) {
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
         String name;
@@ -376,8 +376,8 @@ public class Sys
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the eagle: ");
         name = s1.nextLine();
-        validDouble(speed,"speed","eagle");
-        validDouble(weight,"weight","eagle");
+        speed=validDouble(speed,"speed","eagle");
+        weight=validDouble(weight,"weight","eagle");
         System.out.println("What gender is the eagle");
         System.out.println("1. Male");
         System.out.println("2. Female");
@@ -412,9 +412,9 @@ public class Sys
             }
         }
         double wingspan = 0;
-        validDouble(wingspan,"wingspan","eagle");
+        wingspan=validDouble(wingspan,"wingspan","eagle");
         double altitudeOfFlight = 0;
-        validDouble(altitudeOfFlight,"altitudeOfFlight","eagle");
+        altitudeOfFlight=validDouble(altitudeOfFlight,"altitudeOfFlight","eagle");
         animals[size] = new Eagle(0, gender, name, weight, speed, medals,wingspan, altitudeOfFlight);
     }
     /**
@@ -422,7 +422,7 @@ public class Sys
      * @param size the size of the animals array
      * @param animals the array of animals
      */
-    public void CreatePigeon(int size, Animal[] animals) {
+    public static void CreatePigeon(int size, Animal[] animals) {
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
         String name;
@@ -431,8 +431,8 @@ public class Sys
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the pigeon: ");
         name = s1.nextLine();
-            validDouble(speed,"speed","pigeon");
-            validDouble(weight,"weight","pigeon");
+           speed= validDouble(speed,"speed","pigeon");
+           weight= validDouble(weight,"weight","pigeon");
         System.out.println("What gender is the pigeon");
         System.out.println("1. Male");
         System.out.println("2. Female");
@@ -467,7 +467,7 @@ public class Sys
             }
         }
         double wingspan = 0;
-        validDouble(wingspan,"wingspan","pigeon");
+        wingspan=validDouble(wingspan,"wingspan","pigeon");
         String family;
         System.out.println("Please enter the family of the pigeon: ");
         Scanner s2 = new Scanner(System.in);
@@ -480,7 +480,7 @@ public class Sys
      * @param size the size of the animals array
      * @param animals the array of animals
      */
-    public void CreateDog(int size, Animal[] animals){
+    public static void CreateDog(int size, Animal[] animals){
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
         String name;
@@ -489,8 +489,8 @@ public class Sys
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the dog: ");
         name = s1.nextLine();
-            validDouble(speed,"speed","dog");
-            validDouble(weight,"weight","dog");
+          speed = validDouble(speed,"speed","dog");
+          weight =  validDouble(weight,"weight","dog");
         System.out.println("What gender is the dog");
         System.out.println("1. Male");
         System.out.println("2. Female");
@@ -526,7 +526,7 @@ public class Sys
         }
 
         int noLegs = 0;
-        validInt(noLegs,"noLegs","dog");
+        noLegs = validInt(noLegs,"noLegs","dog");
         String breed;
         System.out.println("Please enter the breed of the Dog: ");
         Scanner s2 = new Scanner(System.in);
@@ -540,7 +540,7 @@ public class Sys
      * @param size the size of the animals array
      * @param animals the array of animals
      */
-    public void CreateCat(int size, Animal[] animals){
+    public static void CreateCat(int size, Animal[] animals){
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
         String name;
@@ -549,8 +549,8 @@ public class Sys
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the cat: ");
         name = s1.nextLine();
-            validDouble(speed,"speed","cat");
-            validDouble(weight,"weight","cat");
+         speed =   validDouble(speed,"speed","cat");
+          weight=  validDouble(weight,"weight","cat");
         System.out.println("What gender is the cat");
         System.out.println("1. Male");
         System.out.println("2. Female");
@@ -586,10 +586,10 @@ public class Sys
         }
 
         int noLegs = 0;
-        validInt(noLegs,"noLegs","cat");
+        noLegs = validInt(noLegs,"noLegs","cat");
         boolean Castrated = false;
         System.out.println("Please enter if the cat is Castrated: ");
-        System.out.println("1. Castrated");
+        System.out.println("1.Castrated");
         System.out.println("2.not Castrated");
         validInput = false;
         Scanner in2 = new Scanner(System.in);
@@ -622,7 +622,7 @@ public class Sys
      * @param size the size of the animals array
      * @param animals the array of animals
      */
-    public void CreateSnake(int size, Animal[] animals){
+    public static void CreateSnake(int size, Animal[] animals){
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
         String name;
@@ -631,8 +631,8 @@ public class Sys
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the Snake: ");
         name = s1.nextLine();
-            validDouble(speed,"speed","snake");
-            validDouble(weight,"weight","snake");
+          speed =  validDouble(speed,"speed","snake");
+           weight = validDouble(weight,"weight","snake");
         System.out.println("What gender is the Snake");
         System.out.println("1. Male");
         System.out.println("2. Female");
@@ -667,7 +667,7 @@ public class Sys
             }
         }
         int noLegs = 0;
-        validInt(noLegs,"noLegs","snake");
+        noLegs=validInt(noLegs,"noLegs","snake");
         double length = 0;
             validDouble(length,"length","Snake");
         Snake.Poisonous poisonous = null;
@@ -705,7 +705,7 @@ public class Sys
      * @param size the number of animals in the zoo
      * @param animals the array of animals
      */
-    public void printAnimalInfo(int size, Animal[] animals){
+    public static void printAnimalInfo(int size, Animal[] animals){
         for (int i = 0; i < size; i++) {
             System.out.println(animals[i]);
         }
@@ -716,7 +716,7 @@ public class Sys
      * @param size the number of animals in the zoo
      * @param animals the array of animals
      */
-    public void printAnimalVoices(int size, Animal[] animals){
+    public static void printAnimalVoices(int size, Animal[] animals){
         for (int i = 0; i < size; i++) {
             animals[i].makeSound();
         }
@@ -728,7 +728,7 @@ public class Sys
      * @param size the number of animals to create
      * @param animals the array of animals
      */
-    public void CreateAnimals(int size, Animal[] animals){
+    public static void CreateAnimals(int size, Animal[] animals){
         Scanner s = new Scanner(System.in);
         boolean continueLoop = true;
         for (int i = 0; i < size;)
@@ -774,9 +774,8 @@ public class Sys
      * @param size the number of animals in the zoo
      * @param animals the array of animals
      */
-    public void MainMenu(int size, Animal[] animals){
+    public static void MainMenu(int size, Animal[] animals){
         Scanner s = new Scanner(System.in);
-        s.nextLine();
         boolean validInput = false;
         while (!validInput)
         {
@@ -811,7 +810,7 @@ public class Sys
 
 
     }
-    public double validDouble(double value,String str,String str2)
+    public static double validDouble(double value,String str,String str2)
     {
         boolean flag = false;
         Scanner s1 = new Scanner(System.in);
@@ -828,7 +827,7 @@ public class Sys
         }
         return value;
     }
-    public double validInt(int value,String str,String str2)
+    public static int validInt(int value,String str,String str2)
     {
         boolean flag = false;
         Scanner s1 = new Scanner(System.in);

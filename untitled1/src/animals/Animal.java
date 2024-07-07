@@ -59,7 +59,7 @@ public abstract class Animal extends Mobile {
      * Method to make the animal produce its sound.
      */
     public void makeSound() {
-        System.out.print(STR."Animal \{getName()} said  \{getSound()}");
+        System.out.println(STR."Animal \{getName()} said \{getSound()}");
     }
 
     /**
