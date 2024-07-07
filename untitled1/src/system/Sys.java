@@ -178,49 +178,14 @@ public class Sys
         name = s1.nextLine();
         speed = validDouble(speed,"speed","whale");
         weight=validDouble(weight,"weight","whale");
-        System.out.println("What gender is the whale");
-        System.out.println("1. Male");
-        System.out.println("2. Female");
-        System.out.println("3. Hermaphrodite");
-        boolean validInput = false;
-        Scanner in = new Scanner(System.in);
-        while (!validInput)
-        {
-            switch (in.nextLine())
-            {
-                case "1":
-                {
-                    gender = Animal.gender.Male;
-                    validInput = true;
-                    break;
-                }
-                case "2":
-                {
-                    gender = Animal.gender.Female;
-                    validInput = true;
-                    break;
-                }
-                case "3":
-                {
-                    gender = Animal.gender.Hermaphrodite;
-                    validInput = true;
-                    break;
-                }
-                default:
-                    System.out.println("Invalid input");
-                    break;
-            }
-        }
-
+        gender = genderChoice();
         double diveDepth = 0;
         diveDepth=validDouble(diveDepth,"diveDepth","whale");
-
         String food_Type;
         System.out.println("Please enter food type of the Whale: ");
         Scanner s2 = new Scanner(System.in);
         food_Type = s2.nextLine();
         animals[size] = new Whale(0, gender, name, weight, speed, medals, diveDepth, food_Type);
-
     }
     /**
      * Creates an Alligator object and adds it to the animals array.
@@ -238,40 +203,7 @@ public class Sys
         name = s1.nextLine();
         speed=validDouble(speed,"speed","alligator");
         weight=validDouble(weight,"weight","alligator");
-        System.out.println("What gender is the alligator");
-        System.out.println("1. Male");
-        System.out.println("2. Female");
-        System.out.println("3. Hermaphrodite");
-        boolean validInput = false;
-        Scanner in = new Scanner(System.in);
-        while (!validInput)
-        {
-            switch (in.nextLine())
-            {
-                case "1":
-                {
-                    gender = Animal.gender.Male;
-                    validInput = true;
-                    break;
-                }
-                case "2":
-                {
-                    gender = Animal.gender.Female;
-                    validInput = true;
-                    break;
-                }
-                case "3":
-                {
-                    gender = Animal.gender.Hermaphrodite;
-                    validInput = true;
-                    break;
-                }
-                default:
-                    System.out.println("Invalid input");
-                    break;
-            }
-        }
-
+        gender = genderChoice();
         double diveDepth = 0;
         diveDepth=validDouble(diveDepth,"diveDepth","alligator");
         String AreaOfLiving;
@@ -296,47 +228,14 @@ public class Sys
         name = s1.nextLine();
         speed=validDouble(speed,"speed","dolphin");
         weight=validDouble(weight,"weight","dolphin");
-        System.out.println("What gender is the dolphin");
-        System.out.println("1. Male");
-        System.out.println("2. Female");
-        System.out.println("3. Hermaphrodite");
+        gender = genderChoice();
         boolean validInput = false;
-        Scanner in = new Scanner(System.in);
-        while (!validInput)
-        {
-            switch (in.nextLine())
-            {
-                case "1":
-                {
-                    gender = Animal.gender.Male;
-                    validInput = true;
-                    break;
-                }
-                case "2":
-                {
-                    gender = Animal.gender.Female;
-                    validInput = true;
-                    break;
-                }
-                case "3":
-                {
-                    gender = Animal.gender.Hermaphrodite;
-                    validInput = true;
-                    break;
-                }
-                default:
-                    System.out.println("Invalid input");
-                    break;
-            }
-        }
-
         double diveDepth = 0;
         diveDepth=validDouble(diveDepth,"diveDepth","dolphin");
         Dolphin.WaterType waterType = null;
         System.out.println("Enter dolphin water type");
         System.out.println("1. Sea");
         System.out.println("2. Sweet");
-        validInput = false;
         Scanner in2 = new Scanner(System.in);
         while (!validInput)
         {
@@ -378,39 +277,7 @@ public class Sys
         name = s1.nextLine();
         speed=validDouble(speed,"speed","eagle");
         weight=validDouble(weight,"weight","eagle");
-        System.out.println("What gender is the eagle");
-        System.out.println("1. Male");
-        System.out.println("2. Female");
-        System.out.println("3. Hermaphrodite");
-        boolean validInput = false;
-        Scanner in = new Scanner(System.in);
-        while (!validInput)
-        {
-            switch (in.nextLine())
-            {
-                case "1":
-                {
-                    gender = Animal.gender.Male;
-                    validInput = true;
-                    break;
-                }
-                case "2":
-                {
-                    gender = Animal.gender.Female;
-                    validInput = true;
-                    break;
-                }
-                case "3":
-                {
-                    gender = Animal.gender.Hermaphrodite;
-                    validInput = true;
-                    break;
-                }
-                default:
-                    System.out.println("Invalid input");
-                    break;
-            }
-        }
+        gender = genderChoice();
         double wingspan = 0;
         wingspan=validDouble(wingspan,"wingspan","eagle");
         double altitudeOfFlight = 0;
@@ -431,41 +298,9 @@ public class Sys
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the pigeon: ");
         name = s1.nextLine();
-           speed= validDouble(speed,"speed","pigeon");
-           weight= validDouble(weight,"weight","pigeon");
-        System.out.println("What gender is the pigeon");
-        System.out.println("1. Male");
-        System.out.println("2. Female");
-        System.out.println("3. Hermaphrodite");
-        boolean validInput = false;
-        Scanner in = new Scanner(System.in);
-        while (!validInput)
-        {
-            switch (in.nextLine())
-            {
-                case "1":
-                {
-                    gender = Animal.gender.Male;
-                    validInput = true;
-                    break;
-                }
-                case "2":
-                {
-                    gender = Animal.gender.Female;
-                    validInput = true;
-                    break;
-                }
-                case "3":
-                {
-                    gender = Animal.gender.Hermaphrodite;
-                    validInput = true;
-                    break;
-                }
-                default:
-                    System.out.println("Invalid input");
-                    break;
-            }
-        }
+        speed= validDouble(speed,"speed","pigeon");
+        weight= validDouble(weight,"weight","pigeon");
+        gender = genderChoice();
         double wingspan = 0;
         wingspan=validDouble(wingspan,"wingspan","pigeon");
         String family;
@@ -489,50 +324,15 @@ public class Sys
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the dog: ");
         name = s1.nextLine();
-          speed = validDouble(speed,"speed","dog");
-          weight =  validDouble(weight,"weight","dog");
-        System.out.println("What gender is the dog");
-        System.out.println("1. Male");
-        System.out.println("2. Female");
-        System.out.println("3. Hermaphrodite");
-        boolean validInput = false;
-        Scanner in = new Scanner(System.in);
-        while (!validInput)
-        {
-            switch (in.nextLine())
-            {
-                case "1":
-                {
-                    gender = Animal.gender.Male;
-                    validInput = true;
-                    break;
-                }
-                case "2":
-                {
-                    gender = Animal.gender.Female;
-                    validInput = true;
-                    break;
-                }
-                case "3":
-                {
-                    gender = Animal.gender.Hermaphrodite;
-                    validInput = true;
-                    break;
-                }
-                default:
-                    System.out.println("Invalid input");
-                    break;
-            }
-        }
-
+        speed = validDouble(speed,"speed","dog");
+        weight =  validDouble(weight,"weight","dog");
+        gender = genderChoice();
         int noLegs = 0;
         noLegs = validInt(noLegs,"noLegs","dog");
         String breed;
         System.out.println("Please enter the breed of the Dog: ");
         Scanner s2 = new Scanner(System.in);
         breed = s2.nextLine();
-
-
         animals[size] = new Dog(0, gender, name, weight, speed, medals,noLegs, breed);
     }
     /**
@@ -551,47 +351,15 @@ public class Sys
         name = s1.nextLine();
          speed =   validDouble(speed,"speed","cat");
           weight=  validDouble(weight,"weight","cat");
-        System.out.println("What gender is the cat");
-        System.out.println("1. Male");
-        System.out.println("2. Female");
-        System.out.println("3. Hermaphrodite");
-        boolean validInput = false;
-        Scanner in = new Scanner(System.in);
-        while (!validInput)
-        {
-            switch (in.nextLine())
-            {
-                case "1":
-                {
-                    gender = Animal.gender.Male;
-                    validInput = true;
-                    break;
-                }
-                case "2":
-                {
-                    gender = Animal.gender.Female;
-                    validInput = true;
-                    break;
-                }
-                case "3":
-                {
-                    gender = Animal.gender.Hermaphrodite;
-                    validInput = true;
-                    break;
-                }
-                default:
-                    System.out.println("Invalid input");
-                    break;
-            }
-        }
 
+        boolean validInput = false;
+        gender = genderChoice();
         int noLegs = 0;
         noLegs = validInt(noLegs,"noLegs","cat");
         boolean Castrated = false;
         System.out.println("Please enter if the cat is Castrated: ");
         System.out.println("1.Castrated");
         System.out.println("2.not Castrated");
-        validInput = false;
         Scanner in2 = new Scanner(System.in);
         while (!validInput)
         {
@@ -631,41 +399,10 @@ public class Sys
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the Snake: ");
         name = s1.nextLine();
-          speed =  validDouble(speed,"speed","snake");
-           weight = validDouble(weight,"weight","snake");
-        System.out.println("What gender is the Snake");
-        System.out.println("1. Male");
-        System.out.println("2. Female");
-        System.out.println("3. Hermaphrodite");
+        speed =  validDouble(speed,"speed","snake");
+        weight = validDouble(weight,"weight","snake");
         boolean validInput = false;
-        Scanner in = new Scanner(System.in);
-        while (!validInput)
-        {
-            switch (in.nextLine())
-            {
-                case "1":
-                {
-                    gender = Animal.gender.Male;
-                    validInput = true;
-                    break;
-                }
-                case "2":
-                {
-                    gender = Animal.gender.Female;
-                    validInput = true;
-                    break;
-                }
-                case "3":
-                {
-                    gender = Animal.gender.Hermaphrodite;
-                    validInput = true;
-                    break;
-                }
-                default:
-                    System.out.println("Invalid input");
-                    break;
-            }
-        }
+        gender = genderChoice();
         int noLegs = 0;
         noLegs=validInt(noLegs,"noLegs","snake");
         double length = 0;
@@ -674,7 +411,6 @@ public class Sys
         System.out.println("Enter if the snake is poisonous or not");
         System.out.println("1. Yes");
         System.out.println("2. Not");
-        validInput = false;
         Scanner in2 = new Scanner(System.in);
         while (!validInput)
         {
@@ -810,8 +546,7 @@ public class Sys
 
 
     }
-    public static double validDouble(double value,String str,String str2)
-    {
+    public static double validDouble(double value,String str,String str2) {
         boolean flag = false;
         Scanner s1 = new Scanner(System.in);
         while (!flag)
@@ -827,8 +562,7 @@ public class Sys
         }
         return value;
     }
-    public static int validInt(int value,String str,String str2)
-    {
+    public static int validInt(int value,String str,String str2) {
         boolean flag = false;
         Scanner s1 = new Scanner(System.in);
         while (!flag)
@@ -844,9 +578,41 @@ public class Sys
         }
         return value;
     }
+    public static Animal.gender genderChoice(){
+        System.out.println("What gender is the Snake");
+        System.out.println("1. Male");
+        System.out.println("2. Female");
+        System.out.println("3. Hermaphrodite");
+        boolean validInput = false;
+        Animal.gender gender = null;
+        Scanner in = new Scanner(System.in);
+        while (!validInput)
+        {
+            switch (in.nextLine())
+            {
+                case "1":
+                {
+                    gender = Animal.gender.Male;
+                    validInput = true;
+                    break;
+                }
+                case "2":
+                {
+                    gender = Animal.gender.Female;
+                    validInput = true;
+                    break;
+                }
+                case "3":
+                {
+                    gender = Animal.gender.Hermaphrodite;
+                    validInput = true;
+                    break;
+                }
+                default:
+                    System.out.println("Invalid input");
+                    break;
+            }
+        }
+        return gender;
+    }
 }
-
-
-
-
-
