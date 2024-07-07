@@ -26,12 +26,16 @@ public class Eagle extends AirAnimal {
         super(totalDistance, gender, name, weight, speed, medals, wingspan);
         this.altitudeOfFlight = altitudeOfFlight;
     }
-
+    public Eagle()
+    {
+        super();
+        this.altitudeOfFlight = 0;
+    }
     /**
      * Method to make the eagle produce its sound.
      */
-    public void getSound() {
-        System.out.println("Clack-wack-chack");
+    protected String getSound() {
+       return  "Clack-wack-chack";
     }
 
     /**

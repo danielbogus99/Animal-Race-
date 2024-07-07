@@ -6,7 +6,7 @@ import mobility.Point;
 /**
  * Represents an air-dwelling animal that extends the Animal class.
  */
-public class AirAnimal extends Animal {
+public abstract class AirAnimal extends Animal {
 
     private double wingspan;
 
@@ -24,6 +24,11 @@ public class AirAnimal extends Animal {
     public AirAnimal(double totalDistance, gender gender, String name, double weight, double speed, Medal[] medals, double wingspan) {
         super(new Point(0, 100), totalDistance, gender, name, weight, speed, medals);
         this.wingspan = wingspan;
+    }
+    public AirAnimal()
+    {
+        super();
+        this.wingspan = 0;
     }
 
     /**
@@ -54,7 +59,5 @@ public class AirAnimal extends Animal {
     /**
      * Method to get the sound of the air animal.
      */
-    public void getSound() {
-        // Implementation specific to each air animal
-    }
+    abstract protected String getSound();
 }

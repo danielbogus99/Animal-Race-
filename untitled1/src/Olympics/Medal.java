@@ -26,6 +26,12 @@ public class Medal {
         this.tournament = tournament;
         this.type = type;
     }
+    public  Medal()
+    {
+        this.tournament = "";
+        this.year = 2024;
+        this.type = type.bronze;
+    }
 
     /**
      * Checks if this medal is equal to another medal.

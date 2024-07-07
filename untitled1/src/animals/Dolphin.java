@@ -33,12 +33,17 @@ public class Dolphin extends WaterAnimal {
         super(totalDistance, gender, name, weight, speed, medals, diveDept);
         this.waterType = waterType;
     }
+    public Dolphin()
+    {
+        super();
+        this.waterType = WaterType.Sea;
+    }
 
     /**
      * Method to make the dolphin produce its sound.
      */
-    public void getSound() {
-        System.out.println("Click-click");
+    protected String getSound() {
+        return  "Click-click";
     }
 
     /**

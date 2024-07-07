@@ -25,12 +25,17 @@ public class Whale extends WaterAnimal {
         super(totalDistance, gender, name, weight, speed, medals, diveDept);
         this.foodType = foodType;
     }
+    public Whale()
+    {
+        super();
+        this.foodType = "";
+    }
 
     /**
      * Method to make the whale produce its sound.
      */
-    public void getSound() {
-        System.out.println("Splash");
+    protected String getSound() {
+       return  "Splash";
     }
 
     /**

@@ -9,7 +9,7 @@ import java.util.Arrays;
 /**
  * Represents an animal with various attributes.
  */
-public class Animal extends Mobile {
+public abstract class Animal extends Mobile {
 
     /**
      * Enumeration representing gender of the animal.
@@ -20,7 +20,6 @@ public class Animal extends Mobile {
     private double weight;
     private double speed;
     private Medal medals[];
-    private Point position;
     private gender gender;
 
     /**
@@ -42,20 +41,25 @@ public class Animal extends Mobile {
         this.gender = gender;
         this.name = name;
     }
+    public Animal() {
+        super();
+        this.weight = 0;
+        this.speed = 0;
+        this.medals = null;
+        this.gender = gender;
+        this.name = "";
+    }
 
     /**
      * Method to get the sound of the animal.
      */
-    public void getSound() {
-        // Implementation specific to each animal
-    }
+    abstract protected String getSound();
 
     /**
      * Method to make the animal produce its sound.
      */
     public void makeSound() {
-        System.out.print(STR."Animal \{getName()} said ");
-        getSound();
+        System.out.print(STR."Animal \{getName()} said  \{getSound()}");
     }
 
     /**
@@ -119,9 +123,7 @@ public class Animal extends Mobile {
      *
      * @return The current position of the animal.
      */
-    public Point getPosition() {
-        return position;
-    }
+
 
     /**
      * Override of the equals method to compare if two Animal objects are equal.
@@ -140,7 +142,7 @@ public class Animal extends Mobile {
                 other.getGender().equals(getGender()) &&
                 other.getWeight() == getWeight() &&
                 other.getSpeed() == getSpeed() &&
-                Arrays.equals(other.getMedals(), getMedals()) &&
-                other.getPosition().equals(getPosition());
+                Arrays.equals(other.getMedals(), getMedals());
+
     }
 }

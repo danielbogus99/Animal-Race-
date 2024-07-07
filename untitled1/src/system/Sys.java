@@ -518,7 +518,7 @@ public class Sys
         Scanner s2 = new Scanner(System.in);
         breed = s2.nextLine();
 
-        animals[size] = new Pigeon(0, gender, name, weight, speed, medals,noLegs, breed);
+        animals[size] = new Dog(0, gender, name, weight, speed, medals,noLegs, breed);
     }
     /**
      * Creates a Cat object and adds it to the animals array.

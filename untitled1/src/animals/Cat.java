@@ -25,12 +25,17 @@ public class Cat extends TerrestrialAnimals {
         super(totalDistance, gender, name, weight, speed, medals, noLegs);
         this.Castrated = Castrated;
     }
+    public Cat()
+    {
+        super();
+        this.Castrated = false;
+    }
 
     /**
      * Method to make the cat produce its sound.
      */
-    public void getSound() {
-        System.out.println("Meow");
+    protected String getSound() {
+         return "Meow";
     }
 
     /**

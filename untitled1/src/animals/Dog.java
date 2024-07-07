@@ -25,6 +25,11 @@ public class Dog extends TerrestrialAnimals {
         super(totalDistance, gender, name, weight, speed, medals, noLegs);
         this.breed = breed;
     }
+    public Dog()
+    {
+        super();
+        this.breed = "";
+    }
 
     /**
      * Returns the breed of the dog.
@@ -38,8 +43,8 @@ public class Dog extends TerrestrialAnimals {
     /**
      * Method to make the dog produce its sound.
      */
-    public void getSound() {
-        System.out.println("Woof Woof");
+    protected String getSound() {
+        return "Woof woof";
     }
 
     /**

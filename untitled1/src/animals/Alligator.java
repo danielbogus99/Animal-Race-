@@ -25,12 +25,17 @@ public class Alligator extends WaterAnimal {
         super(totalDistance, gender, name, weight, speed, medals, diveDept);
         this.AreaOfLiving = AreaOfLiving;
     }
+    public Alligator()
+    {
+        super();
+        AreaOfLiving = "";
+    }
 
     /**
      * Method to make the alligator produce its sound.
      */
-    public void getSound() {
-        System.out.println("Roar");
+    protected String getSound() {
+        return "Roar";
     }
 
     /**

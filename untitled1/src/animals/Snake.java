@@ -36,12 +36,18 @@ public class Snake extends TerrestrialAnimals {
         this.length = length;
         this.poisonous = poison;
     }
+    public Snake()
+    {
+        super();
+        this.length = 0;
+        this.poisonous = Poisonous.NON_POISONOUS;
+    }
 
     /**
      * Method to make the snake produce its sound.
      */
-    public void getSound() {
-        System.out.println("ssssssss");
+    protected String getSound() {
+       return  "ssssssss";
     }
 
     /**

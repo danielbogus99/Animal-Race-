@@ -25,12 +25,17 @@ public class Pigeon extends AirAnimal {
         super(totalDistance, gender, name, weight, speed, medals, wingspan);
         this.family = family;
     }
+    public Pigeon()
+    {
+        super();
+        this.family = "";
+    }
 
     /**
      * Method to make the pigeon produce its sound.
      */
-    public void getSound() {
-        System.out.println("Arr-rar-rar-rar-raah");
+    protected String getSound() {
+        return  "Arr-rar-rar-rar-raah";
     }
 
     /**

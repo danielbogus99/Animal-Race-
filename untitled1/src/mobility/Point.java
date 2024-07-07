@@ -18,6 +18,10 @@ public class Point {
         this.x = x;
         this.y = y;
     }
+    public Point() {
+        this.x = 0;
+        this.y = 0;
+    }
 
     /**
      * Checks if this point is equal to another object.

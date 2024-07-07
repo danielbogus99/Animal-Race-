@@ -20,6 +20,10 @@ public class Mobile implements ILocatable {
         this.location = location;
         this.totalDistance = totalDistance;
     }
+    public Mobile() {
+        this.location = new Point();
+        this.totalDistance = 0;
+    }
 
     /**
      * Adds the specified distance to the total distance traveled by the object.
