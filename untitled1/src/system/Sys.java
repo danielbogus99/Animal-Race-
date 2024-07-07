@@ -173,17 +173,13 @@ public class Sys
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
         String name;
-        double weight;
-        double speed;
+        double weight = 0;
+        double speed = 0;
         Medal[] medals = new Medal[size];
-        System.out.println("Please enter the name of the Whale: ");
+        System.out.println("Please enter the name of the whale: ");
         name = s1.nextLine();
-        System.out.println("Please enter the weight of the Whale: ");
-        weight = s1.nextDouble();
-
-        System.out.println("Please enter the speed of the Whale: ");
-        speed = s1.nextDouble();
-        s1.nextLine();
+        validDouble(speed,"speed","whale");
+        validDouble(weight,"weight","whale");
         System.out.println("What gender is the whale");
         System.out.println("1. Male");
         System.out.println("2. Female");
@@ -218,9 +214,8 @@ public class Sys
             }
         }
 
-        double diveDepth;
-        System.out.println("Please enter dive depth of the Whale: ");
-        diveDepth = s1.nextDouble();
+        double diveDepth = 0;
+        validDouble(diveDepth,"diveDepth","whale");
 
         String food_Type;
         System.out.println("Please enter food type of the Whale: ");
@@ -238,18 +233,14 @@ public class Sys
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
         String name;
-        double weight;
-        double speed;
+        double weight = 0;
+        double speed = 0;
         Medal[] medals = new Medal[size];
-        System.out.println("Please enter the name of the Alligator: ");
+        System.out.println("Please enter the name of the alligator: ");
         name = s1.nextLine();
-        System.out.println("Please enter the weight of the Alligator: ");
-        weight = s1.nextDouble();
-
-        System.out.println("Please enter the speed of the Alligator: ");
-        speed = s1.nextDouble();
-        s1.nextLine();
-        System.out.println("What gender is the Alligator");
+        validDouble(speed,"speed","alligator");
+        validDouble(weight,"weight","alligator");
+        System.out.println("What gender is the alligator");
         System.out.println("1. Male");
         System.out.println("2. Female");
         System.out.println("3. Hermaphrodite");
@@ -283,9 +274,8 @@ public class Sys
             }
         }
 
-        double diveDepth;
-        System.out.println("Please enter dive depth of the Alligator: ");
-        diveDepth = s1.nextDouble();
+        double diveDepth = 0;
+        validDouble(diveDepth,"diveDepth","alligator");
         String AreaOfLiving;
         System.out.println("Please enter Area of the Alligator: ");
         Scanner s2 = new Scanner(System.in);
@@ -301,22 +291,17 @@ public class Sys
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
         String name;
-        double weight;
-        double speed;
+        double weight = 0;
+        double speed = 0;
         Medal[] medals = new Medal[size];
-        System.out.println("Please enter the name of the Dolphin: ");
+        System.out.println("Please enter the name of the dolphin: ");
         name = s1.nextLine();
-        System.out.println("Please enter the weight of the Dolphin: ");
-        weight = s1.nextDouble();
-
-        System.out.println("Please enter the speed of the Dolphin: ");
-        speed = s1.nextDouble();
-        s1.nextLine();
-        System.out.println("What gender is the Dolphin");
+        validDouble(speed,"speed","dolphin");
+        validDouble(weight,"weight","dolphin");
+        System.out.println("What gender is the dolphin");
         System.out.println("1. Male");
         System.out.println("2. Female");
         System.out.println("3. Hermaphrodite");
-
         boolean validInput = false;
         Scanner in = new Scanner(System.in);
         while (!validInput)
@@ -347,9 +332,8 @@ public class Sys
             }
         }
 
-        double diveDepth;
-        System.out.println("Please enter dive depth of the Dolphin: ");
-        diveDepth = s1.nextDouble();
+        double diveDepth = 0;
+        validDouble(diveDepth,"diveDepth","dolphin");
         Dolphin.WaterType waterType = null;
         System.out.println("Enter dolphin water type");
         System.out.println("1. Sea");
@@ -389,18 +373,14 @@ public class Sys
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
         String name;
-        double weight;
-        double speed;
+        double weight = 0;
+        double speed = 0;
         Medal[] medals = new Medal[size];
-        System.out.println("Please enter the name of the Eagle: ");
+        System.out.println("Please enter the name of the eagle: ");
         name = s1.nextLine();
-        System.out.println("Please enter the weight of the Eagle: ");
-        weight = s1.nextDouble();
-
-        System.out.println("Please enter the speed of the Eagle: ");
-        speed = s1.nextDouble();
-        s1.nextLine();
-        System.out.println("What gender is the Eagle");
+        validDouble(speed,"speed","eagle");
+        validDouble(weight,"weight","eagle");
+        System.out.println("What gender is the eagle");
         System.out.println("1. Male");
         System.out.println("2. Female");
         System.out.println("3. Hermaphrodite");
@@ -433,13 +413,10 @@ public class Sys
                     break;
             }
         }
-        in.close();
-        double wingspan;
-        System.out.println("Please enter the wingspan of the Eagle: ");
-        wingspan = s1.nextDouble();
-        double altitudeOfFlight;
-        System.out.println("Please enter the altitude of flight of the Eagle: ");
-        altitudeOfFlight = s1.nextDouble();
+        double wingspan = 0;
+        validDouble(wingspan,"wingspan","eagle");
+        double altitudeOfFlight = 0;
+        validDouble(altitudeOfFlight,"altitudeOfFlight","eagle");
         animals[size] = new Eagle(0, gender, name, weight, speed, medals,wingspan, altitudeOfFlight);
     }
     /**
@@ -451,18 +428,14 @@ public class Sys
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
         String name;
-        double weight;
-        double speed;
+        double weight = 0;
+        double speed = 0;
         Medal[] medals = new Medal[size];
-        System.out.println("Please enter the name of the Pigeon: ");
+        System.out.println("Please enter the name of the Snake: ");
         name = s1.nextLine();
-        System.out.println("Please enter the weight of the Pigeon: ");
-        weight = s1.nextDouble();
-
-        System.out.println("Please enter the speed of the Pigeon: ");
-        speed = s1.nextDouble();
-        s1.nextLine();
-        System.out.println("What gender is the Pigeon");
+            validDouble(speed,"speed","pigeon");
+            validDouble(weight,"weight","pigeon");
+        System.out.println("What gender is the pigeon");
         System.out.println("1. Male");
         System.out.println("2. Female");
         System.out.println("3. Hermaphrodite");
@@ -495,10 +468,8 @@ public class Sys
                     break;
             }
         }
-
-        double wingspan;
-        System.out.println("Please enter the wingspan of the Pigeon: ");
-        wingspan = s1.nextDouble();
+        double wingspan = 0;
+        validDouble(wingspan,"wingspan","pigeon");
         String family;
         System.out.println("Please enter the family of the pigeon: ");
         Scanner s2 = new Scanner(System.in);
@@ -515,18 +486,14 @@ public class Sys
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
         String name;
-        double weight;
-        double speed;
+        double weight = 0;
+        double speed = 0;
         Medal[] medals = new Medal[size];
-        System.out.println("Please enter the name of the Dog: ");
+        System.out.println("Please enter the name of the Snake: ");
         name = s1.nextLine();
-        System.out.println("Please enter the weight of the Dog: ");
-        weight = s1.nextDouble();
-
-        System.out.println("Please enter the speed of the Dog: ");
-        speed = s1.nextDouble();
-        s1.nextLine();
-        System.out.println("What gender is the Dog");
+            validDouble(speed,"speed","dog");
+            validDouble(weight,"weight","dog");
+        System.out.println("What gender is the dog");
         System.out.println("1. Male");
         System.out.println("2. Female");
         System.out.println("3. Hermaphrodite");
@@ -559,9 +526,9 @@ public class Sys
                     break;
             }
         }
-        int noLegs;
-        System.out.println("Please enter the number of legs of the Dog: ");
-        noLegs = s1.nextInt();
+
+        int noLegs = 0;
+        validInt(noLegs,"noLegs","dog");
         String breed;
         System.out.println("Please enter the breed of the Dog: ");
         Scanner s2 = new Scanner(System.in);
@@ -579,18 +546,26 @@ public class Sys
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
         String name;
-        double weight;
-        double speed;
+        double weight = 0;
+        double speed = 0;
         Medal[] medals = new Medal[size];
-        System.out.println("Please enter the name of the Cat: ");
+        System.out.println("Please enter the name of the cat: ");
         name = s1.nextLine();
-        System.out.println("Please enter the weight of the Cat: ");
-        weight = s1.nextDouble();
 
-        System.out.println("Please enter the speed of the Cat: ");
-        speed = s1.nextDouble();
-        s1.nextLine();
-        System.out.println("What gender is the Cat");
+        while(true)
+        {
+            validDouble(speed,"speed","cat");
+            break;
+        }
+        while (true)
+        {
+            validDouble(weight,"weight","cat");
+            break;
+        }
+
+
+
+        System.out.println("What gender is the cat");
         System.out.println("1. Male");
         System.out.println("2. Female");
         System.out.println("3. Hermaphrodite");
@@ -624,9 +599,8 @@ public class Sys
             }
         }
 
-        int noLegs;
-        System.out.println("Please enter the number of legs of the Cat: ");
-        noLegs = s1.nextInt();
+        int noLegs = 0;
+        validInt(noLegs,"noLegs","cat");
         boolean Castrated = false;
         System.out.println("Please enter if the cat is Castrated: ");
         System.out.println("1. Castrated");
@@ -665,17 +639,14 @@ public class Sys
     public void CreateSnake(int size, Animal[] animals){
         Scanner s1 = new Scanner(System.in);
         Animal.gender gender = null;
-        boolean flag = false;
         String name;
         double weight = 0;
         double speed = 0;
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the Snake: ");
         name = s1.nextLine();
-        weight = validWeight(weight);
-        speed = validSpeed(speed);
-
-
+            validDouble(speed,"speed","snake");
+            validDouble(weight,"weight","snake");
         System.out.println("What gender is the Snake");
         System.out.println("1. Male");
         System.out.println("2. Female");
@@ -710,12 +681,10 @@ public class Sys
             }
         }
 
-        int noLegs;
-        System.out.println("Please enter the number of legs of the Snake: ");
-        noLegs = s1.nextInt();
-        double length;
-        System.out.println("Please enter the length of the Snake: ");
-        length = s1.nextDouble();
+        int noLegs = 0;
+        validInt(noLegs,"noLegs","snake");
+        double length = 0;
+            validDouble(length,"length","Snake");
         Snake.Poisonous poisonous = null;
         System.out.println("Enter if the snake is poisonous or not");
         System.out.println("1. Yes");
@@ -857,39 +826,39 @@ public class Sys
 
 
     }
-    public double validSpeed(double speed)
+    public double validDouble(double value,String str,String str2)
     {
         boolean flag = false;
         Scanner s1 = new Scanner(System.in);
         while (!flag)
         {
-            System.out.println("Please enter the speed of the Snake: ");
+            System.out.println("Please enter the "  + str + " of the " + str2 + ": ");
             try {
-                speed = s1.nextDouble();
+                value = s1.nextDouble();
                 flag = true; // Exit the loop if a valid double is entered
             } catch (Exception e) {
                 System.err.println("Invalid input. Please enter a valid number.");
                 s1.next(); // Clear the invalid input
             }
         }
-        return speed;
+        return value;
     }
-    public double validWeight(double weight)
+    public double validInt(int value,String str,String str2)
     {
         boolean flag = false;
         Scanner s1 = new Scanner(System.in);
         while (!flag)
         {
-            System.out.println("Please enter the weight of the Snake: ");
+            System.out.println("Please enter the " + str  +" of the " + str2+": ");
             try {
-                weight = s1.nextDouble();
+                value = s1.nextInt();
                 flag = true; // Exit the loop if a valid double is entered
             } catch (Exception e) {
                 System.err.println("Invalid input. Please enter a valid number.");
                 s1.next(); // Clear the invalid input
             }
         }
-        return weight;
+        return value;
     }
 }
 
