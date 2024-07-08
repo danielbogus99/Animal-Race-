@@ -21,8 +21,8 @@ public class Cat extends TerrestrialAnimals {
      * @param noLegs        The number of legs of the cat.
      * @param Castrated     Whether the cat is castrated or not.
      */
-    public Cat(double totalDistance, gender gender, String name, double weight, double speed, Medal[] medals, int noLegs, boolean Castrated) {
-        super(totalDistance, gender, name, weight, speed, medals, noLegs);
+    public Cat(int x,int y,double totalDistance, gender gender, String name, double weight, double speed, Medal[] medals, int noLegs, boolean Castrated) {
+        super(x,y,totalDistance, gender, name, weight, speed, medals, noLegs);
         this.Castrated = Castrated;
     }
     public Cat()

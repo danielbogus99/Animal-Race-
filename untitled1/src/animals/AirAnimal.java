@@ -21,13 +21,21 @@ public abstract class AirAnimal extends Animal {
      * @param medals        The array of medals won by the animal.
      * @param wingspan      The wingspan of the air animal.
      */
-    public AirAnimal(double totalDistance, gender gender, String name, double weight, double speed, Medal[] medals, double wingspan) {
-        super(new Point(0, 100), totalDistance, gender, name, weight, speed, medals);
+    public AirAnimal(int x,int y,double totalDistance, gender gender, String name, double weight, double speed, Medal[] medals, double wingspan)
+    {
+        if (x < 0 || y < 0)
+        {
+            System.out.println("X AND Y are negative,default coordinates were set");
+            x = 0;
+            y = 100;
+        }
+        super(new Point(x, y), totalDistance, gender, name, weight, speed, medals);
         this.wingspan = wingspan;
     }
     public AirAnimal()
     {
         super();
+
         this.wingspan = 0;
     }
 

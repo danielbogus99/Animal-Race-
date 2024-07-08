@@ -21,8 +21,8 @@ public class Dog extends TerrestrialAnimals {
      * @param noLegs        The number of legs of the dog.
      * @param breed         The breed of the dog.
      */
-    public Dog(double totalDistance, gender gender, String name, double weight, double speed, Medal[] medals, int noLegs, String breed) {
-        super(totalDistance, gender, name, weight, speed, medals, noLegs);
+    public Dog(int x,int y,double totalDistance, gender gender, String name, double weight, double speed, Medal[] medals, int noLegs, String breed) {
+        super(x,y,totalDistance, gender, name, weight, speed, medals, noLegs);
         this.breed = breed;
     }
     public Dog()

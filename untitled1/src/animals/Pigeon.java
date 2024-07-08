@@ -21,8 +21,8 @@ public class Pigeon extends AirAnimal {
      * @param wingspan      The wingspan of the pigeon.
      * @param family        The family of the pigeon.
      */
-    public Pigeon(double totalDistance, Animal.gender gender, String name, double weight, double speed, Medal[] medals, double wingspan, String family) {
-        super(totalDistance, gender, name, weight, speed, medals, wingspan);
+    public Pigeon(int x,int y,double totalDistance, Animal.gender gender, String name, double weight, double speed, Medal[] medals, double wingspan, String family) {
+        super(x,y,totalDistance, gender, name, weight, speed, medals, wingspan);
         this.family = family;
     }
     public Pigeon()

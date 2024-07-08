@@ -29,8 +29,8 @@ public class Dolphin extends WaterAnimal {
      * @param diveDept      The dive depth of the dolphin.
      * @param waterType     The type of water the dolphin inhabits.
      */
-    public Dolphin(double totalDistance, Animal.gender gender, String name, double weight, double speed, Medal[] medals, double diveDept, WaterType waterType) {
-        super(totalDistance, gender, name, weight, speed, medals, diveDept);
+    public Dolphin(int x,int y,double totalDistance, Animal.gender gender, String name, double weight, double speed, Medal[] medals, double diveDept, WaterType waterType) {
+        super(x,y,totalDistance, gender, name, weight, speed, medals, diveDept);
         this.waterType = waterType;
     }
     public Dolphin()

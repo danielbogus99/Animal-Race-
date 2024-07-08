@@ -21,8 +21,8 @@ public class Alligator extends WaterAnimal implements IReptile{
      * @param diveDept      The dive depth of the alligator.
      * @param AreaOfLiving  The area of living of the alligator.
      */
-    public Alligator(double totalDistance, Animal.gender gender, String name, double weight, double speed, Medal[] medals, double diveDept, String AreaOfLiving) {
-        super(totalDistance, gender, name, weight, speed, medals, diveDept);
+    public Alligator(int x,int y,double totalDistance, Animal.gender gender, String name, double weight, double speed, Medal[] medals, double diveDept, String AreaOfLiving) {
+        super(x,y,totalDistance, gender, name, weight, speed, medals, diveDept);
         this.AreaOfLiving = AreaOfLiving;
     }
     public Alligator()

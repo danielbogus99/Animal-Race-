@@ -46,7 +46,7 @@ public abstract class Animal extends Mobile {
         this.weight = 0;
         this.speed = 0;
         this.medals = null;
-        this.gender = gender;
+        this.gender = gender.Male;
         this.name = "";
     }
 

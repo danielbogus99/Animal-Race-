@@ -21,13 +21,20 @@ public abstract class TerrestrialAnimals extends Animal {
      * @param medals        The array of medals won by the animal.
      * @param noLegs        The number of legs of the terrestrial animal.
      */
-    public TerrestrialAnimals(double totalDistance, Animal.gender gender, String name, double weight, double speed, Medal[] medals, int noLegs) {
-        super(new Point(0, 20), totalDistance, gender, name, weight, speed, medals);
+    public TerrestrialAnimals(int x,int y, double totalDistance, Animal.gender gender, String name, double weight, double speed, Medal[] medals, int noLegs) {
+        if (x < 0 || y < 0)
+        {
+            System.out.println("X AND Y are negative,default coordinates were set");
+            x = 0;
+            y = 20;
+        }
+        super(new Point(x, y), totalDistance, gender, name, weight, speed, medals);
         this.noLegs = noLegs;
     }
     public TerrestrialAnimals()
     {
         super();
+        new Point(0, 20);
         noLegs = 0;
     }
 

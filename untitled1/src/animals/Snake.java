@@ -41,8 +41,8 @@ public class Snake extends TerrestrialAnimals implements IReptile{
      * @param poison        The poisonous status of the snake.
      * @param length        The length of the snake.
      */
-    public Snake(double totalDistance, gender gender, String name, double weight, double speed, Medal[] medals, int noLegs, Poisonous poison, double length) {
-        super(totalDistance, gender, name, weight, speed, medals, noLegs);
+    public Snake(int x,int y,double totalDistance, gender gender, String name, double weight, double speed, Medal[] medals, int noLegs, Poisonous poison, double length) {
+        super(x,y,totalDistance, gender, name, weight, speed, medals, noLegs);
         this.length = length;
         this.poisonous = poison;
     }

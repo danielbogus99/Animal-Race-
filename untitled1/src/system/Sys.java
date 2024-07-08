@@ -1,11 +1,11 @@
 package system;
 
-import mobility.*;
+
 import animals.*;
 import Olympics.*;
 import java.util.*;
 /**
- * The Sys class provides functionality to create and manage various types of animals.
+ * Daniel Boguslavsky,207915729
  */
 public class Sys
 {
@@ -173,6 +173,10 @@ public class Sys
         String name;
         double weight = 0;
         double speed = 0;
+        int x = 0;
+        int y = 0;
+        x = SetXandY(x,"x");
+        y = SetXandY(y,"y");
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the whale: ");
         name = s1.nextLine();
@@ -185,7 +189,7 @@ public class Sys
         System.out.println("Please enter food type of the Whale: ");
         Scanner s2 = new Scanner(System.in);
         food_Type = s2.nextLine();
-        animals[size] = new Whale(0, gender, name, weight, speed, medals, diveDepth, food_Type);
+        animals[size] = new Whale(x,y,0, gender, name, weight, speed, medals, diveDepth, food_Type);
     }
     /**
      * Creates an Alligator object and adds it to the animals array.
@@ -198,6 +202,10 @@ public class Sys
         String name;
         double weight = 0;
         double speed = 0;
+        int x = 0;
+        int y = 0;
+        x = SetXandY(x,"x");
+        y = SetXandY(y,"y");
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the alligator: ");
         name = s1.nextLine();
@@ -210,7 +218,7 @@ public class Sys
         System.out.println("Please enter Area of the Alligator: ");
         Scanner s2 = new Scanner(System.in);
         AreaOfLiving = s2.nextLine();
-        animals[size] = new Alligator(0, gender, name, weight, speed, medals, diveDepth, AreaOfLiving);
+        animals[size] = new Alligator(x,y,0, gender, name, weight, speed, medals, diveDepth, AreaOfLiving);
     }
     /**
      * Creates a Dolphin object and adds it to the animals array.
@@ -223,6 +231,10 @@ public class Sys
         String name;
         double weight = 0;
         double speed = 0;
+        int x = 0;
+        int y = 0;
+        x = SetXandY(x,"x");
+        y = SetXandY(y,"y");
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the dolphin: ");
         name = s1.nextLine();
@@ -258,7 +270,7 @@ public class Sys
                     break;
             }
         }
-        animals[size] = new Dolphin(0, gender, name, weight, speed, medals, diveDepth, waterType);
+        animals[size] = new Dolphin(x,y,0, gender, name, weight, speed, medals, diveDepth, waterType);
 
     }
     /**
@@ -272,6 +284,10 @@ public class Sys
         String name;
         double weight = 0;
         double speed = 0;
+        int x = 0;
+        int y = 0;
+        x = SetXandY(x,"x");
+        y = SetXandY(y,"y");
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the eagle: ");
         name = s1.nextLine();
@@ -282,7 +298,7 @@ public class Sys
         wingspan=validDouble(wingspan,"wingspan","eagle");
         double altitudeOfFlight = 0;
         altitudeOfFlight=validDouble(altitudeOfFlight,"altitudeOfFlight","eagle");
-        animals[size] = new Eagle(0, gender, name, weight, speed, medals,wingspan, altitudeOfFlight);
+        animals[size] = new Eagle(x,y,0, gender, name, weight, speed, medals,wingspan, altitudeOfFlight);
     }
     /**
      * Creates a Pigeon object and adds it to the animals array.
@@ -295,6 +311,10 @@ public class Sys
         String name;
         double weight = 0;
         double speed = 0;
+        int x = 0;
+        int y = 0;
+        x = SetXandY(x,"x");
+        y = SetXandY(y,"y");
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the pigeon: ");
         name = s1.nextLine();
@@ -308,7 +328,7 @@ public class Sys
         Scanner s2 = new Scanner(System.in);
         family = s2.nextLine();
 
-        animals[size] = new Pigeon(0, gender, name, weight, speed, medals,wingspan, family);
+        animals[size] = new Pigeon(x,y,0, gender, name, weight, speed, medals,wingspan, family);
     }
     /**
      * Creates a Dog object and adds it to the animals array.
@@ -321,6 +341,10 @@ public class Sys
         String name;
         double weight = 0;
         double speed = 0;
+        int x = 0;
+        int y = 0;
+        x = SetXandY(x,"x");
+        y = SetXandY(y,"y");
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the dog: ");
         name = s1.nextLine();
@@ -333,7 +357,8 @@ public class Sys
         System.out.println("Please enter the breed of the Dog: ");
         Scanner s2 = new Scanner(System.in);
         breed = s2.nextLine();
-        animals[size] = new Dog(0, gender, name, weight, speed, medals,noLegs, breed);
+
+        animals[size] = new Dog(x,y,0, gender, name, weight, speed, medals,noLegs, breed);
     }
     /**
      * Creates a Cat object and adds it to the animals array.
@@ -346,12 +371,15 @@ public class Sys
         String name;
         double weight = 0;
         double speed = 0;
+        int x = 0;
+        int y = 0;
+        x = SetXandY(x,"x");
+        y = SetXandY(y,"y");
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the cat: ");
         name = s1.nextLine();
-         speed =   validDouble(speed,"speed","cat");
-          weight=  validDouble(weight,"weight","cat");
-
+        speed =   validDouble(speed,"speed","cat");
+        weight=  validDouble(weight,"weight","cat");
         boolean validInput = false;
         gender = genderChoice();
         int noLegs = 0;
@@ -383,7 +411,7 @@ public class Sys
             }
         }
 
-        animals[size] = new Cat(0, gender, name, weight, speed, medals,noLegs,Castrated);
+        animals[size] = new Cat(x,y,0, gender, name, weight, speed, medals,noLegs,Castrated);
     }
     /**
      * Creates a Snake object and adds it to the animals array.
@@ -396,6 +424,10 @@ public class Sys
         String name;
         double weight = 0;
         double speed = 0;
+        int x = 0;
+        int y = 0;
+        x = SetXandY(x,"x");
+        y = SetXandY(y,"y");
         Medal[] medals = new Medal[size];
         System.out.println("Please enter the name of the Snake: ");
         name = s1.nextLine();
@@ -433,7 +465,7 @@ public class Sys
                     break;
             }
         }
-        animals[size] = new Snake(0, gender, name, weight, speed, medals,noLegs, poisonous,length);
+        animals[size] = new Snake(x,y,0, gender, name, weight, speed, medals,noLegs, poisonous,length);
     }
     /**
      * Prints the information of all animals in the zoo.
@@ -614,5 +646,22 @@ public class Sys
             }
         }
         return gender;
+    }
+    public static int SetXandY(int value,String axis) {
+        boolean flag = false;
+        Scanner s1 = new Scanner(System.in);
+
+        while (!flag) {
+            System.out.println("Please enter the youre " +axis+" location");
+            try {
+                value = s1.nextInt();
+                flag = true;
+
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+                s1.next(); // Clear the invalid input
+            }
+        }
+        return value;
     }
 }

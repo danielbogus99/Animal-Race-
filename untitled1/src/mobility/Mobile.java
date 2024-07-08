@@ -10,6 +10,7 @@ public class Mobile implements ILocatable {
     private Point location;
     private double totalDistance;
 
+
     /**
      * Constructs a Mobile object with the specified initial location and total distance.
      *
@@ -21,7 +22,7 @@ public class Mobile implements ILocatable {
         this.totalDistance = totalDistance;
     }
     public Mobile() {
-        this.location = new Point();
+        this.location = new Point(0, 0);
         this.totalDistance = 0;
     }
 

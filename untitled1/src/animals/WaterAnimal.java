@@ -26,13 +26,21 @@ public abstract class WaterAnimal extends Animal {
      * @param medals        The array of medals won by the animal.
      * @param diveDept      The initial depth of diving for the water animal.
      */
-    public WaterAnimal(double totalDistance, gender gender, String name, double weight, double speed, Medal[] medals, double diveDept) {
-        super(new Point(50, 0), totalDistance, gender, name, weight, speed, medals);
+    public WaterAnimal(int x,int y,double totalDistance, gender gender, String name, double weight, double speed, Medal[] medals, double diveDept)
+    {
+        if (x < 0 || y < 0)
+        {
+            System.out.println("X AND Y are negative,default coordinates were set");
+            x = 50;
+            y = 0;
+        }
+        super(new Point(x, y), totalDistance, gender, name, weight, speed, medals);
         this.diveDept = diveDept;
     }
     public WaterAnimal()
     {
         super();
+
         this.diveDept = 0;
     }
 

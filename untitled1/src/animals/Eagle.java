@@ -21,9 +21,9 @@ public class Eagle extends AirAnimal {
      * @param wingspan         The wingspan of the eagle.
      * @param altitudeOfFlight The altitude of flight of the eagle.
      */
-    public Eagle(double totalDistance, Animal.gender gender, String name, double weight, double speed,
+    public Eagle(int x,int y,double totalDistance, Animal.gender gender, String name, double weight, double speed,
                  Medal[] medals, double wingspan, double altitudeOfFlight) {
-        super(totalDistance, gender, name, weight, speed, medals, wingspan);
+        super(x,y,totalDistance, gender, name, weight, speed, medals, wingspan);
         this.altitudeOfFlight = altitudeOfFlight;
     }
     public Eagle()

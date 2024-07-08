@@ -21,8 +21,8 @@ public class Whale extends WaterAnimal {
      * @param diveDept      The dive depth of the whale.
      * @param foodType      The type of food the whale consumes.
      */
-    public Whale(double totalDistance, Animal.gender gender, String name, double weight, double speed, Medal[] medals, double diveDept, String foodType) {
-        super(totalDistance, gender, name, weight, speed, medals, diveDept);
+    public Whale(int x,int y,double totalDistance, Animal.gender gender, String name, double weight, double speed, Medal[] medals, double diveDept, String foodType) {
+        super(x,y,totalDistance, gender, name, weight, speed, medals, diveDept);
         this.foodType = foodType;
     }
     public Whale()
