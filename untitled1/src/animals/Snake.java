@@ -24,8 +24,8 @@ public class Snake extends TerrestrialAnimals implements IReptile{
      * Enum defining the poisonous status of the snake.
      */
     public enum Poisonous {
-        NON_POISONOUS,
-        POISONOUS
+        LOW, MEDIUM, HIGH,
+
     }
 
     /**
@@ -50,7 +50,7 @@ public class Snake extends TerrestrialAnimals implements IReptile{
     {
         super();
         this.length = 0;
-        this.poisonous = Poisonous.NON_POISONOUS;
+        this.poisonous = Poisonous.LOW;
     }
 
     /**
