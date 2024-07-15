@@ -3,6 +3,9 @@ package animals;
 import Olympics.Medal;
 import mobility.Point;
 
+import javax.xml.stream.Location;
+import java.awt.image.BufferedImage;
+
 /**
  * Represents a water-dwelling animal that extends the Animal class.
  */
@@ -26,7 +29,7 @@ public  class WaterAnimal extends Animal implements IWaterAnimal {
      * @param medals        The array of medals won by the animal.
      * @param diveDept      The initial depth of diving for the water animal.
      */
-    public WaterAnimal(int x,int y,double totalDistance, gender gender, String name, double weight, double speed, Medal[] medals, double diveDept)
+    public WaterAnimal(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, Location loc, BufferedImage img1, BufferedImage img2, BufferedImage img3, BufferedImage img4, double diveDept)
     {
         if (x < 0 || y < 0)
         {
@@ -34,7 +37,7 @@ public  class WaterAnimal extends Animal implements IWaterAnimal {
             x = 50;
             y = 0;
         }
-        super(new Point(x, y), totalDistance, gender, name, weight, speed, medals);
+        super(new Point(x, y), totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4);
         this.diveDept = diveDept;
     }
     public WaterAnimal()

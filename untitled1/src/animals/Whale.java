@@ -2,6 +2,9 @@ package animals;
 
 import Olympics.Medal;
 
+import javax.xml.stream.Location;
+import java.awt.image.BufferedImage;
+
 /**
  * Represents a whale, a water-dwelling animal that extends the WaterAnimal class.
  */
@@ -21,8 +24,8 @@ public class Whale extends WaterAnimal {
      * @param diveDept      The dive depth of the whale.
      * @param foodType      The type of food the whale consumes.
      */
-    public Whale(int x,int y,double totalDistance, Animal.gender gender, String name, double weight, double speed, Medal[] medals, double diveDept, String foodType) {
-        super(x,y,totalDistance, gender, name, weight, speed, medals, diveDept);
+    public Whale(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, Location loc, BufferedImage img1, BufferedImage img2, BufferedImage img3, BufferedImage img4, double diveDept, String foodType) {
+        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4, diveDept);
         this.foodType = foodType;
     }
     public Whale()

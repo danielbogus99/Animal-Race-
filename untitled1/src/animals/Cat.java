@@ -2,6 +2,9 @@ package animals;
 
 import Olympics.Medal;
 
+import javax.xml.stream.Location;
+import java.awt.image.BufferedImage;
+
 /**
  * Represents a cat, a terrestrial animal that extends the TerrestrialAnimals class.
  */
@@ -21,8 +24,8 @@ public class Cat extends TerrestrialAnimals {
      * @param noLegs        The number of legs of the cat.
      * @param Castrated     Whether the cat is castrated or not.
      */
-    public Cat(int x,int y,double totalDistance, gender gender, String name, double weight, double speed, Medal[] medals, int noLegs, boolean Castrated) {
-        super(x,y,totalDistance, gender, name, weight, speed, medals, noLegs);
+    public Cat(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, Location loc, BufferedImage img1, BufferedImage img2, BufferedImage img3, BufferedImage img4, int noLegs, boolean Castrated) {
+        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4, noLegs);
         this.Castrated = Castrated;
     }
     public Cat()

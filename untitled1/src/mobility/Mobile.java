@@ -52,8 +52,15 @@ public class Mobile implements ILocatable {
      * @param distance the distance to move
      * @return the updated total distance traveled
      */
-    public double move(Point distance) {
-        return totalDistance;
+    public boolean move(Point distance) {
+        if (distance.getX() < 0 || distance.getY() < 0) {
+            return false;
+        }
+        double distances = calcDistance(distance);
+        addTotalDistance(distances);
+        location.setX(distance.getX());
+        location.setY(distance.getY());
+        return true;
     }
 
     /**

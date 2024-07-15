@@ -3,6 +3,9 @@ package animals;
 import Olympics.Medal;
 import mobility.Point;
 
+import javax.xml.stream.Location;
+import java.awt.image.BufferedImage;
+
 /**
  * Represents an alligator, a water-dwelling animal that extends the WaterAnimal class.
  */
@@ -24,11 +27,11 @@ public class Alligator extends Animal implements IReptile,IWaterAnimal,ITerrestr
      * @param diveDept      The dive depth of the alligator.
      * @param AreaOfLiving  The area of living of the alligator.
      */
-    public Alligator(int x,int y,double totalDistance, Animal.gender gender, String name, double weight, double speed, Medal[] medals, double diveDept,int noLegs, String AreaOfLiving)
+    public Alligator(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, Location loc, BufferedImage img1, BufferedImage img2, BufferedImage img3, BufferedImage img4, double diveDept, int noLegs, String AreaOfLiving)
     {
-        super(new Point(x,y),totalDistance,gender,name,weight,speed,medals);
-        waterAnimal = new WaterAnimal(x,y,totalDistance, gender, name, weight, speed, medals,diveDept);
-        terrestrialAnimals = new TerrestrialAnimals(x,y,totalDistance, gender, name, weight, speed, medals,noLegs);
+        super(new Point(x, y), totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4);
+        waterAnimal = new WaterAnimal(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4,diveDept);
+        terrestrialAnimals = new TerrestrialAnimals(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4,noLegs);
         this.AreaOfLiving = AreaOfLiving;
     }
     public Alligator()

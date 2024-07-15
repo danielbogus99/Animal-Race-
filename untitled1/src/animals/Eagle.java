@@ -2,6 +2,9 @@ package animals;
 
 import Olympics.Medal;
 
+import javax.xml.stream.Location;
+import java.awt.image.BufferedImage;
+
 /**
  * Represents an eagle, an air-dwelling animal that extends the AirAnimal class.
  */
@@ -21,9 +24,8 @@ public class Eagle extends AirAnimal {
      * @param wingspan         The wingspan of the eagle.
      * @param altitudeOfFlight The altitude of flight of the eagle.
      */
-    public Eagle(int x,int y,double totalDistance, Animal.gender gender, String name, double weight, double speed,
-                 Medal[] medals, double wingspan, double altitudeOfFlight) {
-        super(x,y,totalDistance, gender, name, weight, speed, medals, wingspan);
+    public Eagle(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, Location loc, BufferedImage img1, BufferedImage img2, BufferedImage img3, BufferedImage img4, double wingspan, double altitudeOfFlight) {
+        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4, wingspan);
         this.altitudeOfFlight = altitudeOfFlight;
     }
     public Eagle()

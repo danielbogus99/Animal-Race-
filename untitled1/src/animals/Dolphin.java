@@ -2,6 +2,9 @@ package animals;
 
 import Olympics.Medal;
 
+import javax.xml.stream.Location;
+import java.awt.image.BufferedImage;
+
 /**
  * Represents a dolphin, a water-dwelling animal that extends the WaterAnimal class.
  */
@@ -29,8 +32,8 @@ public class Dolphin extends WaterAnimal {
      * @param diveDept      The dive depth of the dolphin.
      * @param waterType     The type of water the dolphin inhabits.
      */
-    public Dolphin(int x,int y,double totalDistance, Animal.gender gender, String name, double weight, double speed, Medal[] medals, double diveDept, WaterType waterType) {
-        super(x,y,totalDistance, gender, name, weight, speed, medals, diveDept);
+    public Dolphin(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, Location loc, BufferedImage img1, BufferedImage img2, BufferedImage img3, BufferedImage img4, double diveDept, WaterType waterType) {
+        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4, diveDept);
         this.waterType = waterType;
     }
     public Dolphin()

@@ -2,6 +2,9 @@ package animals;
 
 import Olympics.Medal;
 
+import javax.xml.stream.Location;
+import java.awt.image.BufferedImage;
+
 /**
  * Represents a dog, a terrestrial animal that extends the TerrestrialAnimals class.
  */
@@ -21,8 +24,8 @@ public class Dog extends TerrestrialAnimals {
      * @param noLegs        The number of legs of the dog.
      * @param breed         The breed of the dog.
      */
-    public Dog(int x,int y,double totalDistance, gender gender, String name, double weight, double speed, Medal[] medals, int noLegs, String breed) {
-        super(x,y,totalDistance, gender, name, weight, speed, medals, noLegs);
+    public Dog(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, Location loc, BufferedImage img1, BufferedImage img2, BufferedImage img3, BufferedImage img4, int noLegs, String breed) {
+        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4, noLegs);
         this.breed = breed;
     }
     public Dog()

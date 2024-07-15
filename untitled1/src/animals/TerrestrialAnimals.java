@@ -3,6 +3,9 @@ package animals;
 import Olympics.Medal;
 import mobility.Point;
 
+import javax.xml.stream.Location;
+import java.awt.image.BufferedImage;
+
 /**
  * Represents a terrestrial animal that extends the Animal class.
  */
@@ -21,14 +24,14 @@ public  class TerrestrialAnimals extends Animal implements ITerrestrailAnimal {
      * @param medals        The array of medals won by the animal.
      * @param noLegs        The number of legs of the terrestrial animal.
      */
-    public TerrestrialAnimals(int x,int y, double totalDistance, Animal.gender gender, String name, double weight, double speed, Medal[] medals, int noLegs) {
+    public TerrestrialAnimals(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, Location loc, BufferedImage img1, BufferedImage img2, BufferedImage img3, BufferedImage img4, int noLegs) {
         if (x < 0 || y < 0)
         {
             System.out.println("X AND Y are negative,default coordinates were set");
             x = 0;
             y = 20;
         }
-        super(new Point(x, y), totalDistance, gender, name, weight, speed, medals);
+        super(new Point(x, y), totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4);
         this.noLegs = noLegs;
     }
     public TerrestrialAnimals()

@@ -2,6 +2,9 @@ package animals;
 
 import Olympics.Medal;
 
+import javax.xml.stream.Location;
+import java.awt.image.BufferedImage;
+
 /**
  * Represents a pigeon, an air-dwelling animal that extends the AirAnimal class.
  */
@@ -21,8 +24,8 @@ public class Pigeon extends AirAnimal {
      * @param wingspan      The wingspan of the pigeon.
      * @param family        The family of the pigeon.
      */
-    public Pigeon(int x,int y,double totalDistance, Animal.gender gender, String name, double weight, double speed, Medal[] medals, double wingspan, String family) {
-        super(x,y,totalDistance, gender, name, weight, speed, medals, wingspan);
+    public Pigeon(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, Location loc, BufferedImage img1, BufferedImage img2, BufferedImage img3, BufferedImage img4, double wingspan, String family) {
+        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4, wingspan);
         this.family = family;
     }
     public Pigeon()
