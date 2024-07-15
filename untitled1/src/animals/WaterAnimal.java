@@ -6,7 +6,7 @@ import mobility.Point;
 /**
  * Represents a water-dwelling animal that extends the Animal class.
  */
-public abstract class WaterAnimal extends Animal {
+public  class WaterAnimal extends Animal implements IWaterAnimal {
 
     /**
      * Constant defining the maximum depth for diving.
@@ -40,7 +40,6 @@ public abstract class WaterAnimal extends Animal {
     public WaterAnimal()
     {
         super();
-
         this.diveDept = 0;
     }
 
@@ -86,5 +85,17 @@ public abstract class WaterAnimal extends Animal {
     /**
      * Method to get the sound of the water animal.
      */
-    abstract protected String getSound();
+    protected String getSound(){
+        return "water.wav";
+    };
+    public double getDiveDept() {
+        return diveDept;
+    }
+
+    @Override
+    public double getDiveDeap() {
+        return diveDept;
+    }
+
+
 }

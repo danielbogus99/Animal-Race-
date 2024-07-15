@@ -6,7 +6,7 @@ import mobility.Point;
 /**
  * Represents a terrestrial animal that extends the Animal class.
  */
-public abstract class TerrestrialAnimals extends Animal {
+public  class TerrestrialAnimals extends Animal implements ITerrestrailAnimal {
 
     private int noLegs;
 
@@ -67,5 +67,12 @@ public abstract class TerrestrialAnimals extends Animal {
     /**
      * Method to get the sound of the terrestrial animal.
      */
-    abstract protected String getSound();
+    protected String getSound(){
+        return "";
+    };
+
+    @Override
+    public int getNumberOfLegs() {
+        return noLegs;
+    }
 }

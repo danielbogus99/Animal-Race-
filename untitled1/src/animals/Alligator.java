@@ -1,13 +1,16 @@
 package animals;
 
 import Olympics.Medal;
+import mobility.Point;
 
 /**
  * Represents an alligator, a water-dwelling animal that extends the WaterAnimal class.
  */
-public class Alligator extends WaterAnimal implements IReptile{
+public class Alligator extends Animal implements IReptile,IWaterAnimal,ITerrestrailAnimal{
 
     private String AreaOfLiving;
+    private TerrestrialAnimals terrestrialAnimals;
+    private WaterAnimal waterAnimal;
 
     /**
      * Constructor to initialize an Alligator object.
@@ -21,13 +24,18 @@ public class Alligator extends WaterAnimal implements IReptile{
      * @param diveDept      The dive depth of the alligator.
      * @param AreaOfLiving  The area of living of the alligator.
      */
-    public Alligator(int x,int y,double totalDistance, Animal.gender gender, String name, double weight, double speed, Medal[] medals, double diveDept, String AreaOfLiving) {
-        super(x,y,totalDistance, gender, name, weight, speed, medals, diveDept);
+    public Alligator(int x,int y,double totalDistance, Animal.gender gender, String name, double weight, double speed, Medal[] medals, double diveDept,int noLegs, String AreaOfLiving)
+    {
+        super(new Point(x,y),totalDistance,gender,name,weight,speed,medals);
+        waterAnimal = new WaterAnimal(x,y,totalDistance, gender, name, weight, speed, medals,diveDept);
+        terrestrialAnimals = new TerrestrialAnimals(x,y,totalDistance, gender, name, weight, speed, medals,noLegs);
         this.AreaOfLiving = AreaOfLiving;
     }
     public Alligator()
     {
         super();
+        waterAnimal = new WaterAnimal();
+        terrestrialAnimals = new TerrestrialAnimals();
         AreaOfLiving = "";
     }
 
@@ -45,7 +53,7 @@ public class Alligator extends WaterAnimal implements IReptile{
      */
     @Override
     public String toString() {
-        return STR."Alligator\{super.toString()}, areaOfLiving=\{AreaOfLiving}}";
+        return STR."Alligator\{super.toString()}noLegs=\{getNumberOfLegs()},DiveDeap=\{getDiveDeap()}, areaOfLiving=\{AreaOfLiving}}";
     }
 
     /**
@@ -70,5 +78,26 @@ public class Alligator extends WaterAnimal implements IReptile{
         }
         addSpeed(speeds);
         return true;
+    }
+
+    @Override
+    public int getNumberOfLegs()
+    {
+        return terrestrialAnimals.getNumberOfLegs();
+    }
+
+    @Override
+    public double getDiveDeap() {
+        return waterAnimal.getDiveDept();
+    }
+
+    @Override
+    public boolean Dive(double distanceDive)
+    {
+        if(waterAnimal.Dive(distanceDive))
+        {
+            return true;
+        }
+        return false;
     }
 }

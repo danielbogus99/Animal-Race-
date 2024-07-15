@@ -12,7 +12,9 @@ public class Sys
     public static void main(String[] args)
     {
         Scanner s = new Scanner(System.in);
-
+        Medal[] medal = new Medal[]{new Medal()};
+        Animal k = new Alligator(25,45,45, Animal.gender.Male,"dasdsa0",456,456,medal,456,45,"Dasdsa");
+        System.out.println(k);
         int n;
         while (true) {
             try {
@@ -218,7 +220,7 @@ public class Sys
         System.out.println("Please enter Area of the Alligator: ");
         Scanner s2 = new Scanner(System.in);
         AreaOfLiving = s2.nextLine();
-        animals[size] = new Alligator(x,y,0, gender, name, weight, speed, medals, diveDepth, AreaOfLiving);
+        animals[size] = new Alligator(x,y,0, gender, name, weight, speed, medals, diveDepth,45, AreaOfLiving);
     }
     /**
      * Creates a Dolphin object and adds it to the animals array.
@@ -450,13 +452,13 @@ public class Sys
             {
                 case "1":
                 {
-                    poisonous = Snake.Poisonous.POISONOUS;
+                    poisonous = Snake.Poisonous.HIGH;
                     validInput = true;
                     break;
                 }
                 case "2":
                 {
-                    poisonous = Snake.Poisonous.NON_POISONOUS;
+                    poisonous = Snake.Poisonous.LOW;
                     validInput = true;
                     break;
                 }
