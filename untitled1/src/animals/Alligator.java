@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 /**
  * Represents an alligator, a water-dwelling animal that extends the WaterAnimal class.
  */
-public class Alligator extends Animal implements IReptile,IWaterAnimal,ITerrestrailAnimal{
+public class Alligator extends WaterAnimal implements IReptile,ITerrestrailAnimal{
 
     private String AreaOfLiving;
     private TerrestrialAnimals terrestrialAnimals;
@@ -29,15 +29,13 @@ public class Alligator extends Animal implements IReptile,IWaterAnimal,ITerrestr
      */
     public Alligator(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, Location loc, BufferedImage img1, BufferedImage img2, BufferedImage img3, BufferedImage img4, double diveDept, int noLegs, String AreaOfLiving)
     {
-        super(new Point(x, y), totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4);
-        waterAnimal = new WaterAnimal(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4,diveDept);
+        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4,diveDept);
         terrestrialAnimals = new TerrestrialAnimals(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4,noLegs);
         this.AreaOfLiving = AreaOfLiving;
     }
     public Alligator()
     {
         super();
-        waterAnimal = new WaterAnimal();
         terrestrialAnimals = new TerrestrialAnimals();
         AreaOfLiving = "";
     }
@@ -56,7 +54,7 @@ public class Alligator extends Animal implements IReptile,IWaterAnimal,ITerrestr
      */
     @Override
     public String toString() {
-        return STR."Alligator\{super.toString()}noLegs=\{getNumberOfLegs()},DiveDeap=\{getDiveDeap()}, areaOfLiving=\{AreaOfLiving}}";
+        return STR."Alligator\{super.toString()}noLegs=\{getNumberOfLegs()}, areaOfLiving=\{AreaOfLiving}}";
     }
 
     /**
@@ -89,18 +87,5 @@ public class Alligator extends Animal implements IReptile,IWaterAnimal,ITerrestr
         return terrestrialAnimals.getNumberOfLegs();
     }
 
-    @Override
-    public double getDiveDeap() {
-        return waterAnimal.getDiveDept();
-    }
 
-    @Override
-    public boolean Dive(double distanceDive)
-    {
-        if(waterAnimal.Dive(distanceDive))
-        {
-            return true;
-        }
-        return false;
-    }
 }

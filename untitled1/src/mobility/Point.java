@@ -1,12 +1,10 @@
 package mobility;
 
-import Graphics.IClonable;
-
 /**
  * The Point class represents a point in a 2D coordinate system.
  * It includes the x and y coordinates of the point.
  */
-public class Point implements IClonable {
+public class Point {
     private int x;
     private int y;
 

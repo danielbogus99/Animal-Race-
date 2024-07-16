@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 /**
  * Represents a water-dwelling animal that extends the Animal class.
  */
-public  class WaterAnimal extends Animal implements IWaterAnimal {
+public abstract class WaterAnimal extends Animal {
 
     /**
      * Constant defining the maximum depth for diving.
@@ -88,17 +88,9 @@ public  class WaterAnimal extends Animal implements IWaterAnimal {
     /**
      * Method to get the sound of the water animal.
      */
-    protected String getSound(){
-        return "water.wav";
-    };
-    public double getDiveDept() {
-        return diveDept;
-    }
+    abstract protected String getSound();
 
-    @Override
-    public double getDiveDeap() {
-        return diveDept;
-    }
+
 
 
 }

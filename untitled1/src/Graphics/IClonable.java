@@ -1,6 +1,5 @@
 package Graphics;
-
-public interface IClonable
+public interface IClonable  extends Cloneable
 {
 
 }

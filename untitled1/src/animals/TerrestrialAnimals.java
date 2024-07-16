@@ -78,4 +78,7 @@ public  class TerrestrialAnimals extends Animal implements ITerrestrailAnimal {
     public int getNumberOfLegs() {
         return noLegs;
     }
+
+
+
 }

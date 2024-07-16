@@ -1,8 +1,9 @@
 package animals;
 
-import Graphics.IClonable;
 import Graphics.IDrawable;
 import Graphics.IMoveable;
+import Graphics.IAnimal;
+import Graphics.IClonable;
 import mobility.ILocatable;
 import mobility.Mobile;
 import mobility.Point;
@@ -17,7 +18,7 @@ import java.util.Arrays;
 /**
  * Represents an animal with various attributes.
  */
-public abstract class Animal extends Mobile implements ILocatable, IMoveable, IDrawable, IClonable {
+public abstract class Animal extends Mobile implements ILocatable, IMoveable, IDrawable,IAnimal, IClonable {
 
     private String name;
     private double weight;
@@ -26,7 +27,7 @@ public abstract class Animal extends Mobile implements ILocatable, IMoveable, ID
     private gender gender;
     private IMoveable Imoveable;
     private IDrawable Idrawable;
-    private IClonable Clonable;
+    private IClonable cloneable;
     private int size;
     private int id;
     private Location loc;
@@ -92,7 +93,6 @@ public abstract class Animal extends Mobile implements ILocatable, IMoveable, ID
         this.img4 = null;
     }
 
-
     /**
      * Method to get the sound of the animal.
      */
@@ -156,6 +156,7 @@ public abstract class Animal extends Mobile implements ILocatable, IMoveable, ID
     public int getSpeed() {
         return speed;
     }
+
     protected void addSpeed(int speed) {
         this.speed += speed;
     }
@@ -216,5 +217,9 @@ public abstract class Animal extends Mobile implements ILocatable, IMoveable, ID
     }
     public void drawObject(Graphics g) {
 
+    }
+    public boolean eat(int energy)
+    {
+        return false;
     }
 }
