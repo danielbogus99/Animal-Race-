@@ -14,7 +14,7 @@ class ImagePanel extends JPanel {
     {
         try
         {
-            backgroundImage = ImageIO.read(new File("C:\\Users\\A\\Desktop\\graphics2\\competitionBackground.png"));
+            backgroundImage = ImageIO.read(new File("src/graphics2/competitionBackground.png"));
         } catch (IOException e)
         {
             e.printStackTrace();

@@ -2,10 +2,8 @@ package Graphics;
 import javax.swing.*;
 import java.awt.*;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 class CompetitionPanel extends JPanel {
 
 
@@ -17,19 +15,7 @@ class CompetitionPanel extends JPanel {
     private JButton exit;
 
     public CompetitionPanel() {
-
-
-
-
-
-
-        //JPanel buttonPanel = new JPanel();
-
-        System.out.println("Competition Panel");
         setLayout(new GridLayout(1,0));
-
-
-
 
         addCompetitionButton = new JButton("Add Competition");
         addAnimal = new JButton("Add Animal");
@@ -43,23 +29,38 @@ class CompetitionPanel extends JPanel {
         add(eat);
         add(info);
         add(exit);
-//        addButtonToPanel(buttonPanel, addCompetitionButton);
-//        addButtonToPanel(buttonPanel, addAnimal);
-//        addButtonToPanel(buttonPanel, clear);
-//        addButtonToPanel(buttonPanel, eat);
-//        addButtonToPanel(buttonPanel, info);
-//        addButtonToPanel(buttonPanel, exit);
-//
-//        add(buttonPanel, BorderLayout.SOUTH);
+        exit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        addCompetitionButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        addAnimal.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {}
+        });
+        clear.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        eat.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        info.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
 
 
     }
 
-
-
-    private void addButtonToPanel(JPanel panel, JButton button) {
-        panel.add(button);
-    }
 
 
 }
