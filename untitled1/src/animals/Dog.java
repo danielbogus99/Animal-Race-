@@ -24,8 +24,8 @@ public class Dog extends TerrestrialAnimals {
      * @param noLegs        The number of legs of the dog.
      * @param breed         The breed of the dog.
      */
-    public Dog(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, Location loc, BufferedImage img1, BufferedImage img2, BufferedImage img3, BufferedImage img4, int noLegs, String breed) {
-        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4, noLegs);
+    public Dog(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, int noLegs, String breed) {
+        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter, noLegs);
         this.breed = breed;
     }
     public Dog()
@@ -73,5 +73,9 @@ public class Dog extends TerrestrialAnimals {
         Dog other = (Dog) obj;
         return super.equals(obj) &&
                 breed.equals(other.breed);
+    }
+    public String animalType()
+    {
+        return "Dog";
     }
 }

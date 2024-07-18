@@ -34,6 +34,8 @@ public abstract class Animal extends Mobile implements ILocatable, IMoveable, ID
     private Orientation orien ;
     private int maxEnergy;
     private int energyPerMeter;
+    private int CurrentEnergy;
+
     //private CompetitionPanel pan;
     private BufferedImage img1, img2, img3, img4;
 
@@ -51,13 +53,10 @@ public abstract class Animal extends Mobile implements ILocatable, IMoveable, ID
      * @param maxEnergy     The maximum energy of the animal.
      * @param energyPerMeter The energy per meter for the animal.
      * @param //pan           The competition panel associated with the animal.
-     * @param loc           The location of the animal.
-     * @param img1          The first image of the animal.
-     * @param img2          The second image of the animal.
-     * @param img3          The third image of the animal.
-     * @param img4          The fourth image of the animal.
+     * @param //loc           The location of the animal.
+
      */
-    public Animal(Point position, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, Location loc, BufferedImage img1, BufferedImage img2, BufferedImage img3, BufferedImage img4) {
+    public Animal(Point position, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter) {
         super(position, totalDistance);
         this.weight = weight;
         this.speed = speed;
@@ -67,12 +66,14 @@ public abstract class Animal extends Mobile implements ILocatable, IMoveable, ID
         this.orien = orien;
         this.maxEnergy = maxEnergy;
         this.energyPerMeter = energyPerMeter;
+        this.size = 65;
         //this.pan = pan;
         this.loc = loc;
         this.img1 = img1;
         this.img2 = img2;
         this.img3 = img3;
         this.img4 = img4;
+        this.CurrentEnergy = maxEnergy;
     }
 
     public Animal() {
@@ -82,7 +83,7 @@ public abstract class Animal extends Mobile implements ILocatable, IMoveable, ID
         this.medals = null;
         this.gender = gender.Male;
         this.name = "";
-        this.orien = Orientation.NORTH; // Default value
+        this.orien = Orientation.EAST; // Default value
         this.maxEnergy = 0;
         this.energyPerMeter = 0;
         //this.pan = null;
@@ -91,6 +92,7 @@ public abstract class Animal extends Mobile implements ILocatable, IMoveable, ID
         this.img2 = null;
         this.img3 = null;
         this.img4 = null;
+        this.CurrentEnergy = maxEnergy;
     }
 
     /**
@@ -142,7 +144,6 @@ public abstract class Animal extends Mobile implements ILocatable, IMoveable, ID
     public double getWeight() {
         return weight;
     }
-
 
     public String getAnimaleName() {
         return name;
@@ -197,29 +198,43 @@ public abstract class Animal extends Mobile implements ILocatable, IMoveable, ID
                 other.orien == this.orien &&
                 other.maxEnergy == this.maxEnergy &&
                 other.energyPerMeter == this.energyPerMeter &&
-                (other.loc == this.loc || (other.loc != null && other.loc.equals(this.loc))) &&
-                (other.img1 == this.img1 || (other.img1 != null && other.img1.equals(this.img1))) &&
-                (other.img2 == this.img2 || (other.img2 != null && other.img2.equals(this.img2))) &&
-                (other.img3 == this.img3 || (other.img3 != null && other.img3.equals(this.img3))) &&
-                (other.img4 == this.img4 || (other.img4 != null && other.img4.equals(this.img4)));
+                (other.loc == this.loc || (other.loc != null && other.loc.equals(this.loc)));
+
     }
 
 
     public enum Orientation {
         NORTH, EAST, SOUTH, WEST
     }
-    /**
-     * Enumeration representing gender of the animal.
-     */
     public enum gender {Male, Female, Hermaphrodite}
-    public void loadImages(String nm) {
+    public String animalType()
+    {
+        return "Animal";
+    }
+    public void loadImages(String nm)
+    {
 
     }
-    public void drawObject(Graphics g) {
+    public void drawObject(Graphics g)
+    {
 
     }
     public boolean eat(int energy)
     {
-        return false;
+        if(energy+CurrentEnergy > maxEnergy)
+        {
+            CurrentEnergy = maxEnergy;
+            return true;
+        }
+        CurrentEnergy += energy;
+        return true;
+
+    }
+    public void setOrientation(Orientation orientation) {
+        this.orien = orientation;
+    }
+
+    public Orientation getOrientation() {
+        return orien;
     }
 }

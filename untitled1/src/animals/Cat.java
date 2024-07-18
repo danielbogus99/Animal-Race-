@@ -24,8 +24,8 @@ public class Cat extends TerrestrialAnimals {
      * @param noLegs        The number of legs of the cat.
      * @param Castrated     Whether the cat is castrated or not.
      */
-    public Cat(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, Location loc, BufferedImage img1, BufferedImage img2, BufferedImage img3, BufferedImage img4, int noLegs, boolean Castrated) {
-        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4, noLegs);
+    public Cat(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, int noLegs, boolean Castrated) {
+        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter, noLegs);
         this.Castrated = Castrated;
     }
     public Cat()
@@ -64,5 +64,9 @@ public class Cat extends TerrestrialAnimals {
     @Override
     public String toString() {
         return STR."Cat\{super.toString()}, Castrated=\{Castrated}}";
+    }
+    public String animalType()
+    {
+        return "Cat";
     }
 }

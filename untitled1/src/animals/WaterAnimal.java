@@ -29,7 +29,7 @@ public abstract class WaterAnimal extends Animal {
      * @param medals        The array of medals won by the animal.
      * @param diveDept      The initial depth of diving for the water animal.
      */
-    public WaterAnimal(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, Location loc, BufferedImage img1, BufferedImage img2, BufferedImage img3, BufferedImage img4, double diveDept)
+    public WaterAnimal(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double diveDept)
     {
         if (x < 0 || y < 0)
         {
@@ -37,7 +37,7 @@ public abstract class WaterAnimal extends Animal {
             x = 50;
             y = 0;
         }
-        super(new Point(x, y), totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4);
+        super(new Point(x, y), totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter);
         this.diveDept = diveDept;
     }
     public WaterAnimal()
@@ -89,6 +89,10 @@ public abstract class WaterAnimal extends Animal {
      * Method to get the sound of the water animal.
      */
     abstract protected String getSound();
+    public String animalType()
+    {
+        return "WaterAnimal";
+    }
 
 
 

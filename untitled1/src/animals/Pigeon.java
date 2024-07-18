@@ -24,8 +24,8 @@ public class Pigeon extends AirAnimal {
      * @param wingspan      The wingspan of the pigeon.
      * @param family        The family of the pigeon.
      */
-    public Pigeon(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, Location loc, BufferedImage img1, BufferedImage img2, BufferedImage img3, BufferedImage img4, double wingspan, String family) {
-        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4, wingspan);
+    public Pigeon(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double wingspan, String family) {
+        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter, wingspan);
         this.family = family;
     }
     public Pigeon()
@@ -64,5 +64,9 @@ public class Pigeon extends AirAnimal {
         Pigeon other = (Pigeon) obj;
         return super.equals(obj) &&
                 other.family.equals(family);
+    }
+    public String animalType()
+    {
+        return "Pigeon";
     }
 }

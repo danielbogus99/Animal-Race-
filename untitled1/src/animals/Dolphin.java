@@ -32,8 +32,8 @@ public class Dolphin extends WaterAnimal {
      * @param diveDept      The dive depth of the dolphin.
      * @param waterType     The type of water the dolphin inhabits.
      */
-    public Dolphin(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, Location loc, BufferedImage img1, BufferedImage img2, BufferedImage img3, BufferedImage img4, double diveDept, WaterType waterType) {
-        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4, diveDept);
+    public Dolphin(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double diveDept, WaterType waterType) {
+        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter, diveDept);
         this.waterType = waterType;
     }
     public Dolphin()
@@ -72,5 +72,9 @@ public class Dolphin extends WaterAnimal {
         Dolphin other = (Dolphin) obj;
         return super.equals(obj) &&
                 other.waterType == waterType;
+    }
+    public String animalType()
+    {
+        return "Dolphin";
     }
 }

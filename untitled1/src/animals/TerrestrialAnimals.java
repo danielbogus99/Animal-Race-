@@ -13,25 +13,15 @@ public  class TerrestrialAnimals extends Animal implements ITerrestrailAnimal {
 
     private int noLegs;
 
-    /**
-     * Constructor to initialize a TerrestrialAnimals object.
-     *
-     * @param totalDistance The total distance covered by the animal.
-     * @param gender        The gender of the animal.
-     * @param name          The name of the animal.
-     * @param weight        The weight of the animal.
-     * @param speed         The speed of the animal.
-     * @param medals        The array of medals won by the animal.
-     * @param noLegs        The number of legs of the terrestrial animal.
-     */
-    public TerrestrialAnimals(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, Location loc, BufferedImage img1, BufferedImage img2, BufferedImage img3, BufferedImage img4, int noLegs) {
+
+    public TerrestrialAnimals(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, int noLegs) {
         if (x < 0 || y < 0)
         {
             System.out.println("X AND Y are negative,default coordinates were set");
             x = 0;
             y = 20;
         }
-        super(new Point(x, y), totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4);
+        super(new Point(x, y), totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter);
         this.noLegs = noLegs;
     }
     public TerrestrialAnimals()
@@ -79,6 +69,9 @@ public  class TerrestrialAnimals extends Animal implements ITerrestrailAnimal {
         return noLegs;
     }
 
-
+    public String animalType()
+    {
+        return "TerrestrialAnimals";
+    }
 
 }

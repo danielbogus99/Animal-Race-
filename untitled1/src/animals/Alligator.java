@@ -27,10 +27,10 @@ public class Alligator extends WaterAnimal implements IReptile,ITerrestrailAnima
      * @param diveDept      The dive depth of the alligator.
      * @param AreaOfLiving  The area of living of the alligator.
      */
-    public Alligator(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, Location loc, BufferedImage img1, BufferedImage img2, BufferedImage img3, BufferedImage img4, double diveDept, int noLegs, String AreaOfLiving)
+    public Alligator(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double diveDept, int noLegs, String AreaOfLiving)
     {
-        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4,diveDept);
-        terrestrialAnimals = new TerrestrialAnimals(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4,noLegs);
+        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,diveDept);
+        terrestrialAnimals = new TerrestrialAnimals(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,noLegs);
         this.AreaOfLiving = AreaOfLiving;
     }
     public Alligator()
@@ -85,6 +85,10 @@ public class Alligator extends WaterAnimal implements IReptile,ITerrestrailAnima
     public int getNumberOfLegs()
     {
         return terrestrialAnimals.getNumberOfLegs();
+    }
+    public String animalType()
+    {
+        return "Alligator";
     }
 
 

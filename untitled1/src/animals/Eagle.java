@@ -24,8 +24,8 @@ public class Eagle extends AirAnimal {
      * @param wingspan         The wingspan of the eagle.
      * @param altitudeOfFlight The altitude of flight of the eagle.
      */
-    public Eagle(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, Location loc, BufferedImage img1, BufferedImage img2, BufferedImage img3, BufferedImage img4, double wingspan, double altitudeOfFlight) {
-        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,loc,img1,img2,img3,img4, wingspan);
+    public Eagle(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double wingspan, double altitudeOfFlight) {
+        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter, wingspan);
         this.altitudeOfFlight = altitudeOfFlight;
     }
     public Eagle()
@@ -63,5 +63,9 @@ public class Eagle extends AirAnimal {
         Eagle other = (Eagle) obj;
         return super.equals(obj) &&
                 other.altitudeOfFlight == altitudeOfFlight;
+    }
+    public String animalType()
+    {
+        return "Eagle";
     }
 }
