@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CompetitionFrame extends JFrame {
-
     private CompetitionPanel competitionPanel;
     private ImagePanel imagePanel;
 

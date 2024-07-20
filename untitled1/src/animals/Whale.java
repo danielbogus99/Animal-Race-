@@ -2,13 +2,17 @@ package animals;
 
 import Olympics.Medal;
 
-
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 
 public class Whale extends WaterAnimal {
 
     private String foodType;
-
+    private BufferedImage img1;
 
     public Whale(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double diveDept, String foodType) {
         super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter, diveDept);
@@ -19,30 +23,14 @@ public class Whale extends WaterAnimal {
         super();
         this.foodType = "";
     }
-
-    /**
-     * Method to make the whale produce its sound.
-     */
     protected String getSound() {
        return  "Splash";
     }
 
-    /**
-     * Override of the toString method to provide a string representation of the Whale object.
-     *
-     * @return A string representation of the Whale object.
-     */
     @Override
     public String toString() {
         return STR."Whale\{super.toString()}, foodType=\{foodType}}";
     }
-
-    /**
-     * Override of the equals method to compare if two Whale objects are equal.
-     *
-     * @param obj The object to compare with.
-     * @return True if the objects are equal, false otherwise.
-     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -54,5 +42,20 @@ public class Whale extends WaterAnimal {
     public String animalType()
     {
         return "Whale";
+    }
+    public void drawObject(Graphics g)
+    {
+        switch (getOrientation()) {
+            case EAST:
+                g.drawImage(img1, location.getX(), location.getY() - size / 10, size * 2, size,getPan());
+                break;
+        }
+    }
+    public void loadImages(String nm) {
+        try {
+            img1 = ImageIO.read(new File("untitled1/src/graphics2/whale2E.png"));
+        } catch (IOException e) {
+            System.out.println("Cannot load image: " + nm);
+        }
     }
 }

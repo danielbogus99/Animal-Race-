@@ -4,6 +4,7 @@ import Olympics.Medal;
 import mobility.Point;
 
 import javax.xml.stream.Location;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
@@ -73,6 +74,13 @@ public abstract class AirAnimal extends Animal {
     public String animalType()
     {
         return "AirAnimals";
+    }
+    public String animalCategory()
+    {
+        return "Air";
+    }
+    public void drawObject(Graphics g) {
+        super.drawObject(g);
     }
     abstract protected String getSound();
 }

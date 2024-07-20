@@ -2,8 +2,12 @@ package animals;
 
 import Olympics.Medal;
 
+import javax.imageio.ImageIO;
 import javax.xml.stream.Location;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Represents a pigeon, an air-dwelling animal that extends the AirAnimal class.
@@ -11,6 +15,7 @@ import java.awt.image.BufferedImage;
 public class Pigeon extends AirAnimal {
 
     private String family;
+    private BufferedImage img1;
 
     /**
      * Constructor to initialize a Pigeon object.
@@ -68,5 +73,20 @@ public class Pigeon extends AirAnimal {
     public String animalType()
     {
         return "Pigeon";
+    }
+    public void drawObject(Graphics g)
+    {
+        switch (getOrientation()) {
+            case EAST:
+                g.drawImage(img1, location.getX(), location.getY() - size / 10, size * 2, size,getPan());
+                break;
+        }
+    }
+    public void loadImages(String nm) {
+        try {
+            img1 = ImageIO.read(new File("untitled1/src/graphics2/pigeon.png"));
+        } catch (IOException e) {
+            System.out.println("Cannot load image: " + nm);
+        }
     }
 }

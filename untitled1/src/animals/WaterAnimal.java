@@ -4,6 +4,7 @@ import Olympics.Medal;
 import mobility.Point;
 
 import javax.xml.stream.Location;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
@@ -93,8 +94,12 @@ public abstract class WaterAnimal extends Animal {
     {
         return "WaterAnimal";
     }
-
-
-
+    public String animalCategory()
+    {
+        return "Water";
+    }
+    public void drawObject(Graphics g) {
+        super.drawObject(g);
+    }
 
 }

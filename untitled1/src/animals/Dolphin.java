@@ -2,8 +2,12 @@ package animals;
 
 import Olympics.Medal;
 
+import javax.imageio.ImageIO;
 import javax.xml.stream.Location;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Represents a dolphin, a water-dwelling animal that extends the WaterAnimal class.
@@ -11,7 +15,7 @@ import java.awt.image.BufferedImage;
 public class Dolphin extends WaterAnimal {
 
     private WaterType waterType;
-
+    private BufferedImage img1;
     /**
      * Enum defining the type of water the dolphin inhabits.
      */
@@ -76,5 +80,20 @@ public class Dolphin extends WaterAnimal {
     public String animalType()
     {
         return "Dolphin";
+    }
+    public void drawObject(Graphics g)
+    {
+        switch (getOrientation()) {
+            case EAST:
+                g.drawImage(img1, location.getX(), location.getY() - size / 10, size * 2, size,getPan());
+                break;
+        }
+    }
+    public void loadImages(String nm) {
+        try {
+            img1 = ImageIO.read(new File("untitled1/src/graphics2/dolphin3E.png"));
+        } catch (IOException e) {
+            System.out.println("Cannot load image: " + nm);
+        }
     }
 }

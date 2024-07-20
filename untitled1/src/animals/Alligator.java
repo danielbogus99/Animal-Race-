@@ -3,8 +3,12 @@ package animals;
 import Olympics.Medal;
 import mobility.Point;
 
+import javax.imageio.ImageIO;
 import javax.xml.stream.Location;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Represents an alligator, a water-dwelling animal that extends the WaterAnimal class.
@@ -14,7 +18,7 @@ public class Alligator extends WaterAnimal implements IReptile,ITerrestrailAnima
     private String AreaOfLiving;
     private TerrestrialAnimals terrestrialAnimals;
     private WaterAnimal waterAnimal;
-
+    private BufferedImage img1;
     /**
      * Constructor to initialize an Alligator object.
      *
@@ -27,14 +31,12 @@ public class Alligator extends WaterAnimal implements IReptile,ITerrestrailAnima
      * @param diveDept      The dive depth of the alligator.
      * @param AreaOfLiving  The area of living of the alligator.
      */
-    public Alligator(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double diveDept, int noLegs, String AreaOfLiving)
-    {
+    public Alligator(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double diveDept, int noLegs, String AreaOfLiving) {
         super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,diveDept);
         terrestrialAnimals = new TerrestrialAnimals(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,noLegs);
         this.AreaOfLiving = AreaOfLiving;
     }
-    public Alligator()
-    {
+    public Alligator() {
         super();
         terrestrialAnimals = new TerrestrialAnimals();
         AreaOfLiving = "";
@@ -47,11 +49,7 @@ public class Alligator extends WaterAnimal implements IReptile,ITerrestrailAnima
         return "Roar";
     }
 
-    /**
-     * Override of the toString method to provide a string representation of the Alligator object.
-     *
-     * @return A string representation of the Alligator object.
-     */
+
     @Override
     public String toString() {
         return STR."Alligator\{super.toString()}noLegs=\{getNumberOfLegs()}, areaOfLiving=\{AreaOfLiving}}";
@@ -91,5 +89,19 @@ public class Alligator extends WaterAnimal implements IReptile,ITerrestrailAnima
         return "Alligator";
     }
 
-
+    public void drawObject(Graphics g)
+    {
+        switch (getOrientation()) {
+            case EAST:
+                g.drawImage(img1, location.getX(), location.getY() - size / 10, size * 2, size,getPan());
+                break;
+        }
+    }
+    public void loadImages(String nm) {
+        try {
+            img1 = ImageIO.read(new File("untitled1/src/graphics2/alligator2E.png"));
+        } catch (IOException e) {
+            System.out.println("Cannot load image: " + nm);
+        }
+    }
 }

@@ -6,6 +6,6 @@ public interface IMoveable
 {
     public String getAnimaleName();
     public int getSpeed();
-    public double move(Point p);
+    public boolean move(Point p);
 
 }

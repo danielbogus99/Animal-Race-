@@ -5,11 +5,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Scanner;
+
 
 public class AddAnimalDialog extends JDialog
 {
-    private String selectedAnimal = null;
     private Animal selectedAnimalObject = null;
     public AddAnimalDialog(JFrame parent, String raceType) {
         super(parent, "Animal Selection", true); // Make the dialog modal
@@ -66,7 +65,6 @@ public class AddAnimalDialog extends JDialog
                         {
                             throw new IllegalArgumentException("You can't select a dog for a " + raceType + " race");
                         }
-                        selectedAnimal = "Dog";
                         selectedAnimalObject = CreateDog();
 
                     }
@@ -76,7 +74,6 @@ public class AddAnimalDialog extends JDialog
                         {
                             throw new IllegalArgumentException("You can't select a cat for a " + raceType + " race");
                         }
-                        selectedAnimal = "Cat";
                         selectedAnimalObject = CreateCat();
                     } 
                     else if (alligatorButton.isSelected())
@@ -85,7 +82,7 @@ public class AddAnimalDialog extends JDialog
                         {
                             throw new IllegalArgumentException("You can't select an alligator for an " + raceType + " race");
                         }
-                        selectedAnimal = "Alligator";
+
                         selectedAnimalObject = CreateAlligator();
                     } 
                     else if (dolphinButton.isSelected())
@@ -94,7 +91,7 @@ public class AddAnimalDialog extends JDialog
                         {
                             throw new IllegalArgumentException("You can't select a dolphin for a " + raceType + " race");
                         }
-                        selectedAnimal = "Dolphin";
+
                         selectedAnimalObject = CreateDolphin();
                     }
                     else if (whaleButton.isSelected())
@@ -103,7 +100,6 @@ public class AddAnimalDialog extends JDialog
                         {
                             throw new IllegalArgumentException("You can't select a whale for a " + raceType + " race");
                         }
-                        selectedAnimal = "Whale";
                         selectedAnimalObject = CreateWhale();
                     } else if (eagleButton.isSelected())
                     {
@@ -111,7 +107,7 @@ public class AddAnimalDialog extends JDialog
                         {
                             throw new IllegalArgumentException("You can't select an eagle for an " + raceType + " race");
                         }
-                        selectedAnimal = "Eagle";
+
                         selectedAnimalObject = CreateEagle();
                     } else if (pigeonButton.isSelected())
                     {
@@ -119,8 +115,7 @@ public class AddAnimalDialog extends JDialog
                         {
                             throw new IllegalArgumentException("You can't select a pigeon for a " + raceType + " race");
                         }
-                        selectedAnimal = "Pigeon";
-                        
+
                         selectedAnimalObject = CreatePigeon();
                     } else if (snakeButton.isSelected())
                     {
@@ -128,7 +123,6 @@ public class AddAnimalDialog extends JDialog
                         {
                             throw new IllegalArgumentException("You can't select a snake for a " + raceType + " race");
                         }
-                        selectedAnimal = "Snake";
                         selectedAnimalObject = CreateSnake();
                     }
                     dispose();
@@ -140,9 +134,6 @@ public class AddAnimalDialog extends JDialog
         });
 
         setVisible(true);
-    }
-    public String getSelectedAnimal() {
-        return selectedAnimal;
     }
     public Animal getSelectedAnimalObject() {
         return selectedAnimalObject;

@@ -4,6 +4,7 @@ import Olympics.Medal;
 import mobility.Point;
 
 import javax.xml.stream.Location;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
@@ -73,5 +74,16 @@ public  class TerrestrialAnimals extends Animal implements ITerrestrailAnimal {
     {
         return "TerrestrialAnimals";
     }
+    public String animalCategory()
+    {
+        return "Terrestrial";
+    }
+    public void drawObject(Graphics g) {
+        super.drawObject(g);
+    }
 
+    @Override
+    public String getAnimaleName() {
+        return "";
+    }
 }

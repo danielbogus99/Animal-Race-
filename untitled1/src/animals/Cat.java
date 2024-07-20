@@ -2,8 +2,12 @@ package animals;
 
 import Olympics.Medal;
 
+import javax.imageio.ImageIO;
 import javax.xml.stream.Location;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Represents a cat, a terrestrial animal that extends the TerrestrialAnimals class.
@@ -11,7 +15,7 @@ import java.awt.image.BufferedImage;
 public class Cat extends TerrestrialAnimals {
 
     private boolean Castrated;
-
+    private BufferedImage img1, img2, img3, img4;
     /**
      * Constructor to initialize a Cat object.
      *
@@ -68,5 +72,32 @@ public class Cat extends TerrestrialAnimals {
     public String animalType()
     {
         return "Cat";
+    }
+    public void drawObject(Graphics g)
+    {
+        switch (getOrientation()) {
+            case EAST:
+                g.drawImage(img1, location.getX(), location.getY() - size / 10, size * 2, size,getPan());
+                break;
+            case SOUTH:
+                g.drawImage(img2, location.getX(), location.getY() - size / 10, size, size,getPan());
+                break;
+            case WEST:
+                g.drawImage(img3, location.getX(), location.getY() - size / 10, size * 2, size, getPan());
+                break;
+            case NORTH:
+                g.drawImage(img4, location.getX() - size / 2, location.getY() - size / 10, size, size * 2, getPan());
+                break;
+        }
+    }
+    public void loadImages(String nm) {
+        try {
+            img1 = ImageIO.read(new File("untitled1/src/graphics2/cat1.East.png"));
+            img2 = ImageIO.read(new File("untitled1/src/graphics2/cat1.S.png"));
+            img3 = ImageIO.read(new File("untitled1/src/graphics2/cat1.png"));
+            img4 = ImageIO.read(new File("untitled1/src/graphics2/cat1.N.png"));
+        } catch (IOException e) {
+            System.out.println("Cannot load image: " + nm);
+        }
     }
 }

@@ -7,7 +7,7 @@ import static java.lang.Math.sqrt;
  * It implements the ILocatable interface to provide location-related functionalities.
  */
 public class Mobile implements ILocatable {
-    private Point location;
+    protected Point location;
     private double totalDistance;
 
 
@@ -24,6 +24,9 @@ public class Mobile implements ILocatable {
     public Mobile() {
         this.location = new Point(0, 0);
         this.totalDistance = 0;
+    }
+    public double getTotalDistance() {
+        return totalDistance;
     }
 
     /**
@@ -52,15 +55,16 @@ public class Mobile implements ILocatable {
      * @param distance the distance to move
      * @return the updated total distance traveled
      */
-    public double move(Point distance) {
-        if (distance.getX() < 0 || distance.getY() < 0) {
-            return totalDistance;
+    public boolean move(Point distance) {
+        if (distance.getX() < 0 || distance.getY() < 0)
+        {
+            return false;
         }
         double distances = calcDistance(distance);
         addTotalDistance(distances);
         location.setX(distance.getX());
         location.setY(distance.getY());
-        return totalDistance;
+        return true;
     }
 
     /**

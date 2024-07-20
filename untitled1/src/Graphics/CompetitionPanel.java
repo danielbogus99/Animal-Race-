@@ -5,12 +5,13 @@ import animals.Dog;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-class CompetitionPanel extends JPanel {
-
+public class CompetitionPanel extends JPanel {
+    private BufferedImage backgroundImage;
     private JButton addCompetitionButton;
     private JButton addAnimalButton;
     private JButton clearButton;
@@ -43,7 +44,7 @@ class CompetitionPanel extends JPanel {
         exitButton.addActionListener(e -> System.exit(0));
         addCompetitionButton.addActionListener(e -> addCompetition());
         addAnimalButton.addActionListener(e -> addAnimal());
-        // infoButton.addActionListener(e -> info());
+        infoButton.addActionListener(e -> info());
         clearButton.addActionListener(e -> clear());
         eatButton.addActionListener(e -> eat());
     }
@@ -104,7 +105,7 @@ class CompetitionPanel extends JPanel {
                         if (competition.getName().equals(selectedCompetitionName))
                         {
                             competition.addAnimal(selectedAnimal);
-                            JOptionPane.showMessageDialog(parentFrame, selectedAnimal.getName() + " added to the " + selectedCompetitionName + " race");
+                            JOptionPane.showMessageDialog(parentFrame, selectedAnimal.getAnimaleName() + " added to the " + selectedCompetitionName + " race");
                             break;
                         }
                     }
@@ -172,7 +173,7 @@ class CompetitionPanel extends JPanel {
                                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                                 if (value instanceof Animal)
                                 {
-                                    setText(((Animal) value).getName());
+                                    setText(((Animal) value).getAnimaleName());
                                 }
                                 return this;
                             }
@@ -299,7 +300,7 @@ class CompetitionPanel extends JPanel {
                         JFrame removeFrame = new JFrame("Select Animal to Remove");
                         removeFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         removeFrame.setSize(300, 150);
-                        JComboBox<String> animalComboBox = new JComboBox<>(animalList.stream().map(Animal::getName).toArray(String[]::new));
+                        JComboBox<String> animalComboBox = new JComboBox<>(animalList.stream().map(Animal::getAnimaleName).toArray(String[]::new));
                         animalComboBox.setSelectedIndex(0);
                         animalComboBox.setFont(new Font("Arial", Font.ITALIC, 15));
                         JButton removeAnimalButton = new JButton("Remove");
@@ -317,7 +318,7 @@ class CompetitionPanel extends JPanel {
                         removeAnimalButton.addActionListener(e2 ->
                         {
                             String selectedAnimalName = (String) animalComboBox.getSelectedItem();
-                            animalList.removeIf(animal -> animal.getName().equals(selectedAnimalName));
+                            animalList.removeIf(animal -> animal.getAnimaleName().equals(selectedAnimalName));
                             JOptionPane.showMessageDialog(parentFrame, selectedAnimalName + " removed from " + selectedCompetitionName);
                             removeFrame.dispose();
                         });
@@ -330,8 +331,7 @@ class CompetitionPanel extends JPanel {
             }
         });
     }
-    private void info()
-    {
+    private void info() {
         JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (competitions.isEmpty()) {
             JOptionPane.showMessageDialog(parentFrame, "There are no competitions to clear.");
@@ -378,10 +378,39 @@ class CompetitionPanel extends JPanel {
                             JOptionPane.showMessageDialog(parentFrame, "There are no animals in this competition.");
                             return;
                         }
-                        
+                        JTable j = new JTable();
+                        JFrame f = new JFrame();
+
+                        // Frame Title
+                        f.setTitle("Info");
+
+                        Object[][] data = new Object[animalList.size()][7];
+                        for (int i = 0; i < animalList.size(); i++) {
+                            Animal animal = animalList.get(i);
+                            data[i][0] = animal.getAnimaleName();
+                            data[i][1] = animal.animalCategory();
+                            data[i][2] = animal.animalType();
+                            data[i][3] = animal.getSpeed();
+                            data[i][4] = animal.getCurrentEnergy();
+                            data[i][5] = animal.getTotalDistance();
+                            data[i][6] = animal.getTotalConsumption();
+                        }
+
+                        String[] columnNames = { "Animal", "Category", "Type", "Speed","Energy Amount","Distance","Energy Consumption" };
+
+
+                        j = new JTable(data, columnNames);
+                        j.setBounds(30, 40, 200, 300);
+
+                        JScrollPane sp = new JScrollPane(j);
+                        f.add(sp);
+                        f.setSize(500, 200);
+                        f.setVisible(true);
                     }
                 }
             }
         });
     }
+
+
 }

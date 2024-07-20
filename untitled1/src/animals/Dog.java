@@ -3,7 +3,21 @@ package animals;
 import Olympics.Medal;
 
 import javax.xml.stream.Location;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import Graphics.IDrawable;
+import Graphics.IMoveable;
+import Graphics.IAnimal;
+import Graphics.IClonable;
+import mobility.ILocatable;
+import mobility.Mobile;
+import mobility.Point;
+import Olympics.Medal;
+import Graphics.*;
 
 /**
  * Represents a dog, a terrestrial animal that extends the TerrestrialAnimals class.
@@ -12,18 +26,7 @@ public class Dog extends TerrestrialAnimals {
 
     private String breed;
 
-    /**
-     * Constructor to initialize a Dog object.
-     *
-     * @param totalDistance The total distance covered by the dog.
-     * @param gender        The gender of the dog.
-     * @param name          The name of the dog.
-     * @param weight        The weight of the dog.
-     * @param speed         The speed of the dog.
-     * @param medals        The array of medals won by the dog.
-     * @param noLegs        The number of legs of the dog.
-     * @param breed         The breed of the dog.
-     */
+    private BufferedImage img1, img2, img3, img4;
     public Dog(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, int noLegs, String breed) {
         super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter, noLegs);
         this.breed = breed;
@@ -34,38 +37,16 @@ public class Dog extends TerrestrialAnimals {
         this.breed = "";
     }
 
-    /**
-     * Returns the breed of the dog.
-     *
-     * @return The breed of the dog.
-     */
     public String getBreed() {
         return breed;
     }
-
-    /**
-     * Method to make the dog produce its sound.
-     */
     protected String getSound() {
         return "Woof woof";
     }
-
-    /**
-     * Override of the toString method to provide a string representation of the Dog object.
-     *
-     * @return A string representation of the Dog object.
-     */
     @Override
     public String toString() {
         return STR."Dog\{super.toString()}, breed=\{breed}}";
     }
-
-    /**
-     * Override of the equals method to compare if two Dog objects are equal.
-     *
-     * @param obj The object to compare with.
-     * @return True if the objects are equal, false otherwise.
-     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -78,4 +59,33 @@ public class Dog extends TerrestrialAnimals {
     {
         return "Dog";
     }
+
+    public void drawObject(Graphics g)
+    {
+        switch (getOrientation()) {
+            case EAST:
+                g.drawImage(img1, location.getX(), location.getY() - size / 10, size * 2, size,getPan());
+                break;
+            case SOUTH:
+                g.drawImage(img2, location.getX(), location.getY() - size / 10, size, size,getPan());
+                break;
+            case WEST:
+                g.drawImage(img3, location.getX(), location.getY() - size / 10, size * 2, size, getPan());
+                break;
+            case NORTH:
+                g.drawImage(img4, location.getX() - size / 2, location.getY() - size / 10, size, size * 2, getPan());
+                break;
+        }
+    }
+    public void loadImages(String nm) {
+        try {
+            img1 = ImageIO.read(new File("untitled1/src/graphics2/dog2E.png"));
+            img2 = ImageIO.read(new File("untitled1/src/graphics2/dog2S.png"));
+            img3 = ImageIO.read(new File("untitled1/src/graphics2/dog2W.png"));
+            img4 = ImageIO.read(new File("untitled1/src/graphics2/dog2N.png"));
+        } catch (IOException e) {
+            System.out.println("Cannot load image: " + nm);
+        }
+    }
+
 }
