@@ -94,9 +94,9 @@ public class Cat extends TerrestrialAnimals {
     public void loadImages(String nm) {
         try {
             img1 = ImageIO.read(new File("src/graphics2/cat1.East.png"));
-            img2 = ImageIO.read(new File("untitled1/src/graphics2/cat1.S.png"));
-            img3 = ImageIO.read(new File("untitled1/src/graphics2/cat1.png"));
-            img4 = ImageIO.read(new File("untitled1/src/graphics2/cat1.N.png"));
+            img2 = ImageIO.read(new File("src/graphics2/cat1.S.png"));
+            img3 = ImageIO.read(new File("src/graphics2/cat1.png"));
+            img4 = ImageIO.read(new File("src/graphics2/cat1.N.png"));
         } catch (IOException e) {
             System.out.println("Cannot load image: " + nm);
         }

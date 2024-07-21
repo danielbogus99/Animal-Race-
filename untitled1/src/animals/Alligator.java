@@ -101,7 +101,7 @@ public class Alligator extends WaterAnimal implements IReptile,ITerrestrailAnima
     }
     public void loadImages(String nm) {
         try {
-            img1 = ImageIO.read(new File("untitled1/src/graphics2/alligator2E.png"));
+            img1 = ImageIO.read(new File("src/graphics2/alligator2E.png"));
         } catch (IOException e) {
             System.out.println("Cannot load image: " + nm);
         }

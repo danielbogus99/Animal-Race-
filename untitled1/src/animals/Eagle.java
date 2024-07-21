@@ -83,7 +83,7 @@ public class Eagle extends AirAnimal {
     }
     public void loadImages(String nm) {
         try {
-            img1 = ImageIO.read(new File("untitled1/src/graphics2/eagle1.png"));
+            img1 = ImageIO.read(new File("src/graphics2/eagle1.png"));
         } catch (IOException e) {
             System.out.println("Cannot load image: " + nm);
         }

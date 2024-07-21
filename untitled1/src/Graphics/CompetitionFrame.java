@@ -33,7 +33,7 @@ public class CompetitionFrame extends JFrame
         add(competitionPanel, BorderLayout.SOUTH);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 800);
+        setSize(getWidth(), getHeight());
 
         exitMenuItem.addActionListener(e -> System.exit(0));
         helpMenuItem.addActionListener(e -> JOptionPane.showMessageDialog(null, "Home Work 2\n" + "GUI"));

@@ -119,10 +119,10 @@ public class Snake extends TerrestrialAnimals implements IReptile{
     }
     public void loadImages(String nm) {
         try {
-            img1 = ImageIO.read(new File("untitled1/src/graphics2/snake2.E.png"));
-            img2 = ImageIO.read(new File("untitled1/src/graphics2/snake2.S.png"));
-            img3 = ImageIO.read(new File("untitled1/src/graphics2/snake2.png"));
-            img4 = ImageIO.read(new File("untitled1/src/graphics2/snake2.N.png"));
+            img1 = ImageIO.read(new File("src/graphics2/snake2.E.png"));
+            img2 = ImageIO.read(new File("src/graphics2/snake2.S.png"));
+            img3 = ImageIO.read(new File("src/graphics2/snake2.png"));
+            img4 = ImageIO.read(new File("src/graphics2/snake2.N.png"));
         } catch (IOException e) {
             System.out.println("Cannot load image: " + nm);
         }

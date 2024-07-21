@@ -54,7 +54,7 @@ public class Whale extends WaterAnimal {
     }
     public void loadImages(String nm) {
         try {
-            img1 = ImageIO.read(new File("untitled1/src/graphics2/whale2E.png"));
+            img1 = ImageIO.read(new File("src/graphics2/whale2E.png"));
         } catch (IOException e) {
             System.out.println("Cannot load image: " + nm);
         }
