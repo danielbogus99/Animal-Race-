@@ -6,6 +6,7 @@ import mobility.Point;
 import javax.xml.stream.Location;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import Graphics.CompetitionPanel;
 
 /**
  * Represents an air-dwelling animal that extends the Animal class.
@@ -25,7 +26,7 @@ public abstract class AirAnimal extends Animal {
      * @param medals        The array of medals won by the animal.
      * @param wingspan      The wingspan of the air animal.
      */
-    public AirAnimal(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double wingspan)
+    public AirAnimal(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double wingspan,CompetitionPanel competitionPanel)
     {
         if (x < 0 || y < 0)
         {
@@ -33,7 +34,7 @@ public abstract class AirAnimal extends Animal {
             x = 0;
             y = 100;
         }
-        super(new Point(x, y), totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter);
+        super(new Point(x, y), totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,competitionPanel);
         this.wingspan = wingspan;
     }
     public AirAnimal()

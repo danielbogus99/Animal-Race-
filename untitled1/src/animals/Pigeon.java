@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import Graphics.CompetitionPanel;
 
 /**
  * Represents a pigeon, an air-dwelling animal that extends the AirAnimal class.
@@ -29,9 +30,10 @@ public class Pigeon extends AirAnimal {
      * @param wingspan      The wingspan of the pigeon.
      * @param family        The family of the pigeon.
      */
-    public Pigeon(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double wingspan, String family) {
-        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter, wingspan);
+    public Pigeon(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double wingspan, String family,CompetitionPanel competitionPanel) {
+        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter, wingspan,competitionPanel);
         this.family = family;
+        loadImages("animals/" + name + ".png");
     }
     public Pigeon()
     {

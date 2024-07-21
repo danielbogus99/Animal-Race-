@@ -7,16 +7,17 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
+import Graphics.CompetitionPanel;
 
 public class Whale extends WaterAnimal {
 
     private String foodType;
     private BufferedImage img1;
 
-    public Whale(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double diveDept, String foodType) {
-        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter, diveDept);
+    public Whale(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double diveDept, String foodType,CompetitionPanel competitionPanel) {
+        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter, diveDept,competitionPanel);
         this.foodType = foodType;
+        loadImages("animals/" + name + ".png");
     }
     public Whale()
     {

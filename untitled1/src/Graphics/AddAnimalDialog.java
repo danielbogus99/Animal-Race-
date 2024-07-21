@@ -10,8 +10,10 @@ import java.awt.event.ActionListener;
 public class AddAnimalDialog extends JDialog
 {
     private Animal selectedAnimalObject = null;
-    public AddAnimalDialog(JFrame parent, String raceType) {
+    private CompetitionPanel competitionPanel;
+    public AddAnimalDialog(CompetitionFrame parent, String raceType) {
         super(parent, "Animal Selection", true); // Make the dialog modal
+        this.competitionPanel = parent.getCompetitionPanel();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(400, 300);
         setLayout(new BorderLayout());
@@ -46,6 +48,28 @@ public class AddAnimalDialog extends JDialog
         animalPanel.add(whaleButton);
         animalPanel.add(snakeButton);
 
+        // Disable irrelevant radio buttons based on race type
+        if (raceType.equals("Air")) {
+            dogButton.setEnabled(false);
+            catButton.setEnabled(false);
+            alligatorButton.setEnabled(false);
+            dolphinButton.setEnabled(false);
+            whaleButton.setEnabled(false);
+            snakeButton.setEnabled(false);
+        } else if (raceType.equals("Water")) {
+            dogButton.setEnabled(false);
+            catButton.setEnabled(false);
+            eagleButton.setEnabled(false);
+            pigeonButton.setEnabled(false);
+            snakeButton.setEnabled(false);
+        } else if (raceType.equals("Terrestrial")) {
+            alligatorButton.setEnabled(false);
+            dolphinButton.setEnabled(false);
+            eagleButton.setEnabled(false);
+            pigeonButton.setEnabled(false);
+            whaleButton.setEnabled(false);
+        }
+
         add(animalPanel, BorderLayout.CENTER);
         JButton goBackButton = new JButton("Go Back");
         JButton confirmButton = new JButton("Confirm Animal Selection");
@@ -75,16 +99,16 @@ public class AddAnimalDialog extends JDialog
                             throw new IllegalArgumentException("You can't select a cat for a " + raceType + " race");
                         }
                         selectedAnimalObject = CreateCat();
-                    } 
+                    }
                     else if (alligatorButton.isSelected())
                     {
                         if (!raceType.equals("Water"))
                         {
-                            throw new IllegalArgumentException("You can't select an alligator for an " + raceType + " race");
+                            throw new IllegalArgumentException("You can't select an alligator for a " + raceType + " race");
                         }
 
                         selectedAnimalObject = CreateAlligator();
-                    } 
+                    }
                     else if (dolphinButton.isSelected())
                     {
                         if (!raceType.equals("Water"))
@@ -105,7 +129,7 @@ public class AddAnimalDialog extends JDialog
                     {
                         if (!raceType.equals("Air"))
                         {
-                            throw new IllegalArgumentException("You can't select an eagle for an " + raceType + " race");
+                            throw new IllegalArgumentException("You can't select an eagle for a " + raceType + " race");
                         }
 
                         selectedAnimalObject = CreateEagle();
@@ -203,7 +227,7 @@ public class AddAnimalDialog extends JDialog
                     int noLegs = Integer.parseInt(noLegsField.getText());
                     String breed = breedField.getText();
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new Dog(0,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,noLegs,breed);
+                    selectedAnimalObject = new Dog(0,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,noLegs,breed, competitionPanel);
                     dogDialog.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(dogDialog, ex.getMessage());
@@ -215,8 +239,8 @@ public class AddAnimalDialog extends JDialog
     }
     public  Animal CreateCat() {
         JDialog CatDialog = new JDialog(this, "Cat Input Panel", true);
-         CatDialog.setSize(500, 400);
-         CatDialog.setLayout(new BorderLayout());
+        CatDialog.setSize(500, 400);
+        CatDialog.setLayout(new BorderLayout());
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 4, 10, 30)); // r
         JTextField nameField = new JTextField(20);
@@ -248,7 +272,7 @@ public class AddAnimalDialog extends JDialog
         JButton GoBackButton = new JButton("Go back");
         panel.add(GoBackButton);
         GoBackButton.addActionListener(e -> dispose());
-         CatDialog.add(panel, BorderLayout.CENTER);
+        CatDialog.add(panel, BorderLayout.CENTER);
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -277,14 +301,14 @@ public class AddAnimalDialog extends JDialog
                     }
                     int noLegs = Integer.parseInt(noLegsField.getText());
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new  Cat(0,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,noLegs,Castrated);
-                     CatDialog.dispose();
+                    selectedAnimalObject = new  Cat(0,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,noLegs,Castrated,competitionPanel);
+                    CatDialog.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog( CatDialog, "Invalid input. Please check your entries.");
                 }
             }
         });
-         CatDialog.setVisible(true);
+        CatDialog.setVisible(true);
         return selectedAnimalObject;
     }
     public  Animal CreateAlligator() {
@@ -356,7 +380,7 @@ public class AddAnimalDialog extends JDialog
                     int Waterpath = WaterPath.getSelectedIndex()+1;
                     int noLegs = Integer.parseInt(noLegsField.getText());
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new  Alligator(Waterpath,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,DiveDepth,noLegs,AreaOfLiving);
+                    selectedAnimalObject = new  Alligator(Waterpath,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,DiveDepth,noLegs,AreaOfLiving,competitionPanel);
                     AlligatorDialog.dispose();
                 }
                 catch (Exception ex)
@@ -443,7 +467,7 @@ public class AddAnimalDialog extends JDialog
                     }
                     int Waterpath = WaterPath.getSelectedIndex()+1;
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new  Dolphin(Waterpath,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,DiveDepth,waterType);
+                    selectedAnimalObject = new  Dolphin(Waterpath,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,DiveDepth,waterType,competitionPanel);
                     DolphinDialog.dispose();
                 }
                 catch (Exception ex)
@@ -522,7 +546,7 @@ public class AddAnimalDialog extends JDialog
 
                     int Waterpath = WaterPath.getSelectedIndex()+1;
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new  Whale(Waterpath,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,DiveDepth,foodType);
+                    selectedAnimalObject = new  Whale(Waterpath,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,DiveDepth,foodType,competitionPanel);
                     WhaleDialog.dispose();
                 }
                 catch (Exception ex)
@@ -539,13 +563,13 @@ public class AddAnimalDialog extends JDialog
         EagleDialog.setSize(500, 400);
         EagleDialog.setLayout(new BorderLayout());
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(0, 4, 10, 30)); 
+        panel.setLayout(new GridLayout(0, 4, 10, 30));
         JTextField nameField = new JTextField(20);
         JTextField speedField = new JTextField(20);
         JTextField weightField = new JTextField(20);
         JComboBox<String> genderComboBox = new JComboBox<>(new String[]{"Male", "Female"," Hermaphrodite"});
         JComboBox<Integer> AirPath = new JComboBox<>(new Integer[]{1,2,3,4,5});
-        
+
         JTextField MaxEnergyField = new JTextField(20);
         JTextField EnergyPerMeter = new JTextField(20);
         JTextField WingspanField = new JTextField(20);
@@ -601,7 +625,7 @@ public class AddAnimalDialog extends JDialog
                         gender = Animal.gender.Hermaphrodite;
                     int Airpath = AirPath.getSelectedIndex()+1;
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new  Eagle(Airpath,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,Wingspan,AltitudeOfFlight);
+                    selectedAnimalObject = new  Eagle(Airpath,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,Wingspan,AltitudeOfFlight,competitionPanel);
                     EagleDialog.dispose();
                 }
                 catch (Exception ex)
@@ -628,7 +652,7 @@ public class AddAnimalDialog extends JDialog
         JTextField MaxEnergyField = new JTextField(20);
         JTextField EnergyPerMeter = new JTextField(20);
         JTextField WingspanField = new JTextField(20);
-        
+
 
         panel.add(new JLabel("Name:"));
         panel.add(nameField);
@@ -680,7 +704,7 @@ public class AddAnimalDialog extends JDialog
                         gender = Animal.gender.Hermaphrodite;
                     int Airpath = AirPath.getSelectedIndex()+1;
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new  Pigeon(Airpath,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,Wingspan,Family);
+                    selectedAnimalObject = new  Pigeon(Airpath,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,Wingspan,Family,competitionPanel);
                     PigeonDialog.dispose();
                 }
                 catch (Exception ex)
@@ -769,7 +793,7 @@ public class AddAnimalDialog extends JDialog
                         poisonous = Snake.Poisonous.HIGH;
                     }
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new Snake(0,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,noLegs,poisonous,length);
+                    selectedAnimalObject = new Snake(0,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,noLegs,poisonous,length,competitionPanel);
                     SnakeDialog.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(SnakeDialog, "Invalid input. Please check your entries.");

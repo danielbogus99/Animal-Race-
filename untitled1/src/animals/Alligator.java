@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import Graphics.CompetitionPanel;
 
 /**
  * Represents an alligator, a water-dwelling animal that extends the WaterAnimal class.
@@ -31,10 +32,11 @@ public class Alligator extends WaterAnimal implements IReptile,ITerrestrailAnima
      * @param diveDept      The dive depth of the alligator.
      * @param AreaOfLiving  The area of living of the alligator.
      */
-    public Alligator(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double diveDept, int noLegs, String AreaOfLiving) {
-        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,diveDept);
-        terrestrialAnimals = new TerrestrialAnimals(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,noLegs);
+    public Alligator(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double diveDept, int noLegs, String AreaOfLiving,CompetitionPanel competitionPanel) {
+        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,diveDept,competitionPanel);
+        terrestrialAnimals = new TerrestrialAnimals(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,noLegs,competitionPanel);
         this.AreaOfLiving = AreaOfLiving;
+        loadImages("animals/" + name + ".png");
     }
     public Alligator() {
         super();

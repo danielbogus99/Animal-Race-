@@ -1,7 +1,7 @@
 package animals;
 
 import Olympics.Medal;
-
+import Graphics.CompetitionPanel;
 import javax.imageio.ImageIO;
 import javax.xml.stream.Location;
 import java.awt.*;
@@ -28,9 +28,10 @@ public class Eagle extends AirAnimal {
      * @param wingspan         The wingspan of the eagle.
      * @param altitudeOfFlight The altitude of flight of the eagle.
      */
-    public Eagle(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double wingspan, double altitudeOfFlight) {
-        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter, wingspan);
+    public Eagle(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double wingspan, double altitudeOfFlight,CompetitionPanel competitionPanel) {
+        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter, wingspan,competitionPanel);
         this.altitudeOfFlight = altitudeOfFlight;
+        loadImages("animals/" + name + ".png");
     }
     public Eagle()
     {

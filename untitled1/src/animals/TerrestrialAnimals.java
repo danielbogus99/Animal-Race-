@@ -6,7 +6,7 @@ import mobility.Point;
 import javax.xml.stream.Location;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
+import Graphics.CompetitionPanel;
 /**
  * Represents a terrestrial animal that extends the Animal class.
  */
@@ -15,14 +15,14 @@ public  class TerrestrialAnimals extends Animal implements ITerrestrailAnimal {
     private int noLegs;
 
 
-    public TerrestrialAnimals(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, int noLegs) {
+    public TerrestrialAnimals(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, int noLegs, CompetitionPanel pan) {
         if (x < 0 || y < 0)
         {
             System.out.println("X AND Y are negative,default coordinates were set");
             x = 0;
             y = 20;
         }
-        super(new Point(x, y), totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter);
+        super(new Point(x, y), totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter, pan);
         this.noLegs = noLegs;
     }
     public TerrestrialAnimals()
@@ -82,8 +82,4 @@ public  class TerrestrialAnimals extends Animal implements ITerrestrailAnimal {
         super.drawObject(g);
     }
 
-    @Override
-    public String getAnimaleName() {
-        return "";
-    }
 }

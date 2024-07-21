@@ -3,7 +3,8 @@ package Graphics;
 import javax.swing.*;
 import java.awt.*;
 
-public class CompetitionFrame extends JFrame {
+public class CompetitionFrame extends JFrame
+{
     private CompetitionPanel competitionPanel;
     private ImagePanel imagePanel;
 
@@ -40,11 +41,14 @@ public class CompetitionFrame extends JFrame {
         setVisible(true);
     }
 
-    public ImagePanel getImagePanel() {
+    public ImagePanel getImagePanel()
+    {
         return imagePanel;
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new CompetitionFrame());
+        CompetitionFrame frame = new CompetitionFrame();
+        frame.setVisible(true);
     }
+    public CompetitionPanel getCompetitionPanel(){return competitionPanel;}
 }

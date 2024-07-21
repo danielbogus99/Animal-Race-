@@ -1,7 +1,7 @@
 package animals;
 
 import Olympics.Medal;
-
+import Graphics.CompetitionPanel;
 import javax.imageio.ImageIO;
 import javax.xml.stream.Location;
 import java.awt.*;
@@ -28,9 +28,10 @@ public class Cat extends TerrestrialAnimals {
      * @param noLegs        The number of legs of the cat.
      * @param Castrated     Whether the cat is castrated or not.
      */
-    public Cat(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, int noLegs, boolean Castrated) {
-        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter, noLegs);
+    public Cat(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, int noLegs, boolean Castrated,CompetitionPanel competitionPanel) {
+        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter, noLegs, competitionPanel);
         this.Castrated = Castrated;
+        loadImages("animals/" + name + ".png");
     }
     public Cat()
     {
@@ -92,7 +93,7 @@ public class Cat extends TerrestrialAnimals {
     }
     public void loadImages(String nm) {
         try {
-            img1 = ImageIO.read(new File("untitled1/src/graphics2/cat1.East.png"));
+            img1 = ImageIO.read(new File("src/graphics2/cat1.East.png"));
             img2 = ImageIO.read(new File("untitled1/src/graphics2/cat1.S.png"));
             img3 = ImageIO.read(new File("untitled1/src/graphics2/cat1.png"));
             img4 = ImageIO.read(new File("untitled1/src/graphics2/cat1.N.png"));

@@ -6,6 +6,7 @@ import mobility.Point;
 import javax.xml.stream.Location;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import Graphics.CompetitionPanel;
 
 /**
  * Represents a water-dwelling animal that extends the Animal class.
@@ -30,7 +31,7 @@ public abstract class WaterAnimal extends Animal {
      * @param medals        The array of medals won by the animal.
      * @param diveDept      The initial depth of diving for the water animal.
      */
-    public WaterAnimal(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double diveDept)
+    public WaterAnimal(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double diveDept,CompetitionPanel competitionPanel)
     {
         if (x < 0 || y < 0)
         {
@@ -38,7 +39,7 @@ public abstract class WaterAnimal extends Animal {
             x = 50;
             y = 0;
         }
-        super(new Point(x, y), totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter);
+        super(new Point(x, y), totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,competitionPanel);
         this.diveDept = diveDept;
     }
     public WaterAnimal()

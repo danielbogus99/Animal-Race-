@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import Graphics.CompetitionPanel;
 
 /**
  * Represents a snake, a terrestrial animal that extends the TerrestrialAnimals class.
@@ -16,6 +17,7 @@ public class Snake extends TerrestrialAnimals implements IReptile{
     private BufferedImage img1, img2, img3, img4;
     private double length;
     private Poisonous poisonous;
+
 
     @Override
     public boolean speedUp(int speeds) {
@@ -48,10 +50,11 @@ public class Snake extends TerrestrialAnimals implements IReptile{
      * @param poison        The poisonous status of the snake.
      * @param length        The length of the snake.
      */
-    public Snake(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, int noLegs, Poisonous poison, double length) {
-        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter, noLegs);
+    public Snake(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, int noLegs, Poisonous poison, double length,CompetitionPanel competitionPanel) {
+        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter, noLegs,competitionPanel);
         this.length = length;
         this.poisonous = poison;
+        loadImages("animals/" + name + ".png");
     }
     public Snake()
     {

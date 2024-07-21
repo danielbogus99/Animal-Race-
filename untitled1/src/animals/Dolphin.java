@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import Graphics.CompetitionPanel;
 
 /**
  * Represents a dolphin, a water-dwelling animal that extends the WaterAnimal class.
@@ -36,9 +37,10 @@ public class Dolphin extends WaterAnimal {
      * @param diveDept      The dive depth of the dolphin.
      * @param waterType     The type of water the dolphin inhabits.
      */
-    public Dolphin(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double diveDept, WaterType waterType) {
-        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter, diveDept);
+    public Dolphin(int x, int y, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, double diveDept, WaterType waterType,CompetitionPanel competitionPanel) {
+        super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter, diveDept, competitionPanel);
         this.waterType = waterType;
+        loadImages("animals/" + name + ".png");
     }
     public Dolphin()
     {

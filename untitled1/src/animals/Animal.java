@@ -21,7 +21,7 @@ public abstract class Animal extends Mobile implements IDrawable,IAnimal ,IMovea
     private int speed;
     private Medal[] medals;
     private gender gender;
-    protected int size;
+    protected int size = 65;
     private Orientation orien;
     private int maxEnergy;
     private int energyPerMeter;
@@ -30,7 +30,8 @@ public abstract class Animal extends Mobile implements IDrawable,IAnimal ,IMovea
     private CompetitionPanel pan;
     private BufferedImage img1, img2, img3, img4;
 
-    public Animal(Point position, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter) {
+
+    public Animal(Point position, double totalDistance, gender gender, String name, double weight, int speed, Medal[] medals, Orientation orien, int maxEnergy, int energyPerMeter, CompetitionPanel pan) {
         super(position, totalDistance);
         this.weight = weight;
         this.speed = speed;
@@ -40,8 +41,9 @@ public abstract class Animal extends Mobile implements IDrawable,IAnimal ,IMovea
         this.orien = orien;
         this.maxEnergy = maxEnergy;
         this.energyPerMeter = energyPerMeter;
-        this.size = 65;
         this.CurrentEnergy = maxEnergy;
+        this.pan = pan;
+        loadImages("animals/" + name + ".png");
     }
 
     public Animal() {
