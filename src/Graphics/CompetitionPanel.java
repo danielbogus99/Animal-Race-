@@ -93,12 +93,16 @@ public class CompetitionPanel extends JPanel {
         {
             frame.dispose();
             String selectedCompetitionName = (String) competitionTypeComboBox.getSelectedItem();
-            if (selectedCompetitionName != null) {
+            if (selectedCompetitionName != null)
+            {
                 Competition selectedCompetition = competitions.stream().filter(c -> c.getName().equals(selectedCompetitionName)).findFirst().orElse(null);
-                if (selectedCompetition != null) {
-                    AddAnimalDialog addAnimalDialog = new AddAnimalDialog(parentFrame, selectedCompetition.getType());
+                if (selectedCompetition != null)
+                {
+                    AddAnimalDialog addAnimalDialog = new AddAnimalDialog(parentFrame, selectedCompetition.getType(),selectedCompetition);
                     selectedAnimal = addAnimalDialog.getSelectedAnimalObject();
-                    if (selectedAnimal != null) {
+
+                    if (selectedAnimal != null)
+                    {
                         selectedCompetition.addAnimal(selectedAnimal);
                         JOptionPane.showMessageDialog(parentFrame, selectedAnimal.getAnimaleName() + " added to the " + selectedCompetitionName + " competition");
                         parentFrame.getImagePanel().setCompetitions(competitions);

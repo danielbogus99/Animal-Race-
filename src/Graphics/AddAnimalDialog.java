@@ -9,11 +9,40 @@ import java.awt.event.ActionListener;
 
 public class AddAnimalDialog extends JDialog
 {
+
     private Animal selectedAnimalObject = null;
+    private int path;
+    private JTextField nameField = new JTextField(20);
+    private JTextField speedField = new JTextField(20);
+    private JTextField weightField = new JTextField(20);
+    private JComboBox<String> genderComboBox = new JComboBox<>(new String[]{"Male", "Female"," Hermaphrodite"});
+    private JTextField noLegsField = new JTextField(20);
+    private JTextField MaxEnergyField = new JTextField(20);
+    private JTextField DiveDepthField = new JTextField(20);
+    private JTextField EnergyPerMeter = new JTextField(20);
+    private JTextField AreaOfLivingField = new JTextField(20);
+    private JComboBox<String> CastratedComboBox = new JComboBox<>(new String[]{"Yes","No"});
+    private Competition competition;
     private CompetitionPanel competitionPanel;
-    public AddAnimalDialog(CompetitionFrame parent, String raceType) {
+
+    public AddAnimalDialog(CompetitionFrame parent, String raceType,Competition competition) {
         super(parent, "Animal Selection", true); // Make the dialog modal
         this.competitionPanel = parent.getCompetitionPanel();
+        this.competition = competition;
+        Integer[] waterPaths = competition.getWaterPath().toArray(new Integer[0]);
+        JComboBox<Integer> WaterPath = new JComboBox<>(waterPaths);
+        Integer[] AirPaths = competition.getAirPath().toArray(new Integer[0]);
+        JComboBox<Integer> airPath = new JComboBox<>(AirPaths);
+        if (waterPaths.length == 0)
+        {
+            JOptionPane.showMessageDialog(parent, "There are no paths available");
+            return;
+        }
+        if(AirPaths.length == 0)
+        {
+            JOptionPane.showMessageDialog(parent, "There are no  paths available");
+            return;
+        }
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(400, 300);
         setLayout(new BorderLayout());
@@ -49,7 +78,8 @@ public class AddAnimalDialog extends JDialog
         animalPanel.add(snakeButton);
 
         // Disable irrelevant radio buttons based on race type
-        if (raceType.equals("Air")) {
+        if (raceType.equals("Air"))
+        {
             dogButton.setEnabled(false);
             catButton.setEnabled(false);
             alligatorButton.setEnabled(false);
@@ -81,7 +111,8 @@ public class AddAnimalDialog extends JDialog
         goBackButton.addActionListener(e -> dispose());
         confirmButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e)
+            {
                 try {
                     if (dogButton.isSelected())
                     {
@@ -150,7 +181,8 @@ public class AddAnimalDialog extends JDialog
                         selectedAnimalObject = CreateSnake();
                     }
                     dispose();
-                } catch (IllegalArgumentException ex)
+                }
+                catch (IllegalArgumentException ex)
                 {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
@@ -162,20 +194,14 @@ public class AddAnimalDialog extends JDialog
     public Animal getSelectedAnimalObject() {
         return selectedAnimalObject;
     }
+
     public  Animal CreateDog() {
         JDialog dogDialog = new JDialog(this, "Dog Input Panel", true);
         dogDialog.setSize(500, 300);
         dogDialog.setLayout(new BorderLayout());
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 4, 10, 20));
-        JTextField nameField = new JTextField(20);
-        JTextField speedField = new JTextField(20);
-        JTextField weightField = new JTextField(20);
-        JComboBox<String> genderComboBox = new JComboBox<>(new String[]{"Male", "Female"," Hermaphrodite"});
-        JTextField noLegsField = new JTextField(20);
         JTextField breedField = new JTextField(20);
-        JTextField MaxEnergyField = new JTextField(20);
-        JTextField EnergyPerMeter = new JTextField(20);
         panel.add(new JLabel("Name:"));
         panel.add(nameField);
         panel.add(new JLabel("Speed:"));
@@ -205,7 +231,6 @@ public class AddAnimalDialog extends JDialog
                 try {
                     String name = nameField.getText();
                     int speed = Integer.parseInt(speedField.getText());
-                    speed = Integer.parseInt(speedField.getText());
                     if (speed < 0)
                     {
                         throw new Exception("Speed cannot be negative.");
@@ -226,7 +251,7 @@ public class AddAnimalDialog extends JDialog
                         gender = Animal.gender.Hermaphrodite;
                     int noLegs = Integer.parseInt(noLegsField.getText());
                     String breed = breedField.getText();
-                    Medal[] medals = new Medal[2];
+                    Medal[] medals = new Medal[0];
                     selectedAnimalObject = new Dog(0,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,noLegs,breed, competitionPanel);
                     dogDialog.dispose();
                 } catch (Exception ex) {
@@ -242,15 +267,10 @@ public class AddAnimalDialog extends JDialog
         CatDialog.setSize(500, 400);
         CatDialog.setLayout(new BorderLayout());
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(0, 4, 10, 30)); // r
-        JTextField nameField = new JTextField(20);
-        JTextField speedField = new JTextField(20);
-        JTextField weightField = new JTextField(20);
-        JComboBox<String> genderComboBox = new JComboBox<>(new String[]{"Male", "Female"," Hermaphrodite"});
-        JComboBox<String> CastratedComboBox = new JComboBox<>(new String[]{"Yes","No"});
-        JTextField noLegsField = new JTextField(20);
-        JTextField MaxEnergyField = new JTextField(20);
-        JTextField EnergyPerMeter = new JTextField(20);
+        panel.setLayout(new GridLayout(0, 4, 10, 30));
+
+
+
         panel.add(new JLabel("Name:"));
         panel.add(nameField);
         panel.add(new JLabel("Speed:"));
@@ -315,18 +335,10 @@ public class AddAnimalDialog extends JDialog
         JDialog AlligatorDialog = new JDialog(this, "Alligator Input Panel", true);
         AlligatorDialog.setSize(500, 400);
         AlligatorDialog.setLayout(new BorderLayout());
+        Integer[] waterPaths = competition.getWaterPath().toArray(new Integer[0]);
+        JComboBox<Integer> WaterPath = new JComboBox<>(waterPaths);
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 4, 10, 30)); // r
-        JTextField nameField = new JTextField(20);
-        JTextField speedField = new JTextField(20);
-        JTextField weightField = new JTextField(20);
-        JComboBox<String> genderComboBox = new JComboBox<>(new String[]{"Male", "Female"," Hermaphrodite"});
-        JComboBox<Integer> WaterPath = new JComboBox<>(new Integer[]{1,2,3,4});
-        JTextField noLegsField = new JTextField(20);
-        JTextField MaxEnergyField = new JTextField(20);
-        JTextField DiveDepthField = new JTextField(20);
-        JTextField EnergyPerMeter = new JTextField(20);
-        JTextField AreaOfLivingField = new JTextField(20);
         panel.add(new JLabel("Name:"));
         panel.add(nameField);
         panel.add(new JLabel("Speed:"));
@@ -380,7 +392,9 @@ public class AddAnimalDialog extends JDialog
                     int Waterpath = WaterPath.getSelectedIndex()+1;
                     int noLegs = Integer.parseInt(noLegsField.getText());
                     Medal[] medals = new Medal[2];
+
                     selectedAnimalObject = new  Alligator(Waterpath,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,DiveDepth,noLegs,AreaOfLiving,competitionPanel);
+                    competition.deleteWaterPath(Waterpath-1);
                     AlligatorDialog.dispose();
                 }
                 catch (Exception ex)
@@ -397,16 +411,10 @@ public class AddAnimalDialog extends JDialog
         DolphinDialog.setSize(500, 400);
         DolphinDialog.setLayout(new BorderLayout());
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(0, 4, 10, 30)); // r
-        JTextField nameField = new JTextField(20);
-        JTextField speedField = new JTextField(20);
-        JTextField weightField = new JTextField(20);
-        JComboBox<String> genderComboBox = new JComboBox<>(new String[]{"Male", "Female"," Hermaphrodite"});
-        JComboBox<Integer> WaterPath = new JComboBox<>(new Integer[]{1,2,3,4});
+        panel.setLayout(new GridLayout(0, 4, 10, 30));
+        Integer[] waterPaths = competition.getWaterPath().toArray(new Integer[0]);
+        JComboBox<Integer> WaterPath = new JComboBox<>(waterPaths);
         JComboBox<String> WaterType = new JComboBox<>(new String[]{"Sea","Sweet"});
-        JTextField MaxEnergyField = new JTextField(20);
-        JTextField DiveDepthField = new JTextField(20);
-        JTextField EnergyPerMeter = new JTextField(20);
 
         panel.add(new JLabel("Name:"));
         panel.add(nameField);
@@ -426,7 +434,6 @@ public class AddAnimalDialog extends JDialog
         panel.add(WaterType);
         panel.add(new JLabel("Water Path:"));
         panel.add(WaterPath);
-
         JButton submitButton = new JButton("Submit");
         panel.add(submitButton);
         JButton GoBackButton = new JButton("Go back");
@@ -468,6 +475,7 @@ public class AddAnimalDialog extends JDialog
                     int Waterpath = WaterPath.getSelectedIndex()+1;
                     Medal[] medals = new Medal[2];
                     selectedAnimalObject = new  Dolphin(Waterpath,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,DiveDepth,waterType,competitionPanel);
+                    competition.deleteWaterPath(Waterpath-1);
                     DolphinDialog.dispose();
                 }
                 catch (Exception ex)
@@ -484,17 +492,11 @@ public class AddAnimalDialog extends JDialog
         WhaleDialog.setSize(500, 400);
         WhaleDialog.setLayout(new BorderLayout());
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(0, 4, 10, 30)); // r
-        JTextField nameField = new JTextField(20);
-        JTextField speedField = new JTextField(20);
-        JTextField weightField = new JTextField(20);
-        JComboBox<String> genderComboBox = new JComboBox<>(new String[]{"Male", "Female"," Hermaphrodite"});
-        JComboBox<Integer> WaterPath = new JComboBox<>(new Integer[]{1,2,3,4});
+        panel.setLayout(new GridLayout(0, 4, 10, 30));
         JTextField Foodtype = new JTextField(20);
-        JTextField MaxEnergyField = new JTextField(20);
         JTextField DiveDepthField = new JTextField(20);
-        JTextField EnergyPerMeter = new JTextField(20);
-
+        Integer[] waterPaths = competition.getWaterPath().toArray(new Integer[0]);
+        JComboBox<Integer> WaterPath = new JComboBox<>(waterPaths);
         panel.add(new JLabel("Name:"));
         panel.add(nameField);
         panel.add(new JLabel("Speed:"));
@@ -545,8 +547,10 @@ public class AddAnimalDialog extends JDialog
                         gender = Animal.gender.Hermaphrodite;
 
                     int Waterpath = WaterPath.getSelectedIndex()+1;
+
                     Medal[] medals = new Medal[2];
                     selectedAnimalObject = new  Whale(Waterpath,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,DiveDepth,foodType,competitionPanel);
+                    competition.deleteWaterPath(Waterpath-1);
                     WhaleDialog.dispose();
                 }
                 catch (Exception ex)
@@ -564,14 +568,9 @@ public class AddAnimalDialog extends JDialog
         EagleDialog.setLayout(new BorderLayout());
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 4, 10, 30));
-        JTextField nameField = new JTextField(20);
-        JTextField speedField = new JTextField(20);
-        JTextField weightField = new JTextField(20);
-        JComboBox<String> genderComboBox = new JComboBox<>(new String[]{"Male", "Female"," Hermaphrodite"});
-        JComboBox<Integer> AirPath = new JComboBox<>(new Integer[]{1,2,3,4,5});
 
-        JTextField MaxEnergyField = new JTextField(20);
-        JTextField EnergyPerMeter = new JTextField(20);
+        Integer[] airPath = competition.getAirPath().toArray(new Integer[0]);
+        JComboBox<Integer> AirPath = new JComboBox<>(airPath);
         JTextField WingspanField = new JTextField(20);
         JTextField altitudeOfFlight = new JTextField(20);
 
@@ -626,6 +625,7 @@ public class AddAnimalDialog extends JDialog
                     int Airpath = AirPath.getSelectedIndex()+1;
                     Medal[] medals = new Medal[2];
                     selectedAnimalObject = new  Eagle(Airpath,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,Wingspan,AltitudeOfFlight,competitionPanel);
+                    competition.deleteAirPath(Airpath-1);
                     EagleDialog.dispose();
                 }
                 catch (Exception ex)
@@ -643,14 +643,10 @@ public class AddAnimalDialog extends JDialog
         PigeonDialog.setLayout(new BorderLayout());
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 4, 10, 30));
-        JTextField nameField = new JTextField(20);
-        JTextField speedField = new JTextField(20);
-        JTextField weightField = new JTextField(20);
-        JComboBox<String> genderComboBox = new JComboBox<>(new String[]{"Male", "Female"," Hermaphrodite"});
-        JComboBox<Integer> AirPath = new JComboBox<>(new Integer[]{1,2,3,4,5});
+        Integer[] airPath = competition.getAirPath().toArray(new Integer[0]);
+        JComboBox<Integer> AirPath = new JComboBox<>(airPath);
+
         JTextField FamilyField = new JTextField(20);
-        JTextField MaxEnergyField = new JTextField(20);
-        JTextField EnergyPerMeter = new JTextField(20);
         JTextField WingspanField = new JTextField(20);
 
 
@@ -705,6 +701,7 @@ public class AddAnimalDialog extends JDialog
                     int Airpath = AirPath.getSelectedIndex()+1;
                     Medal[] medals = new Medal[2];
                     selectedAnimalObject = new  Pigeon(Airpath,0,0,gender,name,weight,speed,medals, Animal.Orientation.EAST,MaxEnergy,Energy,Wingspan,Family,competitionPanel);
+                    competition.deleteAirPath(Airpath-1);
                     PigeonDialog.dispose();
                 }
                 catch (Exception ex)
@@ -721,16 +718,10 @@ public class AddAnimalDialog extends JDialog
         SnakeDialog.setSize(500, 400);
         SnakeDialog.setLayout(new BorderLayout());
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(0, 4, 10, 30)); // r
-        JTextField nameField = new JTextField(20);
-        JTextField speedField = new JTextField(20);
-        JTextField weightField = new JTextField(20);
-        JComboBox<String> genderComboBox = new JComboBox<>(new String[]{"Male", "Female"," Hermaphrodite"});
-        JTextField noLegsField = new JTextField(20);
+        panel.setLayout(new GridLayout(0, 4, 10, 30));
         JComboBox<String> PoisonousComboBox = new JComboBox<>(new String[]{"Low", "Mid"," High"});
         JTextField LengthField = new JTextField(20);
-        JTextField MaxEnergyField = new JTextField(20);
-        JTextField EnergyPerMeter = new JTextField(20);
+
         panel.add(new JLabel("Name:"));
         panel.add(nameField);
         panel.add(new JLabel("Speed:"));
@@ -803,4 +794,5 @@ public class AddAnimalDialog extends JDialog
         SnakeDialog.setVisible(true);
         return selectedAnimalObject;
     }
+
 }
