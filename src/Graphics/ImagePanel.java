@@ -12,8 +12,12 @@ import java.util.List;
 public class ImagePanel extends JPanel {
     private BufferedImage backgroundImage;
     private List<Competition> competitions;
+    private CompetitionFrame parentFrame;
+    private final int preferredWidth = 1024;  // Default width for scaling
+    private final int preferredHeight = 768;  // Default height for scaling
 
-    public ImagePanel() {
+    public ImagePanel(CompetitionFrame parentFrame) {
+        this.parentFrame = parentFrame;
         try {
             backgroundImage = ImageIO.read(new File("src/graphics2/competitionBackground.png"));
         } catch (IOException e) {
@@ -28,17 +32,30 @@ public class ImagePanel extends JPanel {
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g)
+    {
         super.paintComponent(g);
         if (backgroundImage != null) {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
+        Graphics2D g2d = (Graphics2D) g;
         if (competitions != null) {
+            double scaleX = getWidth() / (double) preferredWidth;
+            double scaleY = getHeight() / (double) preferredHeight;
+            g2d.scale(scaleX, scaleY);
             for (Competition competition : competitions) {
                 for (Animal animal : competition.getAnimals()) {
-                    animal.drawObject(g);
+                    animal.drawObject(g2d);
                 }
             }
         }
+    }
+
+    public int getHeight2() {
+        return backgroundImage.getHeight();
+    }
+
+    public int getWidth2() {
+        return backgroundImage.getWidth();
     }
 }

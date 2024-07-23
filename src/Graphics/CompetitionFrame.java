@@ -28,14 +28,16 @@ public class CompetitionFrame extends JFrame
         fileMenu.add(exitMenuItem);
         helpMenu.add(helpMenuItem);
 
-        imagePanel = new ImagePanel();
+        imagePanel = new ImagePanel(this);
         add(imagePanel, BorderLayout.CENTER);
 
-        competitionPanel = new CompetitionPanel(this);
+
+        competitionPanel = new CompetitionPanel(this,imagePanel);
         add(competitionPanel, BorderLayout.SOUTH);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(getWidth(), getHeight());
+        setSize(800,600);
+
 
         exitMenuItem.addActionListener(e -> System.exit(0));
         helpMenuItem.addActionListener(e -> JOptionPane.showMessageDialog(null, "Home Work 2\n" + "GUI"));
@@ -53,4 +55,5 @@ public class CompetitionFrame extends JFrame
         frame.setVisible(true);
     }
     public CompetitionPanel getCompetitionPanel(){return competitionPanel;}
+
 }

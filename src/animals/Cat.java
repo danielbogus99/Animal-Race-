@@ -74,23 +74,24 @@ public class Cat extends TerrestrialAnimals {
     {
         return "Cat";
     }
-    public void drawObject(Graphics g)
-    {
+    public void drawObject(Graphics g){
+
         switch (getOrientation()) {
             case EAST:
-                g.drawImage(img1, location.getX(), location.getY() - size / 10, size * 2, size,getPan());
+                g.drawImage(img1, location.getX(), location.getY()-size/10, size * 2, size, getPan());
                 break;
             case SOUTH:
-                g.drawImage(img2, location.getX(), location.getY() - size / 10, size, size,getPan());
+                g.drawImage(img2, location.getX(), location.getY()-size/10, size, size, getPan());
                 break;
             case WEST:
-                g.drawImage(img3, location.getX(), location.getY() - size / 10, size * 2, size, getPan());
+                g.drawImage(img3, location.getX(), location.getY()-size/10, size * 2, size, getPan());
                 break;
             case NORTH:
-                g.drawImage(img4, location.getX() - size / 2, location.getY() - size / 10, size, size * 2, getPan());
+                g.drawImage(img4, location.getX()-size/2, location.getY()-size/10, size, size * 2, getPan());
                 break;
         }
     }
+
     public void loadImages(String nm) {
         try {
             img1 = ImageIO.read(new File("src/graphics2/cat1.East.png"));

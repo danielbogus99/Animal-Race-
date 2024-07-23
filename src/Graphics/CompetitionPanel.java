@@ -19,11 +19,12 @@ public class CompetitionPanel extends JPanel {
     private List<Competition> competitions = new ArrayList<>();
     private Animal selectedAnimal;
     private CompetitionFrame parentFrame;
+    private ImagePanel imagePanel;
 
-    public CompetitionPanel(CompetitionFrame parentFrame) {
+    public CompetitionPanel(CompetitionFrame parentFrame,ImagePanel imagePanel) {
         this.parentFrame = parentFrame;
         setLayout(new GridLayout(1, 0));
-
+        this.imagePanel = imagePanel;
         addCompetitionButton = new JButton("Add Competition");
         addAnimalButton = new JButton("Add Animal");
         clearButton = new JButton("Clear");
@@ -105,7 +106,7 @@ public class CompetitionPanel extends JPanel {
                     {
                         selectedCompetition.addAnimal(selectedAnimal);
                         JOptionPane.showMessageDialog(parentFrame, selectedAnimal.getAnimaleName() + " added to the " + selectedCompetitionName + " competition");
-                        parentFrame.getImagePanel().setCompetitions(competitions);
+                        imagePanel.setCompetitions(competitions);
                     }
                 }
             }

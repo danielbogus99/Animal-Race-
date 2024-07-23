@@ -77,7 +77,7 @@ public class Eagle extends AirAnimal {
     {
         switch (getOrientation()) {
             case EAST:
-                g.drawImage(img1, location.getX(), location.getY() - size / 10, size * 2, size,getPan());
+                g.drawImage(img1, location.getX(), location.getY() - size / 10, size , size,getPan());
                 break;
         }
     }
