@@ -8,6 +8,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a panel for managing competitions and animals within a competition.
+ */
 public class CompetitionPanel extends JPanel {
     private JButton addCompetitionButton;
     private JButton addAnimalButton;
@@ -21,10 +24,17 @@ public class CompetitionPanel extends JPanel {
     private CompetitionFrame parentFrame;
     private ImagePanel imagePanel;
 
-    public CompetitionPanel(CompetitionFrame parentFrame,ImagePanel imagePanel) {
+    /**
+     * Constructor to initialize the CompetitionPanel.
+     *
+     * @param parentFrame The parent frame.
+     * @param imagePanel The image panel.
+     */
+    public CompetitionPanel(CompetitionFrame parentFrame, ImagePanel imagePanel) {
         this.parentFrame = parentFrame;
         setLayout(new GridLayout(1, 0));
         this.imagePanel = imagePanel;
+
         addCompetitionButton = new JButton("Add Competition");
         addAnimalButton = new JButton("Add Animal");
         clearButton = new JButton("Clear");
@@ -47,6 +57,9 @@ public class CompetitionPanel extends JPanel {
         eatButton.addActionListener(e -> eat());
     }
 
+    /**
+     * Adds a new competition.
+     */
     private void addCompetition() {
         AddCompetitionDialog addCompetitionDialog = new AddCompetitionDialog(parentFrame);
         addCompetitionDialog.setVisible(true);
@@ -60,6 +73,9 @@ public class CompetitionPanel extends JPanel {
         }
     }
 
+    /**
+     * Adds a new animal to a competition.
+     */
     private void addAnimal() {
         if (competitions.isEmpty()) {
             JOptionPane.showMessageDialog(parentFrame, "You need to select at least one competition.");
@@ -99,7 +115,7 @@ public class CompetitionPanel extends JPanel {
                 Competition selectedCompetition = competitions.stream().filter(c -> c.getName().equals(selectedCompetitionName)).findFirst().orElse(null);
                 if (selectedCompetition != null)
                 {
-                    AddAnimalDialog addAnimalDialog = new AddAnimalDialog(parentFrame, selectedCompetition.getType(),selectedCompetition);
+                    AddAnimalDialog addAnimalDialog = new AddAnimalDialog(parentFrame, selectedCompetition.getType(), selectedCompetition);
                     selectedAnimal = addAnimalDialog.getSelectedAnimalObject();
 
                     if (selectedAnimal != null)
@@ -113,6 +129,9 @@ public class CompetitionPanel extends JPanel {
         });
     }
 
+    /**
+     * Feeds an animal in a competition.
+     */
     private void eat() {
         if (competitions.isEmpty()) {
             JOptionPane.showMessageDialog(parentFrame, "There are no competitions to select.");
@@ -243,6 +262,9 @@ public class CompetitionPanel extends JPanel {
         });
     }
 
+    /**
+     * Clears the selected competition.
+     */
     private void clear() {
         if (competitions.isEmpty()) {
             JOptionPane.showMessageDialog(parentFrame, "There are no competitions to clear.");
@@ -339,6 +361,9 @@ public class CompetitionPanel extends JPanel {
         });
     }
 
+    /**
+     * Displays information about the animals in a competition.
+     */
     private void info() {
         JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (competitions.isEmpty()) {
@@ -414,6 +439,11 @@ public class CompetitionPanel extends JPanel {
         });
     }
 
+    /**
+     * Gets all the competitions.
+     *
+     * @return The list of all competitions.
+     */
     public List<Competition> getAllCompetitions() {
         return competitions;
     }

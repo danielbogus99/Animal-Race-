@@ -5,6 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Represents a dialog for adding a new competition.
+ */
 public class AddCompetitionDialog extends JDialog {
     private static final String[] names = {"Air", "Water", "Terrestrial"};
     private final JComboBox<String> combo;
@@ -14,6 +17,11 @@ public class AddCompetitionDialog extends JDialog {
     private String selectedCompetitionType;
     private String competitionName;
 
+    /**
+     * Constructor to initialize the AddCompetitionDialog.
+     *
+     * @param parent The parent frame.
+     */
     public AddCompetitionDialog(JFrame parent) {
         super(parent, "Add Competition", true);
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -83,10 +91,20 @@ public class AddCompetitionDialog extends JDialog {
         this.setLocationRelativeTo(parent); // Center the dialog
     }
 
+    /**
+     * Gets the selected competition type.
+     *
+     * @return The selected competition type.
+     */
     public String getSelectedCompetitionType() {
         return selectedCompetitionType;
     }
 
+    /**
+     * Gets the competition name.
+     *
+     * @return The competition name.
+     */
     public String getCompetitionName() {
         return competitionName;
     }

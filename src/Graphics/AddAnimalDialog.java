@@ -1,16 +1,17 @@
 package Graphics;
+
 import Olympics.Medal;
 import animals.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import Graphics.ImagePanel;
 
+/**
+ * Represents a dialog for adding an animal to the competition.
+ */
+public class AddAnimalDialog extends JDialog {
 
-
-public class AddAnimalDialog extends JDialog
-{
     private Animal selectedAnimalObject = null;
     private final JTextField nameField = new JTextField(20);
     private final JTextField speedField = new JTextField(20);
@@ -25,9 +26,15 @@ public class AddAnimalDialog extends JDialog
     private Competition competition;
     private CompetitionPanel competitionPanel;
     private ImagePanel imagePanel;
-    private int width,high;
+    private int width, high;
 
-
+    /**
+     * Constructor to initialize the AddAnimalDialog.
+     *
+     * @param parent       The parent frame.
+     * @param raceType     The type of the race.
+     * @param competition  The competition instance.
+     */
     public AddAnimalDialog(CompetitionFrame parent, String raceType, Competition competition) {
         super(parent, "Animal Selection", true); // Make the dialog modal
         this.competitionPanel = parent.getCompetitionPanel();
@@ -81,26 +88,7 @@ public class AddAnimalDialog extends JDialog
         animalPanel.add(whaleButton);
         animalPanel.add(snakeButton);
 
-        if (raceType.equals("Air")) {
-            dogButton.setEnabled(false);
-            catButton.setEnabled(false);
-            alligatorButton.setEnabled(false);
-            dolphinButton.setEnabled(false);
-            whaleButton.setEnabled(false);
-            snakeButton.setEnabled(false);
-        } else if (raceType.equals("Water")) {
-            dogButton.setEnabled(false);
-            catButton.setEnabled(false);
-            eagleButton.setEnabled(false);
-            pigeonButton.setEnabled(false);
-            snakeButton.setEnabled(false);
-        } else if (raceType.equals("Terrestrial")) {
-            alligatorButton.setEnabled(false);
-            dolphinButton.setEnabled(false);
-            eagleButton.setEnabled(false);
-            pigeonButton.setEnabled(false);
-            whaleButton.setEnabled(false);
-        }
+       
 
         add(animalPanel, BorderLayout.CENTER);
         JButton goBackButton = new JButton("Go Back");
@@ -171,6 +159,11 @@ public class AddAnimalDialog extends JDialog
         setVisible(true);
     }
 
+    /**
+     * Gets the selected animal object.
+     *
+     * @return The selected animal object.
+     */
     public Animal getSelectedAnimalObject() {
         return selectedAnimalObject;
     }
@@ -202,6 +195,11 @@ public class AddAnimalDialog extends JDialog
         panel.add(EnergyPerMeter);
     }
 
+    /**
+     * Creates a Dog object using user input.
+     *
+     * @return The created Dog object.
+     */
     public Animal CreateDog() {
         JDialog dogDialog = new JDialog(this, "Dog Input Panel", true);
         dogDialog.setSize(500, 300);
@@ -247,6 +245,11 @@ public class AddAnimalDialog extends JDialog
         return selectedAnimalObject;
     }
 
+    /**
+     * Creates a Cat object using user input.
+     *
+     * @return The created Cat object.
+     */
     public Animal CreateCat() {
         JDialog CatDialog = new JDialog(this, "Cat Input Panel", true);
         CatDialog.setSize(500, 400);
@@ -288,6 +291,11 @@ public class AddAnimalDialog extends JDialog
         return selectedAnimalObject;
     }
 
+    /**
+     * Creates an Alligator object using user input.
+     *
+     * @return The created Alligator object.
+     */
     public Animal CreateAlligator() {
         JDialog AlligatorDialog = new JDialog(this, "Alligator Input Panel", true);
         AlligatorDialog.setSize(500, 400);
@@ -331,7 +339,7 @@ public class AddAnimalDialog extends JDialog
                     int noLegs = Integer.parseInt(noLegsField.getText());
                     Medal[] medals = new Medal[2];
 
-                    selectedAnimalObject = new Alligator(width/14, y, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, DiveDepth, noLegs, AreaOfLiving, competitionPanel);
+                    selectedAnimalObject = new Alligator(width / 14, y, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, DiveDepth, noLegs, AreaOfLiving, competitionPanel);
                     AlligatorDialog.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(AlligatorDialog, "Invalid input. Please check your entries.");
@@ -341,6 +349,12 @@ public class AddAnimalDialog extends JDialog
         AlligatorDialog.setVisible(true);
         return selectedAnimalObject;
     }
+
+    /**
+     * Creates a Dolphin object using user input.
+     *
+     * @return The created Dolphin object.
+     */
     public Animal CreateDolphin() {
         JDialog DolphinDialog = new JDialog(this, "Dolphin Input Panel", true);
         DolphinDialog.setSize(500, 400);
@@ -378,7 +392,7 @@ public class AddAnimalDialog extends JDialog
                     int Waterpath = (int) WaterPath.getSelectedItem();
                     int y = calculateYPosition(Waterpath); // Assuming a method for calculating y
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new Dolphin(width/14, y, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, DiveDepth, waterType, competitionPanel);
+                    selectedAnimalObject = new Dolphin(width / 14, y, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, DiveDepth, waterType, competitionPanel);
                     DolphinDialog.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(DolphinDialog, "Invalid input. Please check your entries.");
@@ -388,6 +402,12 @@ public class AddAnimalDialog extends JDialog
         DolphinDialog.setVisible(true);
         return selectedAnimalObject;
     }
+
+    /**
+     * Creates a Whale object using user input.
+     *
+     * @return The created Whale object.
+     */
     public Animal CreateWhale() {
         JDialog WhaleDialog = new JDialog(this, "Whale Input Panel", true);
         WhaleDialog.setSize(500, 400);
@@ -426,7 +446,7 @@ public class AddAnimalDialog extends JDialog
                     int Waterpath = (int) WaterPath.getSelectedItem(); // Getting selected path number directly
                     int y = calculateYPosition(Waterpath); // Using a method to calculate y based on path
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new Whale(width/14, y, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, DiveDepth, foodType, competitionPanel);
+                    selectedAnimalObject = new Whale(width / 14, y, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, DiveDepth, foodType, competitionPanel);
                     WhaleDialog.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(WhaleDialog, "Invalid input. Please check your entries.");
@@ -436,6 +456,12 @@ public class AddAnimalDialog extends JDialog
         WhaleDialog.setVisible(true);
         return selectedAnimalObject;
     }
+
+    /**
+     * Creates an Eagle object using user input.
+     *
+     * @return The created Eagle object.
+     */
     public Animal CreateEagle() {
         JDialog EagleDialog = new JDialog(this, "Eagle Input Panel", true);
         EagleDialog.setSize(500, 400);
@@ -486,6 +512,12 @@ public class AddAnimalDialog extends JDialog
         EagleDialog.setVisible(true);
         return selectedAnimalObject;
     }
+
+    /**
+     * Creates a Pigeon object using user input.
+     *
+     * @return The created Pigeon object.
+     */
     public Animal CreatePigeon() {
         JDialog PigeonDialog = new JDialog(this, "Pigeon Input Panel", true);
         PigeonDialog.setSize(500, 400);
@@ -536,6 +568,12 @@ public class AddAnimalDialog extends JDialog
         PigeonDialog.setVisible(true);
         return selectedAnimalObject;
     }
+
+    /**
+     * Creates a Snake object using user input.
+     *
+     * @return The created Snake object.
+     */
     public Animal CreateSnake() {
         JDialog SnakeDialog = new JDialog(this, "Snake Input Panel", true);
         SnakeDialog.setSize(500, 400);
@@ -592,9 +630,9 @@ public class AddAnimalDialog extends JDialog
     }
 
     private int calculateYPosition(int path) {
-        if(path == 1) {
+        if (path == 1) {
             return high / 8;
-        } else if(path == 2) {
+        } else if (path == 2) {
             return high / 3;
         } else if (path == 3) {
             return high / 3 + high / 5;
@@ -603,24 +641,23 @@ public class AddAnimalDialog extends JDialog
         }
         return 0;
     }
+
     private int calculateYAirPosition(int path) {
-        if(path == 1) {
+        if (path == 1) {
             return 0;
         }
-        if(path == 2) {
-            return high/8+high/10;
+        if (path == 2) {
+            return high / 8 + high / 10;
         }
-        if(path == 3) {
-          return   high/3+high/10;
+        if (path == 3) {
+            return high / 3 + high / 10;
         }
-        if(path == 4) {
-          return   high/2+high/7;
+        if (path == 4) {
+            return high / 2 + high / 7;
         }
-        if(path == 5) {
-           return high/2+high/3;
+        if (path == 5) {
+            return high / 2 + high / 3;
         }
         return 0;
     }
-
-
 }
