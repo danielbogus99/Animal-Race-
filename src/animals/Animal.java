@@ -231,14 +231,24 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
      */
     public void drawObject(Graphics g) {
         if (orien == Orientation.EAST) {
-            g.drawImage(img1, getLocation().getX(), getLocation().getY() - size / 10, size * 2, size, pan);
+            g.drawImage(img1, getLocation().getX(), getLocation().getY() - size / 10, size , size, pan);
         } else if (orien == Orientation.SOUTH) {
             g.drawImage(img2, getLocation().getX(), getLocation().getY() - size / 10, size, size, pan);
         } else if (orien == Orientation.WEST) {
-            g.drawImage(img3, getLocation().getX(), getLocation().getY() - size / 10, size * 2, size, pan);
+            g.drawImage(img3, getLocation().getX(), getLocation().getY() - size / 10, size , size, pan);
         } else if (orien == Orientation.NORTH) {
-            g.drawImage(img4, getLocation().getX() - size / 2, getLocation().getY() - size / 10, size, size * 2, pan);
+            g.drawImage(img4, getLocation().getX() , getLocation().getY()-size/10, size, size, pan);
         }
+    }
+
+    public boolean isOutOfEnergy()
+    {
+        if (currentEnergy < 0)
+        {
+            currentEnergy = 0;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -255,6 +265,32 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
         }
         currentEnergy += energy;
         return true;
+    }
+    public void move() {
+        if (currentEnergy <= 0) {
+            return;
+        }
+        int x = getLocation().getX();
+        int y = getLocation().getY();
+        switch (orien) {
+            case EAST:
+                x += speed;
+                break;
+            case SOUTH:
+                y += speed;
+                break;
+            case WEST:
+                x -= speed;
+                break;
+            case NORTH:
+                y -= speed;
+                break;
+        }
+        setLocation(new Point(x, y));
+
+    }
+    public void decreaseEnergy() {
+        currentEnergy -= energyPerMeter;
     }
 
     /**

@@ -50,9 +50,11 @@ public class ImagePanel extends JPanel {
      * @param g The Graphics context to use for painting.
      */
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g)
+    {
         super.paintComponent(g);
-        if (backgroundImage != null) {
+        if (backgroundImage != null)
+        {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
         Graphics2D g2d = (Graphics2D) g;
@@ -60,8 +62,10 @@ public class ImagePanel extends JPanel {
             double scaleX = getWidth() / (double) preferredWidth;
             double scaleY = getHeight() / (double) preferredHeight;
             g2d.scale(scaleX, scaleY);
-            for (Competition competition : competitions) {
-                for (Animal animal : competition.getAnimals()) {
+            for (Competition competition : competitions)
+            {
+                for (Animal animal : competition.getAnimals())
+                {
                     animal.drawObject(g2d);
                 }
             }

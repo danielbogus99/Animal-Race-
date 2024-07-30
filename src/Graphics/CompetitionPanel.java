@@ -2,6 +2,7 @@ package Graphics;
 
 import Olympics.Medal;
 import animals.Animal;
+import animals.TerrestrialAnimals;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,7 @@ public class CompetitionPanel extends JPanel {
     private JButton eatButton;
     private JButton infoButton;
     private JButton exitButton;
+    private Timer timer;
 
     private List<Competition> competitions = new ArrayList<>();
     private Animal selectedAnimal;
@@ -41,7 +43,7 @@ public class CompetitionPanel extends JPanel {
         eatButton = new JButton("Eat");
         infoButton = new JButton("Info");
         exitButton = new JButton("Exit");
-
+        timer = new Timer(200,e->updateCompetition());
         add(addCompetitionButton);
         add(addAnimalButton);
         add(clearButton);
@@ -55,6 +57,43 @@ public class CompetitionPanel extends JPanel {
         infoButton.addActionListener(e -> info());
         clearButton.addActionListener(e -> clear());
         eatButton.addActionListener(e -> eat());
+        timer.start();
+    }
+    private void updateCompetition() {
+        for (Competition competition : competitions) {
+            for (Animal animal : competition.getAnimals()) {
+                if (!animal.isOutOfEnergy())
+                {
+                    animal.move();
+                    animal.decreaseEnergy();
+                    checkBoundsAndChangeDirection(animal);
+                }
+            }
+        }
+        imagePanel.repaint();
+    }
+    private void checkBoundsAndChangeDirection(Animal animal) {
+
+        int x = animal.getLocation().getX();
+        int y = animal.getLocation().getY();
+        int backgroundWidth = imagePanel.getWidth2();
+        int backgroundHeight = imagePanel.getHeight2();
+
+        if (x > backgroundWidth-260 && animal instanceof TerrestrialAnimals)
+        {
+            System.out.println("here");
+            animal.setOrientation(Animal.Orientation.SOUTH);
+        }
+        if (x > backgroundWidth-260 && y>backgroundHeight-155 && animal instanceof TerrestrialAnimals)
+        {
+            System.out.println("heres");
+            animal.setOrientation(Animal.Orientation.WEST);
+        }
+        if(x < 15 && y>backgroundHeight-155 && animal instanceof TerrestrialAnimals)
+        {
+            System.out.println("herex");
+            animal.setOrientation(Animal.Orientation.NORTH);
+        }
     }
 
     /**
