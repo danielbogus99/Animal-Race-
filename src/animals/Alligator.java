@@ -18,7 +18,7 @@ public class Alligator extends WaterAnimal implements IReptile, ITerrestrailAnim
     private String AreaOfLiving;
     private TerrestrialAnimals terrestrialAnimals;
     private WaterAnimal waterAnimal;
-    private BufferedImage img1;
+    private BufferedImage img1,img2,img3,img4;
 
     /**
      * Constructor to initialize an Alligator object.
@@ -130,11 +130,19 @@ public class Alligator extends WaterAnimal implements IReptile, ITerrestrailAnim
      *
      * @param g The graphics context.
      */
-    public void drawObject(Graphics g)
-    {
+    public void drawObject(Graphics g) {
         switch (getOrientation()) {
             case EAST:
-                g.drawImage(img1, location.getX(), location.getY() - size / 10, size , size,getPan());
+                g.drawImage(img1, location.getX(), location.getY() , size, size, getPan());
+                break;
+            case SOUTH:
+                g.drawImage(img2, location.getX(), location.getY() , size, size, getPan());
+                break;
+            case WEST:
+                g.drawImage(img3, location.getX(), location.getY() , size, size, getPan());
+                break;
+            case NORTH:
+                g.drawImage(img4, location.getX(), location.getY(), size, size, getPan());
                 break;
         }
     }
@@ -147,6 +155,9 @@ public class Alligator extends WaterAnimal implements IReptile, ITerrestrailAnim
     public void loadImages(String nm) {
         try {
             img1 = ImageIO.read(new File("src/graphics2/alligator2E.png"));
+            img2 = ImageIO.read(new File("src/graphics2/alligator2S.png"));
+            img3 = ImageIO.read(new File("src/graphics2/alligator2W.png"));
+            img4 = ImageIO.read(new File("src/graphics2/alligator2N.png"));
         } catch (IOException e) {
             System.out.println("Cannot load image: " + nm);
         }

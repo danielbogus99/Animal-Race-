@@ -266,9 +266,9 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
         currentEnergy += energy;
         return true;
     }
-    public void move() {
+    public boolean move(Point p) {
         if (currentEnergy <= 0) {
-            return;
+            return false;
         }
         int x = getLocation().getX();
         int y = getLocation().getY();
@@ -287,7 +287,12 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
                 break;
         }
         setLocation(new Point(x, y));
+        return true;
 
+    }
+    public void Stop()
+    {
+        speed = 0;
     }
     public void decreaseEnergy() {
         currentEnergy -= energyPerMeter;

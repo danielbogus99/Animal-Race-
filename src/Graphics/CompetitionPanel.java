@@ -1,8 +1,8 @@
 package Graphics;
 
-import Olympics.Medal;
-import animals.Animal;
-import animals.TerrestrialAnimals;
+import javax.swing.Timer;
+
+import animals.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -59,12 +59,13 @@ public class CompetitionPanel extends JPanel {
         eatButton.addActionListener(e -> eat());
         timer.start();
     }
+
     private void updateCompetition() {
         for (Competition competition : competitions) {
             for (Animal animal : competition.getAnimals()) {
                 if (!animal.isOutOfEnergy())
                 {
-                    animal.move();
+                    animal.move(animal.getLocation());
                     animal.decreaseEnergy();
                     checkBoundsAndChangeDirection(animal);
                 }
@@ -72,6 +73,7 @@ public class CompetitionPanel extends JPanel {
         }
         imagePanel.repaint();
     }
+
     private void checkBoundsAndChangeDirection(Animal animal) {
 
         int x = animal.getLocation().getX();
@@ -79,21 +81,39 @@ public class CompetitionPanel extends JPanel {
         int backgroundWidth = imagePanel.getWidth2();
         int backgroundHeight = imagePanel.getHeight2();
 
-        if (x > backgroundWidth-260 && animal instanceof TerrestrialAnimals)
+        if(x > backgroundWidth-250 && animal instanceof AirAnimal)
         {
-            System.out.println("here");
+            animal.Stop();
+        }
+        else if (x > backgroundWidth-260 && animal instanceof ITerrestrailAnimal)
+        {
             animal.setOrientation(Animal.Orientation.SOUTH);
         }
-        if (x > backgroundWidth-260 && y>backgroundHeight-155 && animal instanceof TerrestrialAnimals)
+        else if (x > backgroundWidth-260 && y>backgroundHeight-155 && animal instanceof ITerrestrailAnimal)
         {
-            System.out.println("heres");
             animal.setOrientation(Animal.Orientation.WEST);
         }
-        if(x < 15 && y>backgroundHeight-155 && animal instanceof TerrestrialAnimals)
+        else if(x < 15 && y>backgroundHeight-155 && animal instanceof ITerrestrailAnimal)
         {
-            System.out.println("herex");
             animal.setOrientation(Animal.Orientation.NORTH);
         }
+        else if (x > backgroundWidth-260 && animal instanceof TerrestrialAnimals)
+        {
+            animal.setOrientation(Animal.Orientation.SOUTH);
+        }
+        else if (x > backgroundWidth-260 && y>backgroundHeight-155 && animal instanceof TerrestrialAnimals)
+        {
+            animal.setOrientation(Animal.Orientation.WEST);
+        }
+        else  if(x < 15 && y>backgroundHeight-155 && animal instanceof TerrestrialAnimals)
+        {
+            animal.setOrientation(Animal.Orientation.NORTH);
+        }
+        else if(x>backgroundWidth-345 && animal instanceof WaterAnimal)
+        {
+            animal.Stop();
+        }
+
     }
 
     /**

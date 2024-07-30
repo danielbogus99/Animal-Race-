@@ -27,6 +27,7 @@ public class AddAnimalDialog extends JDialog {
     private CompetitionPanel competitionPanel;
     private ImagePanel imagePanel;
     private int width, high;
+    private int x,y;
 
     /**
      * Constructor to initialize the AddAnimalDialog.
@@ -114,12 +115,13 @@ public class AddAnimalDialog extends JDialog {
                             throw new IllegalArgumentException("You can't select a cat for a " + raceType + " race");
                         }
                         selectedAnimalObject = CreateCat();
-                    } else if (alligatorButton.isSelected()) {
-                        if (!raceType.equals("Water")) {
+                    } else if (alligatorButton.isSelected())
+                    {
+                        if (raceType.equals("Air")) {
                             throw new IllegalArgumentException("You can't select an alligator for a " + raceType + " race");
                         }
 
-                        selectedAnimalObject = CreateAlligator();
+                        selectedAnimalObject = CreateAlligator(raceType);
                     } else if (dolphinButton.isSelected()) {
                         if (!raceType.equals("Water")) {
                             throw new IllegalArgumentException("You can't select a dolphin for a " + raceType + " race");
@@ -296,7 +298,7 @@ public class AddAnimalDialog extends JDialog {
      *
      * @return The created Alligator object.
      */
-    public Animal CreateAlligator() {
+    public Animal CreateAlligator(String raceType) {
         JDialog AlligatorDialog = new JDialog(this, "Alligator Input Panel", true);
         AlligatorDialog.setSize(500, 400);
         AlligatorDialog.setLayout(new BorderLayout());
@@ -309,12 +311,14 @@ public class AddAnimalDialog extends JDialog {
         panel.add(DiveDepthField);
         panel.add(new JLabel("Area of Living:"));
         panel.add(AreaOfLivingField);
-
-        // Retrieve water paths
-        Integer[] waterPaths = competition.getWaterPath().toArray(new Integer[0]);
-        JComboBox<Integer> WaterPath = new JComboBox<>(waterPaths);
-        panel.add(new JLabel("Water Path:"));
-        panel.add(WaterPath);
+        // Add water path combo box only if race type is not Terrestrial
+        JComboBox<Integer> WaterPath = null;
+        if (!raceType.equals("Terrestrial")) {
+            Integer[] waterPaths = competition.getWaterPath().toArray(new Integer[0]);
+            WaterPath = new JComboBox<>(waterPaths);
+            panel.add(new JLabel("Water Path:"));
+            panel.add(WaterPath);
+        }
 
         JButton submitButton = new JButton("Submit");
         panel.add(submitButton);
@@ -322,6 +326,7 @@ public class AddAnimalDialog extends JDialog {
         panel.add(GoBackButton);
         GoBackButton.addActionListener(e -> dispose());
         AlligatorDialog.add(panel, BorderLayout.CENTER);
+        JComboBox<Integer> finalWaterPath = WaterPath; // for use in the inner class
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -334,12 +339,23 @@ public class AddAnimalDialog extends JDialog {
                     double DiveDepth = Double.parseDouble(DiveDepthField.getText());
                     Animal.gender gender = getGender();
                     String AreaOfLiving = AreaOfLivingField.getText();
-                    int Waterpath = (int) WaterPath.getSelectedItem(); // Retrieve selected path directly
-                    int y = calculateYPosition(Waterpath); // Calculate y based on selected path
                     int noLegs = Integer.parseInt(noLegsField.getText());
-                    Medal[] medals = new Medal[2];
 
-                    selectedAnimalObject = new Alligator(width / 14, y, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, DiveDepth, noLegs, AreaOfLiving, competitionPanel);
+                    if (!raceType.equals("Terrestrial") && finalWaterPath != null)
+                    {
+                        int Waterpath = (int) finalWaterPath.getSelectedItem();
+                        y = calculateYPosition(Waterpath); // Calculate y based on selected path
+                        x = width/14;
+                    }
+                    if(raceType.equals("Terrestrial")) {
+                        y = 0;
+                        x = 0;
+                    }
+
+
+
+                    Medal[] medals = new Medal[2];
+                    selectedAnimalObject = new Alligator(x, y, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, DiveDepth, noLegs, AreaOfLiving, competitionPanel);
                     AlligatorDialog.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(AlligatorDialog, "Invalid input. Please check your entries.");
@@ -633,11 +649,11 @@ public class AddAnimalDialog extends JDialog {
         if (path == 1) {
             return high / 8;
         } else if (path == 2) {
-            return high / 3;
+            return high / 3-high/45;
         } else if (path == 3) {
-            return high / 3 + high / 5;
+            return high / 3 + high / 6+high/30;
         } else if (path == 4) {
-            return high / 3 + high / 3 + high / 13;
+            return high / 3 + high / 3 + high / 15;
         }
         return 0;
     }
