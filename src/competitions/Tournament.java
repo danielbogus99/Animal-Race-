@@ -1,0 +1,21 @@
+package competitions;
+
+import animals.Animal;
+
+public abstract class Tournament {
+    protected TournamentThread tournamentThread; // שדה מוגן מסוג TournamentThread
+
+
+    public Tournament(Animal[][] animalGroups, Object additionalInfo) {
+        setup(animalGroups, additionalInfo);
+    }
+
+
+    protected abstract void setup(Animal[][] animalGroups, Object additionalInfo);
+
+
+
+    public TournamentThread getTournamentThread() {
+        return tournamentThread;
+    }
+}

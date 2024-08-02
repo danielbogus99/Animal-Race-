@@ -65,7 +65,7 @@ public class CompetitionPanel extends JPanel {
             for (Animal animal : competition.getAnimals()) {
                 if (!animal.isOutOfEnergy())
                 {
-                    animal.move(animal.getLocation());
+                    animal.move();
                     animal.decreaseEnergy();
                     checkBoundsAndChangeDirection(animal);
                 }
@@ -75,46 +75,38 @@ public class CompetitionPanel extends JPanel {
     }
 
     private void checkBoundsAndChangeDirection(Animal animal) {
-
         int x = animal.getLocation().getX();
         int y = animal.getLocation().getY();
         int backgroundWidth = imagePanel.getWidth2();
         int backgroundHeight = imagePanel.getHeight2();
 
-        if(x > backgroundWidth-250 && animal instanceof AirAnimal)
-        {
-            animal.Stop();
+        if (animal instanceof AirAnimal) {
+            if (x > backgroundWidth - 250) {
+                animal.Stop();
+            }
+        } else if (animal instanceof ITerrestrailAnimal) {
+            if (x > backgroundWidth - 260 && y > backgroundHeight - 155) {
+                animal.setOrientation(Animal.Orientation.WEST);
+            } else if (x > backgroundWidth - 260) {
+                animal.setOrientation(Animal.Orientation.SOUTH);
+            } else if (x < 15 && y > backgroundHeight - 155) {
+                animal.setOrientation(Animal.Orientation.NORTH);
+            }
+        } else if (animal instanceof TerrestrialAnimals) {
+            if (x > backgroundWidth - 260 && y > backgroundHeight - 155) {
+                animal.setOrientation(Animal.Orientation.WEST);
+            } else if (x > backgroundWidth - 260) {
+                animal.setOrientation(Animal.Orientation.SOUTH);
+            } else if (x < 15 && y > backgroundHeight - 155) {
+                animal.setOrientation(Animal.Orientation.NORTH);
+            }
+        } else if (animal instanceof WaterAnimal) {
+            if (x > backgroundWidth - 345) {
+                animal.Stop();
+            }
         }
-        else if (x > backgroundWidth-260 && animal instanceof ITerrestrailAnimal)
-        {
-            animal.setOrientation(Animal.Orientation.SOUTH);
-        }
-        else if (x > backgroundWidth-260 && y>backgroundHeight-155 && animal instanceof ITerrestrailAnimal)
-        {
-            animal.setOrientation(Animal.Orientation.WEST);
-        }
-        else if(x < 15 && y>backgroundHeight-155 && animal instanceof ITerrestrailAnimal)
-        {
-            animal.setOrientation(Animal.Orientation.NORTH);
-        }
-        else if (x > backgroundWidth-260 && animal instanceof TerrestrialAnimals)
-        {
-            animal.setOrientation(Animal.Orientation.SOUTH);
-        }
-        else if (x > backgroundWidth-260 && y>backgroundHeight-155 && animal instanceof TerrestrialAnimals)
-        {
-            animal.setOrientation(Animal.Orientation.WEST);
-        }
-        else  if(x < 15 && y>backgroundHeight-155 && animal instanceof TerrestrialAnimals)
-        {
-            animal.setOrientation(Animal.Orientation.NORTH);
-        }
-        else if(x>backgroundWidth-345 && animal instanceof WaterAnimal)
-        {
-            animal.Stop();
-        }
-
     }
+
 
     /**
      * Adds a new competition.
