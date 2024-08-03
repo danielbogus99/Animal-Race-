@@ -88,7 +88,7 @@ public class AddCompetitionDialog extends JDialog {
         });
 
         this.pack();
-        this.setLocationRelativeTo(parent); // Center the dialog
+        this.setLocationRelativeTo(parent);
     }
 
     /**

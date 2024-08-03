@@ -48,6 +48,7 @@ public class CompetitionFrame extends JFrame {
         // Add action listeners for menu items
         exitMenuItem.addActionListener(e -> System.exit(0));
         helpMenuItem.addActionListener(e -> JOptionPane.showMessageDialog(null, "Home Work 2\n" + "GUI"));
+        setLocationRelativeTo(null);
 
         setVisible(true);
     }

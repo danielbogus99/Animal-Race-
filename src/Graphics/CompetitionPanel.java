@@ -80,28 +80,39 @@ public class CompetitionPanel extends JPanel {
         int backgroundWidth = imagePanel.getWidth2();
         int backgroundHeight = imagePanel.getHeight2();
 
-        if (animal instanceof AirAnimal) {
-            if (x > backgroundWidth - 250) {
+        if (animal instanceof AirAnimal)
+        {
+            if (x > backgroundWidth - 250)
+            {
                 animal.Stop();
             }
-        } else if (animal instanceof ITerrestrailAnimal) {
-            if (x > backgroundWidth - 260 && y > backgroundHeight - 155) {
+        }
+        else if (animal instanceof ITerrestrailAnimal) {
+            if (x > backgroundWidth - 260 && y > backgroundHeight - 155)
+            {
                 animal.setOrientation(Animal.Orientation.WEST);
             } else if (x > backgroundWidth - 260) {
                 animal.setOrientation(Animal.Orientation.SOUTH);
             } else if (x < 15 && y > backgroundHeight - 155) {
                 animal.setOrientation(Animal.Orientation.NORTH);
             }
-        } else if (animal instanceof TerrestrialAnimals) {
-            if (x > backgroundWidth - 260 && y > backgroundHeight - 155) {
+        }
+        else if (animal instanceof TerrestrialAnimals) {
+            if (x > backgroundWidth - 260 && y > backgroundHeight - 155)
+            {
                 animal.setOrientation(Animal.Orientation.WEST);
-            } else if (x > backgroundWidth - 260) {
+            } else if (x > backgroundWidth - 260)
+            {
                 animal.setOrientation(Animal.Orientation.SOUTH);
-            } else if (x < 15 && y > backgroundHeight - 155) {
+            } else if (x < 15 && y > backgroundHeight - 155)
+            {
                 animal.setOrientation(Animal.Orientation.NORTH);
             }
-        } else if (animal instanceof WaterAnimal) {
-            if (x > backgroundWidth - 345) {
+        }
+        else if (animal instanceof WaterAnimal)
+        {
+            if (x > backgroundWidth - 345)
+            {
                 animal.Stop();
             }
         }

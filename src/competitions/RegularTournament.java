@@ -51,4 +51,35 @@ public class RegularTournament extends Tournament {
         return totalDistance;
     }
 
+    public Boolean getStartFlag() {
+        return startFlag;
+    }
+
+    public Scores getScores() {
+        return scores;
+    }
+
+    public int getNumberOfGroups() {
+        return numberOfGroups;
+    }
+
+    public void startRace() {
+        synchronized (startFlag) {
+            startFlag = true;
+            startFlag.notifyAll();
+        }
+    }
+
+    public void stopRace() {
+        for (Thread thread : animalThreads) {
+            if (thread.isAlive()) {
+                thread.interrupt();
+            }
+        }
+        for (Thread thread : refereeThreads) {
+            if (thread.isAlive()) {
+                thread.interrupt();
+            }
+        }
+    }
 }

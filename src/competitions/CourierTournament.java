@@ -28,8 +28,7 @@ public class CourierTournament extends Tournament {
         {
             int n = group.length;
             Boolean[] flags = new Boolean[n];
-            for (int i = 0; i < n; i++)
-            {
+            for (int i = 0; i < n; i++) {
                 flags[i] = false;
             }
 
@@ -51,11 +50,38 @@ public class CourierTournament extends Tournament {
         }
     }
 
-    private double calculateNeededDistance(Animal[] group)
-    {
+    private double calculateNeededDistance(Animal[] group) {
         double totalDistance = 1000.0;
         return totalDistance / group.length;
     }
 
+    public Boolean getStartFlag() {
+        return startFlag;
+    }
 
+    public Scores getScores() {
+        return scores;
+    }
+
+    public int getNumberOfGroups() {
+        return numberOfGroups;
+    }
+
+    public void startRace() {
+        synchronized (startFlag) {
+            startFlag = true;
+            startFlag.notifyAll();
+        }
+    }
+
+    public void stopRace() {
+        for (Thread thread : animalThreads) {
+            if (thread.isAlive()) {
+                thread.interrupt();
+            }
+        }
+        if (refereeThread.isAlive()) {
+            refereeThread.interrupt();
+        }
+    }
 }

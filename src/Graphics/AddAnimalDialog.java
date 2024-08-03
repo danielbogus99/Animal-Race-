@@ -157,7 +157,7 @@ public class AddAnimalDialog extends JDialog {
                 }
             }
         });
-
+setLocationRelativeTo(parent);
         setVisible(true);
     }
 
@@ -243,6 +243,7 @@ public class AddAnimalDialog extends JDialog {
                 }
             }
         });
+        dogDialog.setLocationRelativeTo(null);
         dogDialog.setVisible(true);
         return selectedAnimalObject;
     }
@@ -289,6 +290,7 @@ public class AddAnimalDialog extends JDialog {
                 }
             }
         });
+        CatDialog.setLocationRelativeTo(null);
         CatDialog.setVisible(true);
         return selectedAnimalObject;
     }
@@ -362,6 +364,7 @@ public class AddAnimalDialog extends JDialog {
                 }
             }
         });
+        AlligatorDialog.setLocationRelativeTo(null);
         AlligatorDialog.setVisible(true);
         return selectedAnimalObject;
     }
@@ -415,6 +418,7 @@ public class AddAnimalDialog extends JDialog {
                 }
             }
         });
+        DolphinDialog.setLocationRelativeTo(null);
         DolphinDialog.setVisible(true);
         return selectedAnimalObject;
     }
@@ -469,6 +473,7 @@ public class AddAnimalDialog extends JDialog {
                 }
             }
         });
+        WhaleDialog.setLocationRelativeTo(null);
         WhaleDialog.setVisible(true);
         return selectedAnimalObject;
     }
@@ -525,6 +530,7 @@ public class AddAnimalDialog extends JDialog {
                 }
             }
         });
+        EagleDialog.setLocationRelativeTo(null);
         EagleDialog.setVisible(true);
         return selectedAnimalObject;
     }
@@ -581,6 +587,7 @@ public class AddAnimalDialog extends JDialog {
                 }
             }
         });
+        PigeonDialog.setLocationRelativeTo(null);
         PigeonDialog.setVisible(true);
         return selectedAnimalObject;
     }
@@ -641,6 +648,7 @@ public class AddAnimalDialog extends JDialog {
                 }
             }
         });
+        SnakeDialog.setLocationRelativeTo(null);
         SnakeDialog.setVisible(true);
         return selectedAnimalObject;
     }
