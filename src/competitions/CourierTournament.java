@@ -2,7 +2,16 @@ package competitions;
 
 import animals.Animal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CourierTournament extends Tournament {
+
+    private Boolean startFlag;
+    private Scores scores;
+    private int numberOfGroups;
+    private List<Thread> animalThreads;
+    private Thread refereeThread;
 
     public CourierTournament(Animal[][] animalGroups, Object additionalInfo) {
         super(animalGroups, additionalInfo);
@@ -10,31 +19,43 @@ public class CourierTournament extends Tournament {
 
     @Override
     protected void setup(Animal[][] animalGroups, Object additionalInfo) {
-        Boolean startFlag = false;
-        Scores scores = new Scores();
+        this.startFlag = false;
+        this.scores = new Scores();
+        this.numberOfGroups = animalGroups.length;
+        this.animalThreads = new ArrayList<>();
 
-        for (int i = 0; i < animalGroups.length; i++)
+        for (Animal[] group : animalGroups)
         {
-            Animal[] group = animalGroups[i];
             int n = group.length;
             Boolean[] flags = new Boolean[n];
-
-            for (int j = 0; j < n; j++) {
-                flags[j] = false;
+            for (int i = 0; i < n; i++)
+            {
+                flags[i] = false;
             }
 
-            for (int k = 0; k < n; k++) {
-                final Boolean currentStartFlag = (k == 0) ? startFlag : flags[k - 1];
-                final Boolean currentFinishFlag = flags[k];
+            double neededDistance = calculateNeededDistance(group);
 
-                double neededDistance = calculateNeededDistance(k, n);
-
-                AnimalThread animalThread = new AnimalThread(group[k], currentStartFlag, currentFinishFlag, neededDistance);
-                new Thread(animalThread).start();
+            for (int i = 0; i < n; i++)
+            {
+                Boolean currentStartFlag = (i == 0) ? this.startFlag : flags[i - 1];
+                Boolean currentFinishFlag = flags[i];
+                AnimalThread animalThread = new AnimalThread(group[i], neededDistance, currentStartFlag, currentFinishFlag);
+                Thread thread = new Thread(animalThread);
+                animalThreads.add(thread);
+                thread.start();
             }
 
-            Referee referee = new Referee(flags[n - 1], scores);
-            new Thread(referee).start();
+            Referee referee = new Referee("Team " + group[0].getAnimaleName(), scores, flags[n - 1]);
+            refereeThread = new Thread(referee);
+            refereeThread.start();
         }
     }
+
+    private double calculateNeededDistance(Animal[] group)
+    {
+        double totalDistance = 1000.0;
+        return totalDistance / group.length;
+    }
+
+
 }

@@ -3,7 +3,7 @@ package competitions;
 import animals.Animal;
 
 public abstract class Tournament {
-    protected TournamentThread tournamentThread; // שדה מוגן מסוג TournamentThread
+    protected TournamentThread tournamentThread;
 
 
     public Tournament(Animal[][] animalGroups, Object additionalInfo) {
@@ -12,8 +12,6 @@ public abstract class Tournament {
 
 
     protected abstract void setup(Animal[][] animalGroups, Object additionalInfo);
-
-
 
     public TournamentThread getTournamentThread() {
         return tournamentThread;
