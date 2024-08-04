@@ -27,35 +27,27 @@ public class AddAnimalDialog extends JDialog {
     private CompetitionPanel competitionPanel;
     private ImagePanel imagePanel;
     private int width, high;
-    private int x,y;
+    private int x, y;
 
     /**
      * Constructor to initialize the AddAnimalDialog.
      *
-     * @param parent       The parent frame.
-     * @param raceType     The type of the race.
-     * @param competition  The competition instance.
+     * @param parent   The parent frame.
+     * @param raceType The type of the race.
      */
-    public AddAnimalDialog(CompetitionFrame parent, String raceType, Competition competition) {
+    public AddAnimalDialog(JFrame parent, String raceType) {
         super(parent, "Animal Selection", true); // Make the dialog modal
-        this.competitionPanel = parent.getCompetitionPanel();
-        this.competition = competition;
-        this.imagePanel = parent.getImagePanel();
-        Integer[] waterPaths = competition.getWaterPath().toArray(new Integer[0]);
-        JComboBox<Integer> WaterPath = new JComboBox<>(waterPaths);
-        Integer[] AirPaths = competition.getAirPath().toArray(new Integer[0]);
-        JComboBox<Integer> airPath = new JComboBox<>(AirPaths);
+        this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+        this.competition = new Competition("s",raceType); // Initialize competition instance
+
+        // Assuming these panels and dimensions are correctly initialized elsewhere
+        this.competitionPanel = ((CompetitionFrame) parent).getCompetitionPanel();
+        this.imagePanel = ((CompetitionFrame) parent).getImagePanel();
+
         width = imagePanel.getWidth2();
         high = imagePanel.getHeight2();
-        if (waterPaths.length == 0) {
-            JOptionPane.showMessageDialog(parent, "There are no paths available");
-            return;
-        }
-        if (AirPaths.length == 0) {
-            JOptionPane.showMessageDialog(parent, "There are no paths available");
-            return;
-        }
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
         setSize(400, 300);
         setLayout(new BorderLayout());
         JPanel animalPanel = new JPanel();
@@ -89,8 +81,6 @@ public class AddAnimalDialog extends JDialog {
         animalPanel.add(whaleButton);
         animalPanel.add(snakeButton);
 
-       
-
         add(animalPanel, BorderLayout.CENTER);
         JButton goBackButton = new JButton("Go Back");
         JButton confirmButton = new JButton("Confirm Animal Selection");
@@ -115,8 +105,7 @@ public class AddAnimalDialog extends JDialog {
                             throw new IllegalArgumentException("You can't select a cat for a " + raceType + " race");
                         }
                         selectedAnimalObject = CreateCat();
-                    } else if (alligatorButton.isSelected())
-                    {
+                    } else if (alligatorButton.isSelected()) {
                         if (raceType.equals("Air")) {
                             throw new IllegalArgumentException("You can't select an alligator for a " + raceType + " race");
                         }
@@ -157,7 +146,7 @@ public class AddAnimalDialog extends JDialog {
                 }
             }
         });
-setLocationRelativeTo(parent);
+        setLocationRelativeTo(parent);
         setVisible(true);
     }
 
@@ -217,7 +206,7 @@ setLocationRelativeTo(parent);
         JButton submitButton = new JButton("Submit");
         JButton GoBackButton = new JButton("Go back");
         panel.add(GoBackButton);
-        GoBackButton.addActionListener(e -> dispose());
+        GoBackButton.addActionListener(e -> dogDialog.dispose());
         panel.add(submitButton);
         dogDialog.add(panel, BorderLayout.CENTER);
         submitButton.addActionListener(new ActionListener() {
@@ -268,7 +257,7 @@ setLocationRelativeTo(parent);
         panel.add(submitButton);
         JButton GoBackButton = new JButton("Go back");
         panel.add(GoBackButton);
-        GoBackButton.addActionListener(e -> dispose());
+        GoBackButton.addActionListener(e -> CatDialog.dispose());
         CatDialog.add(panel, BorderLayout.CENTER);
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -326,7 +315,7 @@ setLocationRelativeTo(parent);
         panel.add(submitButton);
         JButton GoBackButton = new JButton("Go back");
         panel.add(GoBackButton);
-        GoBackButton.addActionListener(e -> dispose());
+        GoBackButton.addActionListener(e -> AlligatorDialog.dispose());
         AlligatorDialog.add(panel, BorderLayout.CENTER);
         JComboBox<Integer> finalWaterPath = WaterPath; // for use in the inner class
         submitButton.addActionListener(new ActionListener() {
@@ -343,18 +332,15 @@ setLocationRelativeTo(parent);
                     String AreaOfLiving = AreaOfLivingField.getText();
                     int noLegs = Integer.parseInt(noLegsField.getText());
 
-                    if (!raceType.equals("Terrestrial") && finalWaterPath != null)
-                    {
+                    if (!raceType.equals("Terrestrial") && finalWaterPath != null) {
                         int Waterpath = (int) finalWaterPath.getSelectedItem();
                         y = calculateYPosition(Waterpath); // Calculate y based on selected path
-                        x = width/14;
+                        x = width / 14;
                     }
-                    if(raceType.equals("Terrestrial")) {
+                    if (raceType.equals("Terrestrial")) {
                         y = 0;
                         x = 0;
                     }
-
-
 
                     Medal[] medals = new Medal[2];
                     selectedAnimalObject = new Alligator(x, y, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, DiveDepth, noLegs, AreaOfLiving, competitionPanel);
@@ -394,7 +380,7 @@ setLocationRelativeTo(parent);
         panel.add(submitButton);
         JButton GoBackButton = new JButton("Go back");
         panel.add(GoBackButton);
-        GoBackButton.addActionListener(e -> dispose());
+        GoBackButton.addActionListener(e -> DolphinDialog.dispose());
         DolphinDialog.add(panel, BorderLayout.CENTER);
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -449,7 +435,7 @@ setLocationRelativeTo(parent);
         panel.add(submitButton);
         JButton GoBackButton = new JButton("Go back");
         panel.add(GoBackButton);
-        GoBackButton.addActionListener(e -> dispose());
+        GoBackButton.addActionListener(e -> WhaleDialog.dispose());
         WhaleDialog.add(panel, BorderLayout.CENTER);
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -506,7 +492,7 @@ setLocationRelativeTo(parent);
         panel.add(submitButton);
         JButton GoBackButton = new JButton("Go back");
         panel.add(GoBackButton);
-        GoBackButton.addActionListener(e -> dispose());
+        GoBackButton.addActionListener(e -> EagleDialog.dispose());
         EagleDialog.add(panel, BorderLayout.CENTER);
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -562,7 +548,7 @@ setLocationRelativeTo(parent);
         panel.add(submitButton);
         JButton GoBackButton = new JButton("Go back");
         panel.add(GoBackButton);
-        GoBackButton.addActionListener(e -> dispose());
+        GoBackButton.addActionListener(e -> PigeonDialog.dispose());
         PigeonDialog.add(panel, BorderLayout.CENTER);
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -617,7 +603,7 @@ setLocationRelativeTo(parent);
         panel.add(submitButton);
         JButton GoBackButton = new JButton("Go back");
         panel.add(GoBackButton);
-        GoBackButton.addActionListener(e -> dispose());
+        GoBackButton.addActionListener(e -> SnakeDialog.dispose());
         SnakeDialog.add(panel, BorderLayout.CENTER);
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -657,9 +643,9 @@ setLocationRelativeTo(parent);
         if (path == 1) {
             return high / 8;
         } else if (path == 2) {
-            return high / 3-high/45;
+            return high / 3 - high / 45;
         } else if (path == 3) {
-            return high / 3 + high / 6+high/30;
+            return high / 3 + high / 6 + high / 30;
         } else if (path == 4) {
             return high / 3 + high / 3 + high / 15;
         }

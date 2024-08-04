@@ -80,39 +80,28 @@ public class CompetitionPanel extends JPanel {
         int backgroundWidth = imagePanel.getWidth2();
         int backgroundHeight = imagePanel.getHeight2();
 
-        if (animal instanceof AirAnimal)
-        {
-            if (x > backgroundWidth - 250)
-            {
+        if (animal instanceof AirAnimal) {
+            if (x > backgroundWidth - 250) {
                 animal.Stop();
             }
-        }
-        else if (animal instanceof ITerrestrailAnimal) {
-            if (x > backgroundWidth - 260 && y > backgroundHeight - 155)
-            {
+        } else if (animal instanceof ITerrestrailAnimal) {
+            if (x > backgroundWidth - 260 && y > backgroundHeight - 155) {
                 animal.setOrientation(Animal.Orientation.WEST);
             } else if (x > backgroundWidth - 260) {
                 animal.setOrientation(Animal.Orientation.SOUTH);
             } else if (x < 15 && y > backgroundHeight - 155) {
                 animal.setOrientation(Animal.Orientation.NORTH);
             }
-        }
-        else if (animal instanceof TerrestrialAnimals) {
-            if (x > backgroundWidth - 260 && y > backgroundHeight - 155)
-            {
+        } else if (animal instanceof TerrestrialAnimals) {
+            if (x > backgroundWidth - 260 && y > backgroundHeight - 155) {
                 animal.setOrientation(Animal.Orientation.WEST);
-            } else if (x > backgroundWidth - 260)
-            {
+            } else if (x > backgroundWidth - 260) {
                 animal.setOrientation(Animal.Orientation.SOUTH);
-            } else if (x < 15 && y > backgroundHeight - 155)
-            {
+            } else if (x < 15 && y > backgroundHeight - 155) {
                 animal.setOrientation(Animal.Orientation.NORTH);
             }
-        }
-        else if (animal instanceof WaterAnimal)
-        {
-            if (x > backgroundWidth - 345)
-            {
+        } else if (animal instanceof WaterAnimal) {
+            if (x > backgroundWidth - 345) {
                 animal.Stop();
             }
         }
@@ -139,56 +128,7 @@ public class CompetitionPanel extends JPanel {
      * Adds a new animal to a competition.
      */
     private void addAnimal() {
-        if (competitions.isEmpty()) {
-            JOptionPane.showMessageDialog(parentFrame, "You need to select at least one competition.");
-            return;
-        }
-        try {
-            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        JFrame frame = new JFrame("Competition Type Selection");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(300, 200);
-        JComboBox<String> competitionTypeComboBox = new JComboBox<>(competitions.stream().map(Competition::getName).toArray(String[]::new));
-        competitionTypeComboBox.setSelectedIndex(0);
-        competitionTypeComboBox.setFont(new Font("Arial", Font.PLAIN, 15));
-        JButton selectTypeOfCompetitionButton = new JButton("Confirm");
-        selectTypeOfCompetitionButton.setToolTipText("Click to confirm your selection");
-        JButton goBackButton = new JButton("Go Back");
-        goBackButton.setToolTipText("Click to go back to the previous menu");
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout(10, 10)); // Include spacing for better layout
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Padding around panel edges
-        panel.add(competitionTypeComboBox, BorderLayout.NORTH);
-        panel.add(selectTypeOfCompetitionButton, BorderLayout.CENTER);
-        panel.add(goBackButton, BorderLayout.SOUTH);
-        frame.add(panel);
-        frame.setLocationRelativeTo(parentFrame);
-        frame.setVisible(true);
-        goBackButton.addActionListener(e -> frame.dispose());
-        selectTypeOfCompetitionButton.addActionListener(e ->
-        {
-            frame.dispose();
-            String selectedCompetitionName = (String) competitionTypeComboBox.getSelectedItem();
-            if (selectedCompetitionName != null)
-            {
-                Competition selectedCompetition = competitions.stream().filter(c -> c.getName().equals(selectedCompetitionName)).findFirst().orElse(null);
-                if (selectedCompetition != null)
-                {
-                    AddAnimalDialog addAnimalDialog = new AddAnimalDialog(parentFrame, selectedCompetition.getType(), selectedCompetition);
-                    selectedAnimal = addAnimalDialog.getSelectedAnimalObject();
 
-                    if (selectedAnimal != null)
-                    {
-                        selectedCompetition.addAnimal(selectedAnimal);
-                        JOptionPane.showMessageDialog(parentFrame, selectedAnimal.getAnimaleName() + " added to the " + selectedCompetitionName + " competition");
-                        imagePanel.setCompetitions(competitions);
-                    }
-                }
-            }
-        });
     }
 
     /**

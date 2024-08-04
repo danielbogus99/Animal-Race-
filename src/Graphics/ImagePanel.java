@@ -66,7 +66,9 @@ public class ImagePanel extends JPanel {
             {
                 for (Animal animal : competition.getAnimals())
                 {
-                    animal.drawObject(g2d);
+                    synchronized (animal) {
+                        animal.drawObject(g2d);
+                    }
                 }
             }
         }

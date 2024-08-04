@@ -7,7 +7,7 @@ public class AnimalThread implements Runnable {
     private Boolean startFlag;
     private Boolean finishFlag;
     private volatile boolean isStopped;
-    private static long sleepDuration = 100; // משתנה גלובלי הניתן לשינוי
+    private static long sleepDuration = 100;
 
     public AnimalThread(Animal participant, double neededDistance, Boolean startFlag, Boolean finishFlag) {
         this.participant = participant;
@@ -19,7 +19,8 @@ public class AnimalThread implements Runnable {
 
     @Override
     public void run() {
-        synchronized (startFlag) {
+        synchronized (startFlag)
+        {
             while (!startFlag && !isStopped)
             {
                 try {

@@ -229,7 +229,7 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
      *
      * @param g The graphics context.
      */
-    public void drawObject(Graphics g) {
+    public synchronized void drawObject(Graphics g) {
         if (orien == Orientation.EAST) {
             g.drawImage(img1, getLocation().getX(), getLocation().getY() - size / 10, size , size, pan);
         } else if (orien == Orientation.SOUTH) {
@@ -266,7 +266,8 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
         currentEnergy += energy;
         return true;
     }
-    public double move() {
+
+    public synchronized double move() {
         if (currentEnergy <= 0) {
             return getTotalConsumption();
         }
@@ -290,10 +291,12 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
         return getTotalConsumption();
 
     }
+
     public void Stop()
     {
         speed = 0;
     }
+
     public void decreaseEnergy() {
         currentEnergy -= energyPerMeter;
     }
