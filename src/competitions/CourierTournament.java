@@ -28,7 +28,8 @@ public class CourierTournament extends Tournament {
         {
             int n = group.length;
             Boolean[] flags = new Boolean[n];
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
+            {
                 flags[i] = false;
             }
 

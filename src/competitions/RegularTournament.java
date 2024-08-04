@@ -46,7 +46,8 @@ public class RegularTournament extends Tournament {
         }
     }
 
-    private double calculateNeededDistance(Animal animal) {
+    private double calculateNeededDistance(Animal animal)
+    {
         double totalDistance = 1000.0;
         return totalDistance;
     }

@@ -33,7 +33,8 @@ public class AnimalThread implements Runnable {
         }
 
         double distanceCovered = participant.getTotalDistance();
-        while (distanceCovered < neededDistance && !isStopped) {
+        while (distanceCovered < neededDistance && !isStopped)
+        {
             synchronized (participant)
             {
                 distanceCovered += participant.move();

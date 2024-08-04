@@ -13,13 +13,6 @@ import java.util.List;
  * Represents a panel for managing competitions and animals within a competition.
  */
 public class CompetitionPanel extends JPanel {
-    private JButton addCompetitionButton;
-    private JButton addAnimalButton;
-    private JButton clearButton;
-    private JButton eatButton;
-    private JButton infoButton;
-    private JButton exitButton;
-    private Timer timer;
 
     private List<Competition> competitions = new ArrayList<>();
     private Animal selectedAnimal;
@@ -37,15 +30,15 @@ public class CompetitionPanel extends JPanel {
         setLayout(new GridLayout(1, 0));
         this.imagePanel = imagePanel;
 
-        addCompetitionButton = new JButton("Add Competition");
-        addAnimalButton = new JButton("Add Animal");
-        clearButton = new JButton("Clear");
-        eatButton = new JButton("Eat");
-        infoButton = new JButton("Info");
-        exitButton = new JButton("Exit");
-        timer = new Timer(200,e->updateCompetition());
+        JButton addCompetitionButton = new JButton("Add Competition");
+        JButton StartCompetitionButton = new JButton("Start Competition");
+        JButton clearButton = new JButton("Clear");
+        JButton eatButton = new JButton("Eat");
+        JButton infoButton = new JButton("Info");
+        JButton exitButton = new JButton("Exit");
+        Timer timer = new Timer(200, e -> updateCompetition());
         add(addCompetitionButton);
-        add(addAnimalButton);
+        add(StartCompetitionButton);
         add(clearButton);
         add(eatButton);
         add(infoButton);
@@ -53,7 +46,7 @@ public class CompetitionPanel extends JPanel {
 
         exitButton.addActionListener(e -> System.exit(0));
         addCompetitionButton.addActionListener(e -> addCompetition());
-        addAnimalButton.addActionListener(e -> addAnimal());
+        StartCompetitionButton.addActionListener(e -> startCompetition());
         infoButton.addActionListener(e -> info());
         clearButton.addActionListener(e -> clear());
         eatButton.addActionListener(e -> eat());
@@ -61,8 +54,10 @@ public class CompetitionPanel extends JPanel {
     }
 
     private void updateCompetition() {
-        for (Competition competition : competitions) {
-            for (Animal animal : competition.getAnimals()) {
+        for (Competition competition : competitions)
+        {
+            for (Animal animal : competition.getAnimals())
+            {
                 if (!animal.isOutOfEnergy())
                 {
                     animal.move();
@@ -107,7 +102,10 @@ public class CompetitionPanel extends JPanel {
         }
     }
 
-
+    private void startCompetition()
+    {
+        System.out.println("");
+    }
     /**
      * Adds a new competition.
      */
@@ -127,9 +125,7 @@ public class CompetitionPanel extends JPanel {
     /**
      * Adds a new animal to a competition.
      */
-    private void addAnimal() {
 
-    }
 
     /**
      * Feeds an animal in a competition.
