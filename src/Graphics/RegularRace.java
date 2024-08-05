@@ -47,4 +47,18 @@ public class RegularRace {
     public static List<RegularRace> getAllRaces() {
         return allRaces;
     }
+
+    // Method to convert the list of animals into a 2D array with each animal in its own sub-array
+    public Animal[][] toAnimalTeams()
+    {
+        // Create a 2D array where each row contains a single animal
+        Animal[][] animalTeams = new Animal[animals.size()][1];
+
+        for (int i = 0; i < animals.size(); i++)
+        {
+            animalTeams[i][0] = animals.get(i);
+        }
+
+        return animalTeams;
+    }
 }
