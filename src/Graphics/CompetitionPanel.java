@@ -57,7 +57,7 @@ public class CompetitionPanel extends JPanel {
     }
 
     private void updateCompetition() {
-        if (currentTournament != null && currentTournament.getStartFlag())
+        if (currentTournament != null)
         {
 
             // Update each team of animals in the current tournament

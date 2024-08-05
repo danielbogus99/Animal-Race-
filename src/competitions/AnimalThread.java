@@ -4,30 +4,25 @@ import animals.Animal;
 
 public class AnimalThread implements Runnable {
     private final Animal participant;
-    private final double neededDistance;
-    private final Object startFlagLock;
-    private volatile boolean startFlag;
-    private final Object finishFlagLock;
-    private volatile boolean finishFlag;
-    private volatile boolean isStopped;
+    private  double neededDistance;
+    private final Boolean startFlag;
+    private Boolean finishFlag;
     private static long sleepDuration = 100;
 
-    public AnimalThread(Animal participant, double neededDistance, Object startFlagLock, Object finishFlagLock) {
+    public AnimalThread(Animal participant, double neededDistance, Boolean startFlag, Boolean finishFlag) {
         this.participant = participant;
         this.neededDistance = neededDistance;
-        this.startFlagLock = startFlagLock;
-        this.finishFlagLock = finishFlagLock;
-        this.isStopped = false;
-        this.finishFlag = false;
+        this.startFlag = startFlag;
+        this.finishFlag = finishFlag;
     }
 
     @Override
     public void run() {
         // Wait for the start signal
-        synchronized (startFlagLock) {
-            while (!startFlag && !isStopped) {
+        synchronized (startFlag) {
+            while (!startFlag) {
                 try {
-                    startFlagLock.wait(); // Wait for the race to start
+                    startFlag.wait(); // Wait for the race to start
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt(); // Set interrupt flag again
                     return;
@@ -36,21 +31,22 @@ public class AnimalThread implements Runnable {
         }
 
         double distanceCovered = participant.getTotalDistance();
-        while (distanceCovered < neededDistance && !isStopped) {
+        while (distanceCovered < neededDistance && !Thread.interrupted())
+        {
             synchronized (participant) {
-                distanceCovered += participant.move();
+                distanceCovered += participant.move(); // Move the participant forward
             }
 
             if (distanceCovered >= neededDistance) {
-                synchronized (finishFlagLock) {
+                synchronized (finishFlag) {
                     finishFlag = true;
-                    finishFlagLock.notifyAll(); // Notify that this participant has finished
+                    finishFlag.notifyAll(); // Notify that this participant has finished
                 }
                 break;
             }
 
             try {
-                Thread.sleep(sleepDuration);
+                Thread.sleep(sleepDuration); // Sleep for a specified duration
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 return;
@@ -58,25 +54,8 @@ public class AnimalThread implements Runnable {
         }
     }
 
-    public void stop() {
-        isStopped = true;
-    }
-
-    public boolean isFinished() {
-        synchronized (finishFlagLock) {
-            return finishFlag;
-        }
-    }
-
+    // Static method to set sleep duration
     public static void setSleepDuration(long duration) {
         sleepDuration = duration;
-    }
-
-    // Call this method from your RegularTournament when the race starts
-    public void startRace() {
-        synchronized (startFlagLock) {
-            startFlag = true;
-            startFlagLock.notifyAll();
-        }
     }
 }

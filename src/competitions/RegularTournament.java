@@ -1,13 +1,13 @@
 package competitions;
 
 import animals.Animal;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class RegularTournament extends Tournament {
 
-    private boolean startFlag;
-    private final Object startFlagLock; // Lock object for synchronization
+    private Boolean startFlag;
     private Scores scores;
     private int numberOfGroups;
     private List<Thread> animalThreads;
@@ -15,7 +15,6 @@ public class RegularTournament extends Tournament {
 
     public RegularTournament(Animal[][] animalGroups, Object additionalInfo) {
         super(animalGroups, additionalInfo);
-        this.startFlagLock = new Object(); // Initialize the lock here
         setup(animalGroups, additionalInfo);
     }
 
@@ -28,31 +27,37 @@ public class RegularTournament extends Tournament {
         this.refereeThreads = new ArrayList<>();
 
         for (Animal[] group : animalGroups) {
+            // Assume each group has exactly one animal for a regular tournament
             Animal animal = group[0];
-            Boolean finishFlag = Boolean.FALSE;
 
-            double neededDistance = calculateNeededDistance(animal);
-            System.out.println(animal.getAnimaleName());
-            // Ensure proper initialization before thread creation
-            AnimalThread animalThread = new AnimalThread(animal, neededDistance, startFlagLock, finishFlag);
+            // Create a finish flag for this animal
+            Boolean finishFlag = false;
+
+            // Create an AnimalThread with the start flag and finish flag
+            AnimalThread animalThread = new AnimalThread(animal, calculateNeededDistance(animal), startFlag, finishFlag);
             Thread animalThreadObject = new Thread(animalThread);
             animalThreads.add(animalThreadObject);
 
+            // Create a Referee with the finish flag and scores
             Referee referee = new Referee(animal.getAnimaleName(), scores, finishFlag);
             Thread refereeThread = new Thread(referee);
             refereeThreads.add(refereeThread);
+
+            // Start the threads
+            animalThreadObject.start();
+            refereeThread.start();
         }
     }
 
     private double calculateNeededDistance(Animal animal) {
-        // Assume a fixed total distance for now. Customize as needed.
-        double totalDistance = 1000.0;
-        return totalDistance;
+        // Assuming a fixed total distance for simplicity
+        return 1000.0;
     }
 
-    public boolean getStartFlag() {
-        synchronized (startFlagLock) {
-            return startFlag;
+    public void startRace() {
+        synchronized (startFlag) {
+            startFlag = true;
+            startFlag.notifyAll(); // Notify all waiting threads
         }
     }
 
@@ -62,31 +67,5 @@ public class RegularTournament extends Tournament {
 
     public int getNumberOfGroups() {
         return numberOfGroups;
-    }
-
-    public void startRace() {
-        synchronized (startFlagLock) {
-            startFlag = true;
-            startFlagLock.notifyAll(); // Notify all waiting threads
-        }
-        for (Thread animalThread : animalThreads) {
-            animalThread.start();
-        }
-        for (Thread refereeThread : refereeThreads) {
-            refereeThread.start();
-        }
-    }
-
-    public void stopRace() {
-        for (Thread thread : animalThreads) {
-            if (thread.isAlive()) {
-                thread.interrupt();
-            }
-        }
-        for (Thread thread : refereeThreads) {
-            if (thread.isAlive()) {
-                thread.interrupt();
-            }
-        }
     }
 }
