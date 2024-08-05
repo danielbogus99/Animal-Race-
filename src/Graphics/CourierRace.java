@@ -8,7 +8,7 @@ import java.util.Map;
 public class CourierRace {
     private String name;
     private String type;
-    private List<Animal> animals;
+    private Map<String, List<Animal>> groups;
 
     // Static list to store all created races
     private static List<CourierRace> allRaces = new ArrayList<>();
@@ -17,12 +17,12 @@ public class CourierRace {
     public CourierRace(String name, String type) {
         this.name = name;
         this.type = type;
-        this.animals = new ArrayList<>();
+        this.groups = new HashMap<>();
     }
 
-    // Method to add animals to the race
-    public void addAnimals(List<Animal> animals) {
-        this.animals.addAll(animals);
+    // Method to add a group of animals to the race
+    public void addGroup(String groupName, List<Animal> animals) {
+        groups.put(groupName, new ArrayList<>(animals));
     }
 
     // Method to add the race to the list of all races
@@ -45,38 +45,26 @@ public class CourierRace {
         return type;
     }
 
-    // Method to get the list of animals in the race
+    // Method to get the list of all animals in the race
     public List<Animal> getAnimals() {
-        return new ArrayList<>(animals);
+        List<Animal> allAnimals = new ArrayList<>();
+        for (List<Animal> group : groups.values()) {
+            allAnimals.addAll(group);
+        }
+        return allAnimals;
     }
 
     // Method to return the animals grouped by their group in a 2D array
     public Animal[][] getAnimalGroups() {
-        Map<String, List<Animal>> groupMap = groupAnimalsByGroup();
-
-        // Create a 2D array to store animal groups
-        Animal[][] animalGroups = new Animal[groupMap.size()][];
+        Animal[][] animalGroups = new Animal[groups.size()][];
         int index = 0;
 
         // Populate the 2D array with groups of animals
-        for (List<Animal> group : groupMap.values()) {
+        for (List<Animal> group : groups.values()) {
             animalGroups[index++] = group.toArray(new Animal[0]);
         }
 
         return animalGroups;
-    }
-
-    // Helper method to group animals by their group key
-    private Map<String, List<Animal>> groupAnimalsByGroup() {
-        Map<String, List<Animal>> groupMap = new HashMap<>();
-
-        // Assuming each animal has a method getGroupName() to get its group name
-        for (Animal animal : animals) {
-            String groupName = animal.getAnimaleName(); // Adjust this as per your Animal class implementation
-            groupMap.computeIfAbsent(groupName, k -> new ArrayList<>()).add(animal);
-        }
-
-        return groupMap;
     }
 
     // Method to print race details
@@ -86,9 +74,7 @@ public class CourierRace {
         sb.append("CourierRace{name='").append(name).append("', type='").append(type).append("', groups=\n");
 
         // Get groups of animals
-        Map<String, List<Animal>> groupMap = groupAnimalsByGroup();
-
-        for (Map.Entry<String, List<Animal>> entry : groupMap.entrySet()) {
+        for (Map.Entry<String, List<Animal>> entry : groups.entrySet()) {
             sb.append("  Group '").append(entry.getKey()).append("':\n");
 
             for (Animal animal : entry.getValue()) {

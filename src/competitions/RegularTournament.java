@@ -1,13 +1,13 @@
 package competitions;
 
 import animals.Animal;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class RegularTournament extends Tournament {
 
-    private Boolean startFlag;
+    private boolean startFlag;
+    private final Object startFlagLock; // Lock object for synchronization
     private Scores scores;
     private int numberOfGroups;
     private List<Thread> animalThreads;
@@ -15,6 +15,8 @@ public class RegularTournament extends Tournament {
 
     public RegularTournament(Animal[][] animalGroups, Object additionalInfo) {
         super(animalGroups, additionalInfo);
+        this.startFlagLock = new Object(); // Initialize the lock here
+        setup(animalGroups, additionalInfo);
     }
 
     @Override
@@ -26,34 +28,32 @@ public class RegularTournament extends Tournament {
         this.refereeThreads = new ArrayList<>();
 
         for (Animal[] group : animalGroups) {
-
             Animal animal = group[0];
-            Boolean finishFlag = false;
+            Boolean finishFlag = Boolean.FALSE;
 
             double neededDistance = calculateNeededDistance(animal);
-
-
-            AnimalThread animalThread = new AnimalThread(animal, neededDistance, this.startFlag, finishFlag);
+            System.out.println(animal.getAnimaleName());
+            // Ensure proper initialization before thread creation
+            AnimalThread animalThread = new AnimalThread(animal, neededDistance, startFlagLock, finishFlag);
             Thread animalThreadObject = new Thread(animalThread);
             animalThreads.add(animalThreadObject);
-            animalThreadObject.start();
-
 
             Referee referee = new Referee(animal.getAnimaleName(), scores, finishFlag);
             Thread refereeThread = new Thread(referee);
             refereeThreads.add(refereeThread);
-            refereeThread.start();
         }
     }
 
-    private double calculateNeededDistance(Animal animal)
-    {
+    private double calculateNeededDistance(Animal animal) {
+        // Assume a fixed total distance for now. Customize as needed.
         double totalDistance = 1000.0;
         return totalDistance;
     }
 
-    public Boolean getStartFlag() {
-        return startFlag;
+    public boolean getStartFlag() {
+        synchronized (startFlagLock) {
+            return startFlag;
+        }
     }
 
     public Scores getScores() {
@@ -65,9 +65,15 @@ public class RegularTournament extends Tournament {
     }
 
     public void startRace() {
-        synchronized (startFlag) {
+        synchronized (startFlagLock) {
             startFlag = true;
-            startFlag.notifyAll();
+            startFlagLock.notifyAll(); // Notify all waiting threads
+        }
+        for (Thread animalThread : animalThreads) {
+            animalThread.start();
+        }
+        for (Thread refereeThread : refereeThreads) {
+            refereeThread.start();
         }
     }
 

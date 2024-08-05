@@ -118,7 +118,6 @@ public class AddCompetitionDialog extends JDialog {
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         mainPanel.add(tableScrollPane, gbc);
 
-
         gbc.gridx = 0;
         gbc.gridy = 10;
 
@@ -131,20 +130,16 @@ public class AddCompetitionDialog extends JDialog {
         regularButton.addActionListener(competitionTypeListener);
         courierButton.addActionListener(competitionTypeListener);
 
-
         confirm.addActionListener(e -> {
             selectedCompetitionType = regularButton.isSelected() ? "Regular" : "Courier";
             competitionName = competitionNameField.getText();
             selectedRaceType = (String) raceTypeCombo.getSelectedItem(); // Ensure race type is selected
 
-            if (competitionName.isEmpty())
-            {
+            if (competitionName.isEmpty()) {
                 JOptionPane.showMessageDialog(AddCompetitionDialog.this, "Please enter a competition name.");
-            } else if (selectedCompetitionType == null)
-            {
+            } else if (selectedCompetitionType == null) {
                 JOptionPane.showMessageDialog(AddCompetitionDialog.this, "Please select a competition type.");
-            } else if (selectedRaceType == null)
-            {
+            } else if (selectedRaceType == null) {
                 JOptionPane.showMessageDialog(AddCompetitionDialog.this, "Please select a race type.");
             } else {
                 if (selectedCompetitionType.equals("Regular")) {
@@ -157,9 +152,6 @@ public class AddCompetitionDialog extends JDialog {
                 }
             }
         });
-
-// Modify the processRegularCompetition method
-
 
         // Add action listener to go back button
         goBack.addActionListener(e -> dispose());
@@ -219,8 +211,6 @@ public class AddCompetitionDialog extends JDialog {
         }
         updateTable();
     }
-
-
 
     private void processRegularCompetition() {
         if (selectedCompetitionType.equals("Regular")) {
@@ -302,7 +292,7 @@ public class AddCompetitionDialog extends JDialog {
                 for (String groupName : selectedGroupNames) {
                     List<Animal> animals = competitionManager.getGroupMap().get(groupName);
                     if (animals != null) {
-                        race.addAnimals(animals); // Add selected groups to the race
+                        race.addGroup(groupName, animals); // Add the group to the race
                     }
                 }
 
@@ -315,8 +305,7 @@ public class AddCompetitionDialog extends JDialog {
             if (raceCreated) {
                 CourierRace.addRace(race);
                 JOptionPane.showMessageDialog(AddCompetitionDialog.this,
-                        "The courier race \"" + competitionName + "\" was created successfully!\n" +
-                                "Groups added: " + String.join(", ", eligibleGroupNames));
+                        "The courier race \"" + competitionName + "\" was created successfully!\n");
                 addAnimalFlag = false;
                 dispose();
             } else {
@@ -325,6 +314,7 @@ public class AddCompetitionDialog extends JDialog {
             }
         }
     }
+
 
     // Method to present a selection dialog for choosing groups
     private List<String> selectGroups(List<String> eligibleGroupNames) {
@@ -353,8 +343,6 @@ public class AddCompetitionDialog extends JDialog {
 
         return selectedGroups;
     }
-
-
 
     private void updateTable() {
         tableModel.setRowCount(0); // Clear existing data
@@ -425,8 +413,7 @@ public class AddCompetitionDialog extends JDialog {
         }
 
         // Ensure at least 2 groups of the same type for Courier Competition
-        for (int count : groupTypeCountMap.values())
-        {
+        for (int count : groupTypeCountMap.values()) {
             if (count >= 2) {
                 courierEligible = true;
                 break;
@@ -437,8 +424,6 @@ public class AddCompetitionDialog extends JDialog {
         courierButton.setEnabled(courierEligible);
         confirm.setEnabled(courierEligible || regularEligible);
     }
-
-
 
     private void addGroup(String name, String type) {
         String groupKey = name + " (" + type + ")";
@@ -491,6 +476,7 @@ public class AddCompetitionDialog extends JDialog {
     public List<RegularRace> getAllRegularRaces() {
         return RegularRace.getAllRaces();
     }
+
     public List<CourierRace> getAllCourierRaces() {
         return CourierRace.getAllRaces();
     }

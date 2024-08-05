@@ -1,20 +1,20 @@
 package Graphics;
 
 import animals.Animal;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 /**
- * ImagePanel is a custom JPanel that displays a background image and draws animals from competitions on it.
+ * ImagePanel is a custom JPanel that displays a background image and draws animals on it.
  */
 public class ImagePanel extends JPanel {
     private BufferedImage backgroundImage;
-    private List<Competition> competitions;
+    private Animal[][] animalTeams; // Directly use Animal[][] instead of competitions
     private CompetitionFrame parentFrame;
     private final int preferredWidth = 1024;  // Default width for scaling
     private final int preferredHeight = 768;  // Default height for scaling
@@ -29,49 +29,53 @@ public class ImagePanel extends JPanel {
         try {
             backgroundImage = ImageIO.read(new File("src/graphics2/competitionBackground.png"));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error loading background image: " + e.getMessage());
+            backgroundImage = null;
         }
         setLayout(null);
     }
 
     /**
-     * Sets the competitions to be displayed on this panel.
+     * Sets the animal teams to be displayed on this panel.
      *
-     * @param competitions The list of competitions to display.
+     * @param animalTeams The array of animal teams to display.
      */
-    public void setCompetitions(List<Competition> competitions) {
-        this.competitions = competitions;
+    public void setAnimalTeams(Animal[][] animalTeams) {
+        synchronized (this) {
+            this.animalTeams = animalTeams;
+        }
         repaint();
     }
 
     /**
-     * Paints the component, including the background image and the animals from the competitions.
+     * Paints the component, including the background image and the animals.
      *
      * @param g The Graphics context to use for painting.
      */
     @Override
-    protected void paintComponent(Graphics g)
-    {
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (backgroundImage != null)
-        {
+
+        if (backgroundImage != null) {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
-        Graphics2D g2d = (Graphics2D) g;
-        if (competitions != null) {
+
+        Graphics2D g2d = (Graphics2D) g.create();
+        if (animalTeams != null) {
             double scaleX = getWidth() / (double) preferredWidth;
             double scaleY = getHeight() / (double) preferredHeight;
             g2d.scale(scaleX, scaleY);
-            for (Competition competition : competitions)
-            {
-                for (Animal animal : competition.getAnimals())
-                {
-                    synchronized (animal) {
-                        animal.drawObject(g2d);
+            synchronized (this) {
+                for (Animal[] team : animalTeams) {
+                    for (Animal animal : team) {
+                        synchronized (animal) {
+                            animal.drawObject(g2d); // Draw each animal
+                        }
                     }
                 }
             }
         }
+        g2d.dispose(); // Dispose of the graphics context to release resources
     }
 
     /**
@@ -80,7 +84,7 @@ public class ImagePanel extends JPanel {
      * @return The height of the background image.
      */
     public int getHeight2() {
-        return backgroundImage.getHeight();
+        return backgroundImage != null ? backgroundImage.getHeight() : preferredHeight;
     }
 
     /**
@@ -89,6 +93,6 @@ public class ImagePanel extends JPanel {
      * @return The width of the background image.
      */
     public int getWidth2() {
-        return backgroundImage.getWidth();
+        return backgroundImage != null ? backgroundImage.getWidth() : preferredWidth;
     }
 }
