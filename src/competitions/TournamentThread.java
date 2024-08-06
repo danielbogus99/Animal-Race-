@@ -1,59 +1,65 @@
 package competitions;
 
-import java.util.*;
-import animals.*;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.Date;
 
-class TournamentThread implements Runnable {
-    private  Scores scores;
-    private Boolean startSignal;
-    private final int groups;
+public class TournamentThread implements Runnable {
+    private final Scores scores; // Holds the final results of each group
+    private Boolean startSignal; // Special flag to start all animals
+    private final int groups; // Number of competing groups
+    private final Map<String, Date> raceResults; // Store the results for UI updates
 
-
-    private final Runnable updateUI;
-    private final Map<String, Long> displayTimes;
-
-    public TournamentThread(Scores scores, Boolean startSignal, int groups, Runnable updateUI) {
+    public TournamentThread(Scores scores, Boolean startSignal, int groups) {
         this.scores = scores;
         this.startSignal = startSignal;
         this.groups = groups;
-        this.updateUI = updateUI;
-        this.displayTimes = new HashMap<>();
+        this.raceResults = new ConcurrentHashMap<>();
     }
 
     @Override
     public void run() {
-        synchronized (startSignal)
-        {
+
+        synchronized (startSignal) {
             startSignal = true;
-            startSignal.notifyAll();
+            notifyAll();
         }
 
-        while (!Thread.currentThread().isInterrupted())
-        {
-            Map<String, Date> allScores = scores.getAll();
 
-            for (Map.Entry<String, Date> entry : allScores.entrySet())
+        while (true)
+        {
+            Map<String, Date> allScores = scores.getAll(); // Get all scores
+
+            synchronized (raceResults)
             {
-                displayTimes.putIfAbsent(entry.getKey(), entry.getValue().getTime());
+                raceResults.putAll(allScores); // Update local results with the scores
             }
 
-            updateUI.run();
+            // Display results for completed groups and keep others blank
+            for (int i = 0; i < groups; i++) {
+                String groupName = "Group " + (i + 1);
+                Date finishTime = raceResults.get(groupName);
 
-            if (displayTimes.size() == groups)
+                if (finishTime != null) {
+                    System.out.println(groupName + " finished at: " + finishTime);
+                } else {
+                    System.out.println(groupName + " is still racing.");
+                }
+            }
+
+
+            if (raceResults.size() == groups)
             {
-                break;
+                System.out.println("All groups have finished the race.");
+                break; // Exit loop if all groups are done
             }
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(1000); // Sleep for a while before the next update
             } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
+                Thread.currentThread().interrupt(); // Handle interruption
                 return;
             }
         }
-    }
-
-    public Map<String, Long> getDisplayTimes() {
-        return new HashMap<>(displayTimes);
     }
 }

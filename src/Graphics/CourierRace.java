@@ -78,7 +78,7 @@ public class CourierRace {
             sb.append("  Group '").append(entry.getKey()).append("':\n");
 
             for (Animal animal : entry.getValue()) {
-                sb.append("    - ").append(animal.getAnimaleName()).append(" (").append(animal.animalType()).append(")\n");
+                sb.append("    - ").append(animal.getAnimalName()).append(" (").append(animal.animalType()).append(")\n");
             }
         }
         sb.append("}");

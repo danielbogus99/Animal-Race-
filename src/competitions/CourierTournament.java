@@ -1,17 +1,13 @@
 package competitions;
 
 import animals.Animal;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class CourierTournament extends Tournament {
-
-    private Boolean startFlag;
-    private Scores scores;
-    private int numberOfGroups;
-    private List<Thread> animalThreads;
-    private Thread refereeThread;
+    private Boolean startFlag; // Special start flag to begin the race
+    private Scores scores; // Scores to record the results
+    private int numberOfGroups; // Number of groups in the tournament
 
     public CourierTournament(Animal[][] animalGroups, Object additionalInfo) {
         super(animalGroups, additionalInfo);
@@ -19,70 +15,45 @@ public class CourierTournament extends Tournament {
 
     @Override
     protected void setup(Animal[][] animalGroups, Object additionalInfo) {
-        this.startFlag = false;
-        this.scores = new Scores();
-        this.numberOfGroups = animalGroups.length;
-        this.animalThreads = new ArrayList<>();
+        this.startFlag = false; // Initialize the start flag to false
+        this.scores = new Scores(); // Create a new Scores object
+        this.numberOfGroups = animalGroups.length; // Set the number of groups
 
-        for (Animal[] group : animalGroups)
-        {
-            int n = group.length;
-            Boolean[] flags = new Boolean[n];
-            for (int i = 0; i < n; i++)
-            {
-                flags[i] = false;
+        for (int groupIndex = 0; groupIndex < animalGroups.length; groupIndex++) {
+            Animal[] group = animalGroups[groupIndex];
+            int n = group.length; // Number of animals in the group
+            List<Boolean> flags = new ArrayList<>(n);
+
+            // Initialize all flags to false
+            for (int i = 0; i < n; i++) {
+                flags.add(false);
             }
 
-            double neededDistance = calculateNeededDistance(group);
+            // Create and start AnimalThread for each animal in the group
+            for (int i = 0; i < n; i++) {
+                Boolean currentStartFlag = (i == 0) ? startFlag : flags.get(i - 1);
+                Boolean currentFinishFlag = flags.get(i);
+                double neededDistance = 100.0 / n; // Calculate needed distance
 
-            for (int i = 0; i < n; i++)
-            {
-                Boolean currentStartFlag = (i == 0) ? this.startFlag : flags[i - 1];
-                Boolean currentFinishFlag = flags[i];
                 AnimalThread animalThread = new AnimalThread(group[i], neededDistance, currentStartFlag, currentFinishFlag);
-                Thread thread = new Thread(animalThread);
-                animalThreads.add(thread);
-                thread.start();
+                new Thread(animalThread).start();
             }
 
-            Referee referee = new Referee("Team " + group[0].getAnimaleName(), scores, flags[n - 1]);
-            refereeThread = new Thread(referee);
-            refereeThread.start();
+            // Create and start a Referee for the group
+            Referee referee = new Referee("Group " + (groupIndex + 1), scores, flags.get(n - 1));
+            new Thread(referee).start();
         }
+
+        // Store the startFlag, scores, and number of groups in the tournament thread
+        this.tournamentThread = new TournamentThread(scores, startFlag, numberOfGroups);
+        new Thread(this.tournamentThread).start(); // Start the tournament thread
     }
 
-    private double calculateNeededDistance(Animal[] group) {
-        double totalDistance = 1000.0;
-        return totalDistance / group.length;
-    }
-
-    public Boolean getStartFlag() {
-        return startFlag;
-    }
-
-    public Scores getScores() {
-        return scores;
-    }
-
-    public int getNumberOfGroups() {
-        return numberOfGroups;
-    }
-
+    // Start the race by setting the start flag to true
     public void startRace() {
         synchronized (startFlag) {
             startFlag = true;
             startFlag.notifyAll();
-        }
-    }
-
-    public void stopRace() {
-        for (Thread thread : animalThreads) {
-            if (thread.isAlive()) {
-                thread.interrupt();
-            }
-        }
-        if (refereeThread.isAlive()) {
-            refereeThread.interrupt();
         }
     }
 }

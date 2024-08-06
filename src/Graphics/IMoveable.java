@@ -2,7 +2,7 @@ package Graphics;
 
 public interface IMoveable
 {
-    public String getAnimaleName();
+    public String getAnimalName();
     public int getSpeed();
     public double move();
 

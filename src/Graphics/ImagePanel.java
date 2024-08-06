@@ -1,7 +1,6 @@
 package Graphics;
 
 import animals.Animal;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +13,7 @@ import java.io.IOException;
  */
 public class ImagePanel extends JPanel {
     private BufferedImage backgroundImage;
-    private Animal[][] animalTeams; // Directly use Animal[][] instead of competitions
+    private Animal[][] animalTeams;
     private CompetitionFrame parentFrame;
     private final int preferredWidth = 1024;  // Default width for scaling
     private final int preferredHeight = 768;  // Default height for scaling
@@ -79,20 +78,20 @@ public class ImagePanel extends JPanel {
     }
 
     /**
-     * Gets the height of the background image.
+     * Gets the preferred height for scaling or the background image height if available.
      *
-     * @return The height of the background image.
+     * @return The height of the panel or background image.
      */
     public int getHeight2() {
-        return backgroundImage != null ? backgroundImage.getHeight() : preferredHeight;
+        return getHeight(); // Return the current height of the panel
     }
 
     /**
-     * Gets the width of the background image.
+     * Gets the preferred width for scaling or the background image width if available.
      *
-     * @return The width of the background image.
+     * @return The width of the panel or background image.
      */
     public int getWidth2() {
-        return backgroundImage != null ? backgroundImage.getWidth() : preferredWidth;
+        return getWidth(); // Return the current width of the panel
     }
 }

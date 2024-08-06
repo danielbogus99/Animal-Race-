@@ -1,19 +1,22 @@
 package competitions;
-
-import animals.Animal;
+import java.util.*;
+import animals.*;
 
 public abstract class Tournament {
-    protected Animal[][] animalGroups;
+
+
+    protected TournamentThread tournamentThread;
 
     public Tournament(Animal[][] animalGroups, Object additionalInfo) {
-        this.animalGroups = animalGroups;
         setup(animalGroups, additionalInfo);
     }
 
+
     protected abstract void setup(Animal[][] animalGroups, Object additionalInfo);
 
-    // Method to return the animal teams
-    public Animal[][] getAnimalTeams() {
-        return animalGroups;
+
+    public TournamentThread getTournamentThread()
+    {
+        return tournamentThread;
     }
 }

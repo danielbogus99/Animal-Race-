@@ -368,7 +368,7 @@ public class AddCompetitionDialog extends JDialog {
                 List<Animal> animals = competitionManager.getGroupMap().get(groupName);
                 if (row < animals.size()) {
                     Animal animal = animals.get(row);
-                    rowData[colIndex] = animal.getAnimaleName() + " (" + animal.animalType() + ")";
+                    rowData[colIndex] = animal.getAnimalName() + " (" + animal.animalType() + ")";
                 } else {
                     rowData[colIndex] = ""; // Fill with empty string if no animal at this index
                 }
@@ -453,7 +453,7 @@ public class AddCompetitionDialog extends JDialog {
 
         List<JCheckBox> checkBoxes = new ArrayList<>();
         for (Animal animal : availableAnimals) {
-            JCheckBox checkBox = new JCheckBox(animal.getAnimaleName() + " (" + animal.animalType() + ")");
+            JCheckBox checkBox = new JCheckBox(animal.getAnimalName() + " (" + animal.animalType() + ")");
             checkBoxes.add(checkBox);
             panel.add(checkBox);
         }

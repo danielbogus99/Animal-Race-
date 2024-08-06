@@ -6,31 +6,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Scores {
-    private final Map<String, Date> scores;
+    // A synchronized map to store scores with participant names and their finish times
+    private final Map<String, Date> scores = Collections.synchronizedMap(new HashMap<>());
 
-    public Scores() {
-        scores = Collections.synchronizedMap(new HashMap<>());
-    }
-
-    /**
-     * Adds a score to the map with the current time.
-     *
-     * @param name The name to be added.
-     */
+    // Adds a participant's result to the map with the current timestamp
     public void add(String name) {
         synchronized (scores) {
-            scores.put(name, new Date());
+            scores.put(name, new Date()); // Add current date and time as finish time
         }
     }
 
-    /**
-     * Returns all the scores.
-     *
-     * @return The map of scores.
-     */
+    // Returns a copy of the scores map to avoid concurrent modification issues
     public Map<String, Date> getAll() {
         synchronized (scores) {
-            return new HashMap<>(scores);
+            return new HashMap<>(scores); // Return a copy of the map
         }
     }
 }

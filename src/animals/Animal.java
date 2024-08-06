@@ -33,6 +33,7 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
     private CompetitionPanel pan;
     private BufferedImage img1, img2, img3, img4;
 
+
     /**
      * Constructor to initialize an Animal object.
      *
@@ -90,7 +91,7 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
      * Method to make the animal produce its sound.
      */
     public void makeSound() {
-        System.out.println("Animal " + getAnimaleName() + " said " + getSound());
+        System.out.println("Animal " + getAnimalName() + " said " + getSound());
     }
 
     /**
@@ -137,7 +138,7 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
      *
      * @return The name of the animal.
      */
-    public String getAnimaleName() {
+    public String getAnimalName() {
         return name;
     }
 
