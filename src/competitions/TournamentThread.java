@@ -22,7 +22,7 @@ public class TournamentThread implements Runnable {
 
         synchronized (startSignal) {
             startSignal = true;
-            notifyAll();
+            startSignal.notifyAll();
         }
 
 

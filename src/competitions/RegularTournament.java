@@ -21,7 +21,8 @@ public class RegularTournament extends Tournament {
         this.numberOfGroups = animalGroups.length; // Set the number of groups
         this.animalTeams = animalGroups; // Store the animal teams
 
-        for (Animal[] group : animalGroups) {
+        for (Animal[] group : animalGroups)
+        {
             // Each group contains only one animal in a regular tournament
             Animal animal = group[0];
 
@@ -51,7 +52,7 @@ public class RegularTournament extends Tournament {
         synchronized (startFlag)
         {
             startFlag = true;
-            notifyAll();
+            startFlag.notifyAll();
         }
     }
 }
