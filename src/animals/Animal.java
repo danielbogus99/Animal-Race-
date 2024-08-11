@@ -281,6 +281,7 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
         int x = getLocation().getX();
         int y = getLocation().getY();
 
+
         switch (orien) {
             case EAST:
                 x += speed;
@@ -305,6 +306,10 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
 
         return getTotalConsumption();
     }
+    public void setY(int y)
+    {
+       location.setY(y);
+    }
 
 
     public void checkBoundsAndChangeDirection(Animal animal) {
@@ -313,8 +318,10 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
         int backgroundWidth = new ImagePanel(null).getWidth2();
         int backgroundHeight = new ImagePanel(null).getHeight2();
 
-        if (animal instanceof AirAnimal) {
-            if (x >= backgroundWidth) {
+        if (animal instanceof AirAnimal)
+        {
+            if (x >= backgroundWidth-75)
+            {
                 Stop();
                 System.out.println("AirAnimal stopped at boundary.");
             }
@@ -335,7 +342,7 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
                 animal.setOrientation(Orientation.EAST);
             }
         } else if (animal instanceof WaterAnimal) {
-            if (x >= backgroundWidth - 345) {
+            if (x >= backgroundWidth - 200) {
                 Stop();
                 System.out.println("WaterAnimal stopped at boundary.");
             }

@@ -25,14 +25,19 @@ public class AddCompetitionDialog extends JDialog {
     private String competitionName;
     private boolean addAnimalFlag;
     private final JComboBox<String> raceTypeCombo;
-    private String selectedGroupKey = ""; // Track the selected group
+    private String selectedGroupKey = "";
+    private ImagePanel imagePanel;
+    private int width, high; // Track the selected group
 
     // Use CompetitionManager to manage groups
     private final CompetitionManager competitionManager = CompetitionManager.getInstance();
 
     public AddCompetitionDialog(JFrame parent) {
         super(parent, "Add Competition", true);
+        this.imagePanel = ((CompetitionFrame) parent).getImagePanel();
 
+        width = imagePanel.getWidth2();
+        high = imagePanel.getHeight2();
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
@@ -142,10 +147,24 @@ public class AddCompetitionDialog extends JDialog {
             } else if (selectedRaceType == null) {
                 JOptionPane.showMessageDialog(AddCompetitionDialog.this, "Please select a race type.");
             } else {
+                int selectedPath = -1;
+
+                // Prompt for path only if race type is not Terrestrial
+                if (selectedRaceType.equals("Water")) {
+                    selectedPath = promptForWaterPath(); // Prompt the user to select a water path
+                } else if (selectedRaceType.equals("Air")) {
+                    selectedPath = promptForAirPath(); // Prompt the user to select an air path
+                }
+
+                // If path selection was cancelled, return without proceeding
+                if ((selectedRaceType.equals("Water") || selectedRaceType.equals("Air")) && selectedPath == -1) {
+                    return; // User cancelled path selection, do nothing
+                }
+
                 if (selectedCompetitionType.equals("Regular")) {
-                    processRegularCompetition();
+                    processRegularCompetition(selectedPath); // Pass the selected path
                 } else if (selectedCompetitionType.equals("Courier")) {
-                    processCourierCompetition();
+                    processCourierCompetition(selectedPath); // Pass the selected path
                 } else {
                     addAnimalFlag = false;
                     dispose();
@@ -212,7 +231,7 @@ public class AddCompetitionDialog extends JDialog {
         updateTable();
     }
 
-    private void processRegularCompetition() {
+    private void processRegularCompetition(int path) {
         if (selectedCompetitionType.equals("Regular")) {
             boolean raceCreated = false;
             RegularRace race = new RegularRace(competitionName, selectedRaceType);
@@ -235,7 +254,11 @@ public class AddCompetitionDialog extends JDialog {
 
             // Add only selected animals to the race
             if (!chosenAnimals.isEmpty()) {
-                race.addAnimals(chosenAnimals);
+                int yPosition = calculateYPositionBasedOnType(path); // Calculate Y position based on selected path
+                for (Animal animal : chosenAnimals) {
+                    animal.setY(yPosition); // Update the Y position of the animal
+                }
+                race.addAnimals(chosenAnimals); // Add animals to the race
                 raceCreated = true;
             }
 
@@ -251,7 +274,7 @@ public class AddCompetitionDialog extends JDialog {
         }
     }
 
-    private void processCourierCompetition() {
+    private void processCourierCompetition(int path) {
         if (selectedCompetitionType.equals("Courier")) {
             boolean raceCreated = false;
             CourierRace race = new CourierRace(competitionName, selectedRaceType);
@@ -292,6 +315,10 @@ public class AddCompetitionDialog extends JDialog {
                 for (String groupName : selectedGroupNames) {
                     List<Animal> animals = competitionManager.getGroupMap().get(groupName);
                     if (animals != null) {
+                        int yPosition = calculateYPositionBasedOnType(path); // Calculate Y position based on selected path
+                        for (Animal animal : animals) {
+                            animal.setY(yPosition); // Update the Y position of the animal
+                        }
                         race.addGroup(groupName, animals); // Add the group to the race
                     }
                 }
@@ -315,6 +342,27 @@ public class AddCompetitionDialog extends JDialog {
         }
     }
 
+    private int promptForWaterPath() {
+        Integer[] paths = {1, 2, 3, 4}; // Define the available paths for water
+        JComboBox<Integer> pathCombo = new JComboBox<>(paths);
+        int result = JOptionPane.showConfirmDialog(this, pathCombo, "Select Water Path", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (result == JOptionPane.OK_OPTION) {
+            return (int) pathCombo.getSelectedItem();
+        } else {
+            return -1; // Return -1 if the user cancels the selection
+        }
+    }
+
+    private int promptForAirPath() {
+        Integer[] paths = {1, 2, 3, 4, 5}; // Define the available paths for air
+        JComboBox<Integer> pathCombo = new JComboBox<>(paths);
+        int result = JOptionPane.showConfirmDialog(this, pathCombo, "Select Air Path", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (result == JOptionPane.OK_OPTION) {
+            return (int) pathCombo.getSelectedItem();
+        } else {
+            return -1; // Return -1 if the user cancels the selection
+        }
+    }
 
     // Method to present a selection dialog for choosing groups
     private List<String> selectGroups(List<String> eligibleGroupNames) {
@@ -471,6 +519,47 @@ public class AddCompetitionDialog extends JDialog {
         }
 
         return selectedAnimals;
+    }
+
+    private int calculateYPosition(int path) {
+        if (path == 1) {
+            return high / 8;
+        } else if (path == 2) {
+            return high / 3 + high/45;
+        } else if (path == 3) {
+            return high / 3 + high / 6 + high / 15;
+        } else if (path == 4) {
+            return high / 3 + high / 3 + high / 8;
+        }
+        return 0;
+    }
+
+    private int calculateYAirPosition(int path) {
+        if (path == 1) {
+            return 0;
+        }
+        if (path == 2) {
+            return high / 8 + high / 10;
+        }
+        if (path == 3) {
+            return high / 3 + high / 10;
+        }
+        if (path == 4) {
+            return high / 2 + high / 7;
+        }
+        if (path == 5) {
+            return high / 2 + high / 3;
+        }
+        return 0;
+    }
+
+    private int calculateYPositionBasedOnType(int path) {
+        if (selectedRaceType.equals("Water")) {
+            return calculateYPosition(path);
+        } else if (selectedRaceType.equals("Air")) {
+            return calculateYAirPosition(path);
+        }
+        return 0; // Default fallback
     }
 
     public List<RegularRace> getAllRegularRaces() {

@@ -302,14 +302,6 @@ public class AddAnimalDialog extends JDialog {
         panel.add(DiveDepthField);
         panel.add(new JLabel("Area of Living:"));
         panel.add(AreaOfLivingField);
-        // Add water path combo box only if race type is not Terrestrial
-        JComboBox<Integer> WaterPath = null;
-        if (!raceType.equals("Terrestrial")) {
-            Integer[] waterPaths = competition.getWaterPath().toArray(new Integer[0]);
-            WaterPath = new JComboBox<>(waterPaths);
-            panel.add(new JLabel("Water Path:"));
-            panel.add(WaterPath);
-        }
 
         JButton submitButton = new JButton("Submit");
         panel.add(submitButton);
@@ -317,13 +309,16 @@ public class AddAnimalDialog extends JDialog {
         panel.add(GoBackButton);
         GoBackButton.addActionListener(e -> AlligatorDialog.dispose());
         AlligatorDialog.add(panel, BorderLayout.CENTER);
-        JComboBox<Integer> finalWaterPath = WaterPath; // for use in the inner class
+
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     String name = nameField.getText();
                     int speed = Integer.parseInt(speedField.getText());
+                    if (speed > 5) {
+                        throw new Exception("Alligator speed cannot be greater than 5.");
+                    }
                     double weight = Double.parseDouble(weightField.getText());
                     int MaxEnergy = Integer.parseInt(MaxEnergyField.getText());
                     int Energy = Integer.parseInt(EnergyPerMeter.getText());
@@ -332,21 +327,11 @@ public class AddAnimalDialog extends JDialog {
                     String AreaOfLiving = AreaOfLivingField.getText();
                     int noLegs = Integer.parseInt(noLegsField.getText());
 
-                    if (!raceType.equals("Terrestrial") && finalWaterPath != null) {
-                        int Waterpath = (int) finalWaterPath.getSelectedItem();
-                        y = calculateYPosition(Waterpath); // Calculate y based on selected path
-                        x = width / 14;
-                    }
-                    if (raceType.equals("Terrestrial")) {
-                        y = 0;
-                        x = 0;
-                    }
-
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new Alligator(x, y, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, DiveDepth, noLegs, AreaOfLiving, competitionPanel);
+                    selectedAnimalObject = new Alligator(width/14, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, DiveDepth, noLegs, AreaOfLiving, competitionPanel);
                     AlligatorDialog.dispose();
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(AlligatorDialog, "Invalid input. Please check your entries.");
+                    JOptionPane.showMessageDialog(AlligatorDialog, ex.getMessage());
                 }
             }
         });
@@ -354,6 +339,7 @@ public class AddAnimalDialog extends JDialog {
         AlligatorDialog.setVisible(true);
         return selectedAnimalObject;
     }
+
 
     /**
      * Creates a Dolphin object using user input.
@@ -366,22 +352,20 @@ public class AddAnimalDialog extends JDialog {
         DolphinDialog.setLayout(new BorderLayout());
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 4, 10, 30));
-        Integer[] waterPaths = competition.getWaterPath().toArray(new Integer[0]);
-        JComboBox<Integer> WaterPath = new JComboBox<>(waterPaths);
         JComboBox<String> WaterType = new JComboBox<>(new String[]{"Sea", "Sweet"});
         addCommonFields(panel);
         panel.add(new JLabel("Dive Depth:"));
         panel.add(DiveDepthField);
         panel.add(new JLabel("Water Type:"));
         panel.add(WaterType);
-        panel.add(new JLabel("Water Path:"));
-        panel.add(WaterPath);
+
         JButton submitButton = new JButton("Submit");
         panel.add(submitButton);
         JButton GoBackButton = new JButton("Go back");
         panel.add(GoBackButton);
         GoBackButton.addActionListener(e -> DolphinDialog.dispose());
         DolphinDialog.add(panel, BorderLayout.CENTER);
+
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -394,10 +378,9 @@ public class AddAnimalDialog extends JDialog {
                     double DiveDepth = Double.parseDouble(DiveDepthField.getText());
                     Animal.gender gender = getGender();
                     Dolphin.WaterType waterType = WaterType.getSelectedItem().equals("Sea") ? Dolphin.WaterType.Sea : Dolphin.WaterType.Sweet;
-                    int Waterpath = (int) WaterPath.getSelectedItem();
-                    int y = calculateYPosition(Waterpath); // Assuming a method for calculating y
+
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new Dolphin(width / 14, y, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, DiveDepth, waterType, competitionPanel);
+                    selectedAnimalObject = new Dolphin(width/14, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, DiveDepth, waterType, competitionPanel);
                     DolphinDialog.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(DolphinDialog, "Invalid input. Please check your entries.");
@@ -421,15 +404,11 @@ public class AddAnimalDialog extends JDialog {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 4, 10, 30));
         JTextField Foodtype = new JTextField(20);
-        Integer[] waterPaths = competition.getWaterPath().toArray(new Integer[0]);
-        JComboBox<Integer> WaterPath = new JComboBox<>(waterPaths);
         addCommonFields(panel);
         panel.add(new JLabel("Dive Depth:"));
         panel.add(DiveDepthField);
         panel.add(new JLabel("Food type:"));
         panel.add(Foodtype);
-        panel.add(new JLabel("Water Path:"));
-        panel.add(WaterPath);
 
         JButton submitButton = new JButton("Submit");
         panel.add(submitButton);
@@ -437,6 +416,7 @@ public class AddAnimalDialog extends JDialog {
         panel.add(GoBackButton);
         GoBackButton.addActionListener(e -> WhaleDialog.dispose());
         WhaleDialog.add(panel, BorderLayout.CENTER);
+
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -449,10 +429,9 @@ public class AddAnimalDialog extends JDialog {
                     double DiveDepth = Double.parseDouble(DiveDepthField.getText());
                     String foodType = Foodtype.getText();
                     Animal.gender gender = getGender();
-                    int Waterpath = (int) WaterPath.getSelectedItem(); // Getting selected path number directly
-                    int y = calculateYPosition(Waterpath); // Using a method to calculate y based on path
+
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new Whale(width / 14, y, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, DiveDepth, foodType, competitionPanel);
+                    selectedAnimalObject = new Whale(width/14, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, DiveDepth, foodType, competitionPanel);
                     WhaleDialog.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(WhaleDialog, "Invalid input. Please check your entries.");
@@ -463,6 +442,7 @@ public class AddAnimalDialog extends JDialog {
         WhaleDialog.setVisible(true);
         return selectedAnimalObject;
     }
+
 
     /**
      * Creates an Eagle object using user input.
@@ -475,9 +455,6 @@ public class AddAnimalDialog extends JDialog {
         EagleDialog.setLayout(new BorderLayout());
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 4, 10, 30));
-
-        Integer[] airPath = competition.getAirPath().toArray(new Integer[0]);
-        JComboBox<Integer> AirPath = new JComboBox<>(airPath);
         JTextField WingspanField = new JTextField(20);
         JTextField altitudeOfFlight = new JTextField(20);
         addCommonFields(panel);
@@ -485,8 +462,6 @@ public class AddAnimalDialog extends JDialog {
         panel.add(WingspanField);
         panel.add(new JLabel("Altitude of Flight:"));
         panel.add(altitudeOfFlight);
-        panel.add(new JLabel("Air Path:"));
-        panel.add(AirPath);
 
         JButton submitButton = new JButton("Submit");
         panel.add(submitButton);
@@ -494,6 +469,7 @@ public class AddAnimalDialog extends JDialog {
         panel.add(GoBackButton);
         GoBackButton.addActionListener(e -> EagleDialog.dispose());
         EagleDialog.add(panel, BorderLayout.CENTER);
+
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -506,10 +482,9 @@ public class AddAnimalDialog extends JDialog {
                     double Wingspan = Double.parseDouble(WingspanField.getText());
                     double AltitudeOfFlight = Double.parseDouble(altitudeOfFlight.getText());
                     Animal.gender gender = getGender();
-                    int Airpath = (int) AirPath.getSelectedItem();
-                    int y = calculateYAirPosition(Airpath);
+
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new Eagle(Airpath, y, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, Wingspan, AltitudeOfFlight, competitionPanel);
+                    selectedAnimalObject = new Eagle(0, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, Wingspan, AltitudeOfFlight, competitionPanel);
                     EagleDialog.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(EagleDialog, "Invalid input. Please check your entries.");
@@ -520,6 +495,7 @@ public class AddAnimalDialog extends JDialog {
         EagleDialog.setVisible(true);
         return selectedAnimalObject;
     }
+
 
     /**
      * Creates a Pigeon object using user input.
@@ -532,8 +508,6 @@ public class AddAnimalDialog extends JDialog {
         PigeonDialog.setLayout(new BorderLayout());
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 4, 10, 30));
-        Integer[] airPath = competition.getAirPath().toArray(new Integer[0]);
-        JComboBox<Integer> AirPath = new JComboBox<>(airPath);
         JTextField FamilyField = new JTextField(20);
         JTextField WingspanField = new JTextField(20);
         addCommonFields(panel);
@@ -541,8 +515,6 @@ public class AddAnimalDialog extends JDialog {
         panel.add(WingspanField);
         panel.add(new JLabel("Family:"));
         panel.add(FamilyField);
-        panel.add(new JLabel("Air Path:"));
-        panel.add(AirPath);
 
         JButton submitButton = new JButton("Submit");
         panel.add(submitButton);
@@ -550,6 +522,7 @@ public class AddAnimalDialog extends JDialog {
         panel.add(GoBackButton);
         GoBackButton.addActionListener(e -> PigeonDialog.dispose());
         PigeonDialog.add(panel, BorderLayout.CENTER);
+
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -562,11 +535,9 @@ public class AddAnimalDialog extends JDialog {
                     double Wingspan = Double.parseDouble(WingspanField.getText());
                     String Family = FamilyField.getText();
                     Animal.gender gender = getGender();
-                    int Airpath = (int) AirPath.getSelectedItem();
-                    int y = calculateYAirPosition(Airpath);
-                    Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new Pigeon(Airpath, y, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, Wingspan, Family, competitionPanel);
 
+                    Medal[] medals = new Medal[2];
+                    selectedAnimalObject = new Pigeon(0, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, Wingspan, Family, competitionPanel);
                     PigeonDialog.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(PigeonDialog, "Invalid input. Please check your entries.");
@@ -578,11 +549,13 @@ public class AddAnimalDialog extends JDialog {
         return selectedAnimalObject;
     }
 
+
     /**
      * Creates a Snake object using user input.
      *
      * @return The created Snake object.
      */
+    // Snake Creation with Speed Limit
     public Animal CreateSnake() {
         JDialog SnakeDialog = new JDialog(this, "Snake Input Panel", true);
         SnakeDialog.setSize(500, 400);
@@ -611,6 +584,9 @@ public class AddAnimalDialog extends JDialog {
                 try {
                     String name = nameField.getText();
                     int speed = Integer.parseInt(speedField.getText());
+                    if (speed > 5) {
+                        throw new Exception("Snake speed cannot be greater than 5.");
+                    }
                     double weight = Double.parseDouble(weightField.getText());
                     int MaxEnergy = Integer.parseInt(MaxEnergyField.getText());
                     int Energy = Integer.parseInt(EnergyPerMeter.getText());
@@ -630,7 +606,7 @@ public class AddAnimalDialog extends JDialog {
                     selectedAnimalObject = new Snake(0, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, noLegs, poisonous, length, competitionPanel);
                     SnakeDialog.dispose();
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(SnakeDialog, "Invalid input. Please check your entries.");
+                    JOptionPane.showMessageDialog(SnakeDialog, ex.getMessage());
                 }
             }
         });
@@ -639,35 +615,5 @@ public class AddAnimalDialog extends JDialog {
         return selectedAnimalObject;
     }
 
-    private int calculateYPosition(int path) {
-        if (path == 1) {
-            return high / 8;
-        } else if (path == 2) {
-            return high / 3 - high / 45;
-        } else if (path == 3) {
-            return high / 3 + high / 6 + high / 30;
-        } else if (path == 4) {
-            return high / 3 + high / 3 + high / 15;
-        }
-        return 0;
-    }
 
-    private int calculateYAirPosition(int path) {
-        if (path == 1) {
-            return 0;
-        }
-        if (path == 2) {
-            return high / 8 + high / 10;
-        }
-        if (path == 3) {
-            return high / 3 + high / 10;
-        }
-        if (path == 4) {
-            return high / 2 + high / 7;
-        }
-        if (path == 5) {
-            return high / 2 + high / 3;
-        }
-        return 0;
-    }
 }

@@ -13,12 +13,11 @@ public class TournamentThread implements Runnable {
     private int groups; // Number of competing groups
     private Map<String, Date> raceResults; // Store the results for UI updates
 
-    public TournamentThread(Scores scores, AtomicBoolean startSignal, int groups)
-    {
+    public TournamentThread(Scores scores, AtomicBoolean startSignal, int groups) {
         this.scores = scores;
         this.startSignal = startSignal;
         this.groups = groups;
-        this.raceResults = new ConcurrentHashMap<>();
+        this.raceResults = new ConcurrentHashMap<>(); // Initialize raceResults
     }
 
     @Override
