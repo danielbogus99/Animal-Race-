@@ -6,12 +6,12 @@ import javax.swing.SwingUtilities;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AnimalThread implements Runnable {
-    private final Animal participant;
-    private final double neededDistance;
-    private final AtomicBoolean startFlag;
-    private final AtomicBoolean finishFlag;
+    private  Animal participant;
+    private  double neededDistance;
+    private  AtomicBoolean startFlag;
+    private  AtomicBoolean finishFlag;
     private static long sleepDuration = 100;
-    private final ImagePanel imagePanel; // Reference to the ImagePanel for updates
+    private  ImagePanel imagePanel; // Reference to the ImagePanel for updates
 
     public AnimalThread(Animal participant, double neededDistance, AtomicBoolean startFlag, AtomicBoolean finishFlag, ImagePanel imagePanel) {
         this.participant = participant;

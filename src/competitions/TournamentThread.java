@@ -24,9 +24,10 @@ public class TournamentThread implements Runnable {
     @Override
     public void run()
     {
-        startSignal.set(true);
+
         synchronized (startSignal)
         {
+            startSignal.set(true);
             startSignal.notifyAll();
         }
         while (true)

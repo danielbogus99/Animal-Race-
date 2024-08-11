@@ -5,15 +5,15 @@ import animals.Animal;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class RegularTournament extends Tournament {
-    private AtomicBoolean startFlag;
+    private final AtomicBoolean startFlag; // Correctly initialize as final to ensure it's properly set
     private Scores scores;
     private int numberOfGroups;
     private Animal[][] animals;
-    private ImagePanel imagePanel; // Reference to ImagePanel
+    private final ImagePanel imagePanel; // Reference to ImagePanel
 
     public RegularTournament(Animal[][] animalGroups, Object additionalInfo, ImagePanel imagePanel) {
         super(animalGroups, additionalInfo);
-        this.startFlag = new AtomicBoolean(false);
+        this.startFlag = new AtomicBoolean(false); // Proper initialization
         this.imagePanel = imagePanel; // Initialize ImagePanel reference
         setup(animalGroups, additionalInfo);
     }
@@ -27,7 +27,6 @@ public class RegularTournament extends Tournament {
         for (Animal[] group : animalGroups) {
             for (Animal animal : group) {
                 AtomicBoolean finishFlag = new AtomicBoolean(false);
-                // Create an AnimalThread for each animal and pass the ImagePanel reference
 
                 AnimalThread animalThread = new AnimalThread(animal, 10000, startFlag, finishFlag, imagePanel);
                 new Thread(animalThread).start();
@@ -38,9 +37,9 @@ public class RegularTournament extends Tournament {
             }
         }
 
-        // Start the main tournament thread
-        this.tournamentThread = new TournamentThread(scores, startFlag, numberOfGroups);
-        new Thread(this.tournamentThread).start();
+        // Start the main tournament thread and ensure it has the correct startFlag
+        TournamentThread tournamentThread = new TournamentThread(scores, startFlag, numberOfGroups);
+        new Thread(tournamentThread).start();
     }
 
     public void startRace() {
