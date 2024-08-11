@@ -1,41 +1,50 @@
 package competitions;
 
+import Graphics.ImagePanel;
 import animals.Animal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CourierTournament extends Tournament {
-    private Boolean startFlag; // Special start flag to begin the race
+    private AtomicBoolean startFlag; // Special start flag to begin the race
     private Scores scores; // Scores to record the results
     private int numberOfGroups; // Number of groups in the tournament
+    private ImagePanel imagePanel; // Reference to the ImagePanel for updates
+    private Animal[][] animals; // Reference to the animal groups
 
-    public CourierTournament(Animal[][] animalGroups, Object additionalInfo) {
+    // Constructor that takes the animal groups, additional info, and the ImagePanel
+    public CourierTournament(Animal[][] animalGroups, Object additionalInfo, ImagePanel imagePanel) {
         super(animalGroups, additionalInfo);
+        this.imagePanel = imagePanel; // Initialize the ImagePanel reference
+        setup(animalGroups, additionalInfo); // Call setup with the provided parameters
     }
 
     @Override
     protected void setup(Animal[][] animalGroups, Object additionalInfo) {
-        this.startFlag = false; // Initialize the start flag to false
+        this.startFlag = new AtomicBoolean(false); // Initialize the start flag to false
         this.scores = new Scores(); // Create a new Scores object
         this.numberOfGroups = animalGroups.length; // Set the number of groups
+        this.animals = animalGroups; // Store the animal groups
 
         for (int groupIndex = 0; groupIndex < animalGroups.length; groupIndex++) {
             Animal[] group = animalGroups[groupIndex];
             int n = group.length; // Number of animals in the group
-            List<Boolean> flags = new ArrayList<>(n);
+            List<AtomicBoolean> flags = new ArrayList<>(n);
 
             // Initialize all flags to false
             for (int i = 0; i < n; i++) {
-                flags.add(false);
+                flags.add(new AtomicBoolean(false));
             }
 
             // Create and start AnimalThread for each animal in the group
             for (int i = 0; i < n; i++) {
-                Boolean currentStartFlag = (i == 0) ? startFlag : flags.get(i - 1);
-                Boolean currentFinishFlag = flags.get(i);
-                double neededDistance = 100.0 / n; // Calculate needed distance
+                AtomicBoolean currentStartFlag = (i == 0) ? startFlag : flags.get(i - 1);
+                AtomicBoolean currentFinishFlag = flags.get(i);
+                double neededDistance = 10000 / n; // Calculate needed distance
 
-                AnimalThread animalThread = new AnimalThread(group[i], neededDistance, currentStartFlag, currentFinishFlag);
+                // Pass the imagePanel reference to the AnimalThread
+                AnimalThread animalThread = new AnimalThread(group[i], neededDistance, currentStartFlag, currentFinishFlag, imagePanel);
                 new Thread(animalThread).start();
             }
 
@@ -52,8 +61,13 @@ public class CourierTournament extends Tournament {
     // Start the race by setting the start flag to true
     public void startRace() {
         synchronized (startFlag) {
-            startFlag = true;
-            startFlag.notifyAll();
+            startFlag.set(true);
+            startFlag.notifyAll(); // Notify all threads that the race has started
         }
+    }
+
+    // Method to retrieve the animal teams
+    public Animal[][] getAnimalTeams() {
+        return animals;
     }
 }

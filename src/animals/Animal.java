@@ -267,13 +267,20 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
         currentEnergy += energy;
         return true;
     }
+    public void resetAnimal() {
+        this.totalConsumption = 0;
+        this.setLocation(new Point(0, 0)); // Reset position to the starting point or any desired location
+        this.currentEnergy = this.maxEnergy; // Reset energy if needed
+    }
 
     public synchronized double move() {
         if (currentEnergy <= 0) {
             return getTotalConsumption();
         }
+
         int x = getLocation().getX();
         int y = getLocation().getY();
+
         switch (orien) {
             case EAST:
                 x += speed;
@@ -288,10 +295,53 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
                 y -= speed;
                 break;
         }
-        setLocation(new Point(x, y));
-        return getTotalConsumption();
 
+        // Update the total energy consumption by the distance moved
+        totalConsumption += speed;
+
+        // Update location and check boundaries
+        setLocation(new Point(x, y));
+        checkBoundsAndChangeDirection(this);
+
+        return getTotalConsumption();
     }
+
+
+    public void checkBoundsAndChangeDirection(Animal animal) {
+        int x = animal.getLocation().getX();
+        int y = animal.getLocation().getY();
+        int backgroundWidth = new ImagePanel(null).getWidth2();
+        int backgroundHeight = new ImagePanel(null).getHeight2();
+
+        if (animal instanceof AirAnimal) {
+            if (x >= backgroundWidth) {
+                Stop();
+                System.out.println("AirAnimal stopped at boundary.");
+            }
+        } else if (animal instanceof TerrestrialAnimals || animal instanceof ITerrestrailAnimal)
+        {
+            if (x >= backgroundWidth - 75 && y >= backgroundHeight - 75)
+            {
+                animal.setOrientation(Orientation.WEST);
+            } else if (x >= backgroundWidth - 75)
+            {
+                animal.setOrientation(Orientation.SOUTH);
+            } else if (x <= 15 && y >= backgroundHeight - 155)
+            {
+                animal.setOrientation(Orientation.NORTH);
+            }
+            else if (x <= 0 && y <= 0)
+            {
+                animal.setOrientation(Orientation.EAST);
+            }
+        } else if (animal instanceof WaterAnimal) {
+            if (x >= backgroundWidth - 345) {
+                Stop();
+                System.out.println("WaterAnimal stopped at boundary.");
+            }
+        }
+    }
+
 
     public void Stop()
     {

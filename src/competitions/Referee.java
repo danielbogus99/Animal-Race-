@@ -1,11 +1,13 @@
 package competitions;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class Referee implements Runnable {
     private String groupName;
     private Scores scores;
-    private Boolean finishFlag; // Flag to check if the animal has finished
+    private AtomicBoolean finishFlag; // Flag to check if the animal has finished
 
-    public Referee(String groupName, Scores scores, Boolean finishFlag) {
+    public Referee(String groupName, Scores scores, AtomicBoolean finishFlag) {
         this.groupName = groupName;
         this.scores = scores;
         this.finishFlag = finishFlag;
@@ -14,7 +16,7 @@ public class Referee implements Runnable {
     @Override
     public void run() {
         // Wait for the finish flag to become true
-        while (!finishFlag) {
+        while (!finishFlag.get()) {
             try {
                 Thread.sleep(100); // Polling mechanism, waits until the finish flag is true
             } catch (InterruptedException e) {

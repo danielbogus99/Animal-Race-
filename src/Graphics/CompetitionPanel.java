@@ -21,15 +21,7 @@ public class CompetitionPanel extends JPanel {
     private Timer timer;
     private RegularTournament currentTournament;
     private CourierTournament currentCourier;
-    private Animal[][] regularTournament;
-    private Animal[][] courierTournament;
 
-    /**
-     * Constructor to initialize the CompetitionPanel.
-     *
-     * @param parentFrame The parent frame.
-     * @param imagePanel  The image panel.
-     */
     public CompetitionPanel(CompetitionFrame parentFrame, ImagePanel imagePanel) {
         this.parentFrame = parentFrame;
         setLayout(new GridLayout(1, 0));
@@ -41,8 +33,8 @@ public class CompetitionPanel extends JPanel {
         JButton startCompetitionButton = new JButton("Start Competition");
         JButton exitButton = new JButton("Exit");
 
-        // Initialize the timer
-        timer = new Timer(50, e -> updateCompetition());
+        // Initialize the timer with a faster delay for smoother animation
+        timer = new Timer(200, e -> updateCompetition()); // ~60 FPS
 
         add(addCompetitionButton);
         add(startCompetitionButton);
@@ -51,20 +43,71 @@ public class CompetitionPanel extends JPanel {
         exitButton.addActionListener(e -> System.exit(0));
         addCompetitionButton.addActionListener(e -> addCompetition());
         startCompetitionButton.addActionListener(e -> startCompetition());
+
+        // Enable double buffering to prevent flickering
+        setDoubleBuffered(true);
     }
 
     private void updateCompetition() {
+        List<Animal> allAnimals = new ArrayList<>();
+
         if (currentTournament != null) {
-            // Update each team of animals in the current tournament
-            Animal[][] animalTeams = currentTournament.getAnimalTeams();
-            imagePanel.repaint(); // Repaint the panel to reflect updated positions
+            allAnimals.addAll(collectAnimals(currentTournament.getAnimalTeams()));
         }
+
+        if (currentCourier != null) {
+            allAnimals.addAll(collectAnimals(currentCourier.getAnimalTeams()));
+        }
+
+        if (allAnimals.isEmpty()) {
+            // If there are no animals left, stop the timer and clear the panel
+            timer.stop();
+            imagePanel.setAnimals(null); // Clear the animals from the panel
+        } else {
+            imagePanel.setAnimals(allAnimals);
+        }
+
+        imagePanel.repaint();
     }
 
 
+    private List<Animal> collectAnimals(Animal[][] animalTeams)
+    {
+        List<Animal> allAnimals = new ArrayList<>();
+        for (Animal[] team : animalTeams) {
+            for (Animal animal : team) {
+                allAnimals.add(animal);
+            }
+        }
+        return allAnimals;
+    }
 
     private void startCompetition() {
-        // Gather all race names from both regular and courier races
+        List<String> raceNames = collectRaceNames();
+        if (raceNames.isEmpty()) {
+            JOptionPane.showMessageDialog(parentFrame, "No races are available to start.");
+            return;
+        }
+
+        String selectedRaceName = (String) JOptionPane.showInputDialog(
+                parentFrame,
+                "Select a race to start:",
+                "Start Competition",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                raceNames.toArray(),
+                raceNames.get(0));
+
+        if (selectedRaceName != null) {
+            if (selectedRaceName.endsWith("(Regular)")) {
+                startRegularRace(selectedRaceName.replace(" (Regular)", ""));
+            } else if (selectedRaceName.endsWith("(Courier)")) {
+                startCourierRace(selectedRaceName.replace(" (Courier)", ""));
+            }
+        }
+    }
+
+    private List<String> collectRaceNames() {
         List<String> raceNames = new ArrayList<>();
         if (regularRace != null) {
             for (RegularRace race : regularRace) {
@@ -76,60 +119,37 @@ public class CompetitionPanel extends JPanel {
                 raceNames.add(race.getName() + " (Courier)");
             }
         }
-
-        if (raceNames.isEmpty()) {
-            JOptionPane.showMessageDialog(parentFrame, "No races are available to start.");
-            return;
-        }
-
-        // Create a selection dialog for race names
-        String selectedRaceName = (String) JOptionPane.showInputDialog(
-                parentFrame,
-                "Select a race to start:",
-                "Start Competition",
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                raceNames.toArray(),
-                raceNames.get(0));
-
-        if (selectedRaceName != null) {
-            // Determine the type of race and start it
-            if (selectedRaceName.endsWith("(Regular)")) {
-                startRegularRace(selectedRaceName.replace(" (Regular)", ""));
-            } else if (selectedRaceName.endsWith("(Courier)")) {
-                startCourierRace(selectedRaceName.replace(" (Courier)", ""));
-            }
-        }
+        return raceNames;
     }
 
-    // Method to start a regular race
     private void startRegularRace(String raceName) {
         RegularRace selectedRace = regularRace.stream().filter(race -> race.getRaceName().equals(raceName)).findFirst().orElse(null);
 
         if (selectedRace != null) {
             Animal[][] animalTeams = selectedRace.toAnimalTeams();
-            currentTournament = new RegularTournament(animalTeams, null);
-            new Thread(() -> currentTournament.startRace()).start(); // Start the regular tournament
+            currentTournament = new RegularTournament(animalTeams, null,imagePanel);
+            new Thread(() -> currentTournament.startRace()).start();
 
-            // Start the timer if not already running
             if (!timer.isRunning()) {
                 timer.start();
             }
         }
     }
 
-    // Placeholder method to start a courier race
-    private void startCourierRace(String raceName) {
-        CourierRace selectedRace = courierRace.stream().filter(race -> race.getName().equals(raceName)).findFirst().orElse(null);
+    private void startCourierRace(String raceName)
+    {
+        CourierRace selectedRace = courierRace.stream()
+                .filter(race -> race.getName().equals(raceName))
+                .findFirst()
+                .orElse(null);
 
         if (selectedRace != null) {
-            Animal[][] animals = selectedRace.getAnimalGroups();
-            currentCourier = new CourierTournament(animals, null);
-            new Thread(() -> currentCourier.startRace()).start(); // Start the courier tournament
+            Animal[][] animalTeams = selectedRace.getAnimalGroups();
+            currentCourier = new CourierTournament(animalTeams, null, imagePanel); // Pass the ImagePanel to the tournament
+            new Thread(() -> currentCourier.startRace()).start(); // Start the courier race in a new thread
 
-            // Start the timer if not already running
             if (!timer.isRunning()) {
-                timer.start();
+                timer.start(); // Start the update timer if not already running
             }
         }
     }

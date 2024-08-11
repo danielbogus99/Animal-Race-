@@ -7,13 +7,14 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * ImagePanel is a custom JPanel that displays a background image and draws animals on it.
  */
 public class ImagePanel extends JPanel {
     private BufferedImage backgroundImage;
-    private Animal[][] animalTeams;
+    private List<Animal> animals;
     private CompetitionFrame parentFrame;
     private final int preferredWidth = 1024;  // Default width for scaling
     private final int preferredHeight = 768;  // Default height for scaling
@@ -35,13 +36,13 @@ public class ImagePanel extends JPanel {
     }
 
     /**
-     * Sets the animal teams to be displayed on this panel.
+     * Sets the list of animals to be displayed on this panel.
      *
-     * @param animalTeams The array of animal teams to display.
+     * @param animals The list of animals to display.
      */
-    public void setAnimalTeams(Animal[][] animalTeams) {
+    public void setAnimals(List<Animal> animals) {
         synchronized (this) {
-            this.animalTeams = animalTeams;
+            this.animals = animals;
         }
         repaint();
     }
@@ -52,29 +53,29 @@ public class ImagePanel extends JPanel {
      * @param g The Graphics context to use for painting.
      */
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g)
+    {
         super.paintComponent(g);
 
-        if (backgroundImage != null) {
+        if (backgroundImage != null)
+        {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
 
-        Graphics2D g2d = (Graphics2D) g.create();
-        if (animalTeams != null) {
+        if (animals != null) {
+            Graphics2D g2d = (Graphics2D) g.create();
             double scaleX = getWidth() / (double) preferredWidth;
             double scaleY = getHeight() / (double) preferredHeight;
             g2d.scale(scaleX, scaleY);
             synchronized (this) {
-                for (Animal[] team : animalTeams) {
-                    for (Animal animal : team) {
-                        synchronized (animal) {
-                            animal.drawObject(g2d); // Draw each animal
-                        }
+                for (Animal animal : animals) {
+                    synchronized (animal) {
+                        animal.drawObject(g2d); // Draw each animal
                     }
                 }
             }
+            g2d.dispose(); // Dispose of the graphics context to release resources
         }
-        g2d.dispose(); // Dispose of the graphics context to release resources
     }
 
     /**
@@ -83,7 +84,7 @@ public class ImagePanel extends JPanel {
      * @return The height of the panel or background image.
      */
     public int getHeight2() {
-        return getHeight(); // Return the current height of the panel
+        return preferredHeight; // Return the preferred height for scaling
     }
 
     /**
@@ -92,6 +93,6 @@ public class ImagePanel extends JPanel {
      * @return The width of the panel or background image.
      */
     public int getWidth2() {
-        return getWidth(); // Return the current width of the panel
+        return preferredWidth; // Return the preferred width for scaling
     }
 }
