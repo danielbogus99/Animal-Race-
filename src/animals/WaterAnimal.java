@@ -123,4 +123,5 @@ public abstract class WaterAnimal extends Animal {
     public void drawObject(Graphics g) {
         super.drawObject(g);
     }
+
 }

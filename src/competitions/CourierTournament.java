@@ -11,13 +11,15 @@ public class CourierTournament extends Tournament {
     private Scores scores; // Scores to record the results
     private int numberOfGroups; // Number of groups in the tournament
     private ImagePanel imagePanel; // Reference to the ImagePanel for updates
-    private Animal[][] animals; // Reference to the animal groups
+    private Animal[][] animals;
+    private String raceName;// Reference to the animal groups
+    private int neededDistance;
 
     // Constructor that takes the animal groups, additional info, and the ImagePanel
-    public CourierTournament(Animal[][] animalGroups, Object additionalInfo, ImagePanel imagePanel) {
-        super(animalGroups, additionalInfo);
-        this.imagePanel = imagePanel; // Initialize the ImagePanel reference
-        setup(animalGroups, additionalInfo); // Call setup with the provided parameters
+    public CourierTournament(Animal[][] animalGroups, int neededDistance,String raceName) {
+        super(animalGroups, neededDistance);
+        this.raceName = raceName;
+        setup(animalGroups, neededDistance); // Call setup with the provided parameters
     }
 
     @Override
@@ -44,7 +46,7 @@ public class CourierTournament extends Tournament {
                 double neededDistance = 10000 / n; // Calculate needed distance
 
                 // Pass the imagePanel reference to the AnimalThread
-                AnimalThread animalThread = new AnimalThread(group[i], neededDistance, currentStartFlag, currentFinishFlag, imagePanel);
+                AnimalThread animalThread = new AnimalThread(group[i], neededDistance, currentStartFlag, currentFinishFlag);
                 new Thread(animalThread).start();
             }
 
@@ -54,7 +56,7 @@ public class CourierTournament extends Tournament {
         }
 
         // Store the startFlag, scores, and number of groups in the tournament thread
-        this.tournamentThread = new TournamentThread(scores, startFlag, numberOfGroups);
+        this.tournamentThread = new TournamentThread(scores, startFlag, numberOfGroups,raceName);
         new Thread(this.tournamentThread).start(); // Start the tournament thread
     }
 

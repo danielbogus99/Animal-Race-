@@ -9,13 +9,16 @@ public class RegularTournament extends Tournament {
     private Scores scores;
     private int numberOfGroups;
     private Animal[][] animals;
-    private final ImagePanel imagePanel; // Reference to ImagePanel
+    private String raceName;
 
-    public RegularTournament(Animal[][] animalGroups, Object additionalInfo, ImagePanel imagePanel) {
-        super(animalGroups, additionalInfo);
+    private int neededDistance;// Reference to ImagePanel
+
+    public RegularTournament(Animal[][] animalGroups, int neededDistance,String raceName) {
+        super(animalGroups, neededDistance);
         this.startFlag = new AtomicBoolean(false);
-        this.imagePanel = imagePanel; // Initialize ImagePanel reference
-        setup(animalGroups, additionalInfo);
+        this.neededDistance = neededDistance;
+       this.raceName = raceName;
+        setup(animalGroups, neededDistance);
     }
 
     @Override
@@ -28,7 +31,7 @@ public class RegularTournament extends Tournament {
             for (Animal animal : group) {
                 AtomicBoolean finishFlag = new AtomicBoolean(false);
 
-                AnimalThread animalThread = new AnimalThread(animal, 1000000, startFlag, finishFlag, imagePanel);
+                AnimalThread animalThread = new AnimalThread(animal, neededDistance, startFlag, finishFlag);
                 new Thread(animalThread).start();
 
                 // Create a Referee to monitor each animal
@@ -38,7 +41,7 @@ public class RegularTournament extends Tournament {
         }
 
         // Start the main tournament thread and ensure it has the correct startFlag
-        TournamentThread tournamentThread = new TournamentThread(scores, startFlag, numberOfGroups);
+        TournamentThread tournamentThread = new TournamentThread(scores, startFlag, numberOfGroups,raceName);
         new Thread(tournamentThread).start();
     }
 

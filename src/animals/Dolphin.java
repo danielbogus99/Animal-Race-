@@ -112,6 +112,8 @@ public class Dolphin extends WaterAnimal {
         }
     }
 
+
+
     /**
      * Loads images for the dolphin.
      *

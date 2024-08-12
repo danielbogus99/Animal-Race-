@@ -32,6 +32,7 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
     private int totalConsumption = 0;
     private CompetitionPanel pan;
     private BufferedImage img1, img2, img3, img4;
+    private boolean moving = false;
 
 
     /**
@@ -61,6 +62,8 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
         this.energyPerMeter = energyPerMeter;
         this.currentEnergy = maxEnergy;
         this.pan = pan;
+        this.moving = false;
+
         loadImages("animals/" + name + ".png");
     }
 
@@ -275,7 +278,7 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
 
     public synchronized double move() {
         if (currentEnergy <= 0) {
-            return getTotalConsumption();
+            return 0;
         }
 
         int x = getLocation().getX();
@@ -304,7 +307,7 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
         setLocation(new Point(x, y));
         checkBoundsAndChangeDirection(this);
 
-        return getTotalConsumption();
+        return speed;
     }
     public void setY(int y)
     {
@@ -341,18 +344,34 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
             {
                 animal.setOrientation(Orientation.EAST);
             }
-        } else if (animal instanceof WaterAnimal) {
-            if (x >= backgroundWidth - 200) {
+        } else if (animal instanceof WaterAnimal)
+        {
+            if (x >= backgroundWidth - 200)
+            {
                 Stop();
                 System.out.println("WaterAnimal stopped at boundary.");
             }
         }
     }
 
-
     public void Stop()
     {
         speed = 0;
+    }
+    public void resetPosition(Animal animal,int x)
+    {
+        if(animal instanceof AirAnimal || animal instanceof TerrestrialAnimals)
+        {
+            setLocation(new Point(0, location.getY()));
+        }
+        else
+        {
+            setLocation(new Point(x, location.getY()));
+        }
+    }
+    public void resetTotalConsumption()
+    {
+        totalConsumption = 0;
     }
 
     public void decreaseEnergy() {

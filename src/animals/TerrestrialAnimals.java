@@ -117,4 +117,5 @@ public class TerrestrialAnimals extends Animal implements ITerrestrailAnimal {
     public void drawObject(Graphics g) {
         super.drawObject(g);
     }
+
 }

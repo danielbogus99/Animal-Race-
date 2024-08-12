@@ -2,6 +2,8 @@ package animals;
 
 import Olympics.Medal;
 import Graphics.CompetitionPanel;
+import mobility.Point;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -102,6 +104,11 @@ public class Whale extends WaterAnimal {
                 break;
             // Handle other cases for different orientations if needed
         }
+    }
+
+    public void resetPosition(int x)
+    {
+        setLocation(new Point(x,0));
     }
 
     /**

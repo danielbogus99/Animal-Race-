@@ -147,6 +147,9 @@ public class Alligator extends WaterAnimal implements IReptile, ITerrestrailAnim
         }
     }
 
+
+
+
     /**
      * Loads images for the alligator.
      *

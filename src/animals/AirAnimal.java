@@ -105,4 +105,5 @@ public abstract class AirAnimal extends Animal {
      * @return The sound of the air animal.
      */
     abstract protected String getSound();
+
 }

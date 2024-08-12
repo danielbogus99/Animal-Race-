@@ -14,7 +14,8 @@ public class Referee implements Runnable {
     }
 
     @Override
-    public void run() {
+    public void run()
+    {
         // Wait for the finish flag to become true
         while (!finishFlag.get()) {
             try {
@@ -25,8 +26,9 @@ public class Referee implements Runnable {
             }
         }
 
-        // Once the finish flag is true, add the group's name to scores
-        synchronized (scores) {
+
+        synchronized (scores)
+        {
             scores.add(groupName);
             System.out.println("Animal from group " + groupName + " has finished the race.");
         }

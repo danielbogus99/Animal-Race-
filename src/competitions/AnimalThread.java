@@ -13,12 +13,13 @@ public class AnimalThread implements Runnable {
     private static long sleepDuration = 100;
     private  ImagePanel imagePanel; // Reference to the ImagePanel for updates
 
-    public AnimalThread(Animal participant, double neededDistance, AtomicBoolean startFlag, AtomicBoolean finishFlag, ImagePanel imagePanel) {
+    public AnimalThread(Animal participant, double neededDistance, AtomicBoolean startFlag, AtomicBoolean finishFlag) {
         this.participant = participant;
         this.neededDistance = neededDistance;
         this.startFlag = startFlag;
         this.finishFlag = finishFlag;
-        this.imagePanel = imagePanel; // Initialize the imagePanel reference
+        this.imagePanel = new ImagePanel(null);
+
     }
 
     @Override
@@ -43,8 +44,6 @@ public class AnimalThread implements Runnable {
                     participant.checkBoundsAndChangeDirection(participant); // Check and change direction if needed
                     participant.decreaseEnergy(); // Decrease energy after moving
 
-                    // Update the UI on the Event Dispatch Thread
-                    SwingUtilities.invokeLater(() -> imagePanel.repaint());
                 }
             }
 
@@ -56,6 +55,9 @@ public class AnimalThread implements Runnable {
                     finishFlag.notifyAll(); // Notify that this participant has finished
                 }
                 System.out.println(participant.getAnimalName() + " finished");
+                int high = imagePanel.getHeight2();
+                participant.resetPosition(participant,high);
+                participant.resetTotalConsumption();
                 break;
             }
 
