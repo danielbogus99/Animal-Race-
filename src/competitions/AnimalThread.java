@@ -44,6 +44,7 @@ public class AnimalThread implements Runnable {
                     participant.checkBoundsAndChangeDirection(participant); // Check and change direction if needed
                     participant.decreaseEnergy(); // Decrease energy after moving
 
+
                 }
             }
 
@@ -57,7 +58,7 @@ public class AnimalThread implements Runnable {
                 System.out.println(participant.getAnimalName() + " finished");
                 int high = imagePanel.getHeight2();
                 participant.resetPosition(participant,high);
-                participant.resetTotalConsumption();
+                participant.setTotalDistance();
                 break;
             }
 

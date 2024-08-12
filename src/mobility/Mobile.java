@@ -28,6 +28,9 @@ public class Mobile implements ILocatable {
     public double getTotalDistance() {
         return totalDistance;
     }
+    public void setTotalDistance() {
+        this.totalDistance = 0;
+    }
 
     /**
      * Adds the specified distance to the total distance traveled by the object.
