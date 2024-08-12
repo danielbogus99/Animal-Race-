@@ -7,14 +7,16 @@ import animals.*;
 public class RegularRace {
     private String raceName;
     private String raceType;
+    private int racePath; // Add this field to store the path
     private List<Animal> animals;
 
     // Static list to hold all created races
     private static List<RegularRace> allRaces = new ArrayList<>();
 
-    public RegularRace(String raceName, String raceType) {
+    public RegularRace(String raceName, String raceType, int racePath) { // Update constructor
         this.raceName = raceName;
         this.raceType = raceType;
+        this.racePath = racePath;
         this.animals = new ArrayList<>();
     }
 
@@ -24,6 +26,14 @@ public class RegularRace {
 
     public String getRaceType() {
         return raceType;
+    }
+
+    public int getRacePath() {
+        return racePath; // Getter for race path
+    }
+
+    public void setRacePath(int racePath) {
+        this.racePath = racePath; // Setter for race path
     }
 
     public List<Animal> getAnimals() {
@@ -38,27 +48,19 @@ public class RegularRace {
         animals.addAll(newAnimals);
     }
 
-    // Static method to add a race to the list of all races
     public static void addRace(RegularRace race) {
         allRaces.add(race);
     }
 
-    // Static method to get all races
     public static List<RegularRace> getAllRaces() {
         return allRaces;
     }
 
-    // Method to convert the list of animals into a 2D array with each animal in its own sub-array
-    public Animal[][] toAnimalTeams()
-    {
-        // Create a 2D array where each row contains a single animal
+    public Animal[][] toAnimalTeams() {
         Animal[][] animalTeams = new Animal[animals.size()][1];
-
-        for (int i = 0; i < animals.size(); i++)
-        {
+        for (int i = 0; i < animals.size(); i++) {
             animalTeams[i][0] = animals.get(i);
         }
-
         return animalTeams;
     }
 }

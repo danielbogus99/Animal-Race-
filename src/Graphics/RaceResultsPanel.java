@@ -11,8 +11,13 @@ public class RaceResultsPanel extends JPanel {
     // Update the format to include both date and time
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    public RaceResultsPanel(Map<String, Date> raceResults) {
+    public RaceResultsPanel(String raceName, Map<String, Date> raceResults) {
         setLayout(new BorderLayout());
+
+        // Create a label to display the race name
+        JLabel raceNameLabel = new JLabel("Race Name: " + raceName, JLabel.CENTER);
+        raceNameLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        add(raceNameLabel, BorderLayout.NORTH);
 
         JTextArea resultsArea = new JTextArea(10, 30);
         resultsArea.setEditable(false);

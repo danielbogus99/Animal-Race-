@@ -321,14 +321,7 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
         int backgroundWidth = new ImagePanel(null).getWidth2();
         int backgroundHeight = new ImagePanel(null).getHeight2();
 
-        if (animal instanceof AirAnimal)
-        {
-            if (x >= backgroundWidth-75)
-            {
-                Stop();
-                System.out.println("AirAnimal stopped at boundary.");
-            }
-        } else if (animal instanceof TerrestrialAnimals || animal instanceof ITerrestrailAnimal)
+         if (animal instanceof TerrestrialAnimals || animal instanceof ITerrestrailAnimal)
         {
             if (x >= backgroundWidth - 75 && y >= backgroundHeight - 75)
             {
@@ -346,18 +339,11 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
             }
         } else if (animal instanceof WaterAnimal)
         {
-            if (x >= backgroundWidth - 200)
-            {
-                Stop();
-                System.out.println("WaterAnimal stopped at boundary.");
-            }
+
         }
     }
 
-    public void Stop()
-    {
-        speed = 0;
-    }
+
     public void resetPosition(Animal animal,int x)
     {
         if(animal instanceof AirAnimal || animal instanceof TerrestrialAnimals)
@@ -369,9 +355,19 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
             setLocation(new Point(x, location.getY()));
         }
     }
-    public void resetTotalConsumption()
+    public boolean isMoving()
     {
-        totalConsumption = 0;
+        if(moving)
+            return true;
+        return false;
+    }
+    public void setMoving()
+    {
+        moving = true;
+    }
+    public void setNotMoving()
+    {
+        moving = false;
     }
 
     public void decreaseEnergy() {

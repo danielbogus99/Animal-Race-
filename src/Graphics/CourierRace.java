@@ -8,15 +8,17 @@ import java.util.Map;
 public class CourierRace {
     private String name;
     private String type;
+    private int racePath; // New field to store the path
     private Map<String, List<Animal>> groups;
 
     // Static list to store all created races
     private static List<CourierRace> allRaces = new ArrayList<>();
 
     // Constructor
-    public CourierRace(String name, String type) {
+    public CourierRace(String name, String type, int racePath) { // Updated constructor
         this.name = name;
         this.type = type;
+        this.racePath = racePath; // Store the path
         this.groups = new HashMap<>();
     }
 
@@ -45,6 +47,16 @@ public class CourierRace {
         return type;
     }
 
+    // Method to get the path of the race
+    public int getRacePath() {
+        return racePath;
+    }
+
+    // Method to set the path of the race
+    public void setRacePath(int racePath) {
+        this.racePath = racePath;
+    }
+
     // Method to get the list of all animals in the race
     public List<Animal> getAnimals() {
         List<Animal> allAnimals = new ArrayList<>();
@@ -71,7 +83,7 @@ public class CourierRace {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("CourierRace{name='").append(name).append("', type='").append(type).append("', groups=\n");
+        sb.append("CourierRace{name='").append(name).append("', type='").append(type).append("', path=").append(racePath).append(", groups=\n");
 
         // Get groups of animals
         for (Map.Entry<String, List<Animal>> entry : groups.entrySet()) {

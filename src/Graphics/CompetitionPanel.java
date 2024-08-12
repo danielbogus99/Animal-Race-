@@ -6,7 +6,9 @@ import competitions.*;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a panel for managing competitions and animals within a competition.
@@ -22,6 +24,7 @@ public class CompetitionPanel extends JPanel {
     private List<CourierRace> startedCourierRaces; // Tracks started courier races
     private List<Animal> activeRegularAnimals; // Tracks active animals in regular races
     private List<Animal> activeCourierAnimals; // Tracks active animals in courier races
+    private Map<String, Integer> occupiedPaths; // Map to track occupied paths
     private Timer timer;
     private RegularTournament currentTournament;
     private CourierTournament currentCourier;
@@ -36,6 +39,7 @@ public class CompetitionPanel extends JPanel {
         this.startedCourierRaces = new ArrayList<>();
         this.activeRegularAnimals = new ArrayList<>();
         this.activeCourierAnimals = new ArrayList<>();
+        this.occupiedPaths = new HashMap<>(); // Initialize the map
 
         JButton addCompetitionButton = new JButton("Add Competition");
         JButton startCompetitionButton = new JButton("Start Competition");
@@ -137,6 +141,10 @@ public class CompetitionPanel extends JPanel {
         return raceNames;
     }
 
+    private String createCompositeKey(String raceType, int path) {
+        return raceType + "-" + path;
+    }
+
     private void startRegularRace(String raceName) {
         RegularRace selectedRace = regularRace.stream()
                 .filter(race -> race.getRaceName().equals(raceName))
@@ -144,10 +152,28 @@ public class CompetitionPanel extends JPanel {
                 .orElse(null);
 
         if (selectedRace != null) {
-            // Prompt the user for the required distance
+            // Check if all animals are not moving
+            List<Animal> animals = collectAnimals(selectedRace.toAnimalTeams());
+            if (!allAnimalsNotMoving(animals)) {
+                JOptionPane.showMessageDialog(parentFrame, "There is an animal in the race that is currently in an active race.");
+                return;
+            }
+
+            // Determine the valid distance range based on race type
+            String raceType = selectedRace.getRaceType();
+            String distanceHint = "";
+            if (raceType.equals("Water")) {
+                distanceHint = " (100-800 meters)";
+            } else if (raceType.equals("Air")) {
+                distanceHint = " (100-1000 meters)";
+            } else if (raceType.equals("Terrestrial")) {
+                distanceHint = " (any positive number)";
+            }
+
+            // Prompt the user for the required distance with the hint
             String distanceInput = JOptionPane.showInputDialog(
                     parentFrame,
-                    "Enter the required distance for the race:",
+                    "Enter the required distance for the " + raceType + " race" + distanceHint + ":",
                     "Distance Input",
                     JOptionPane.PLAIN_MESSAGE);
 
@@ -155,10 +181,33 @@ public class CompetitionPanel extends JPanel {
                 try {
                     int distance = Integer.parseInt(distanceInput);
 
-                    Animal[][] animalTeams = selectedRace.toAnimalTeams();
-                    activeRegularAnimals.addAll(collectAnimals(animalTeams)); // Add these animals to the active list
-                    RegularTournament tournament = new RegularTournament(animalTeams, distance, raceName); // Create a new tournament for each race
-                    new Thread(() -> tournament.startRace()).start(); // Start each race in a separate thread
+                    // Validate the distance based on the type of race
+                    if ((raceType.equals("Water") && (distance < 100 || distance > 800)) ||
+                            (raceType.equals("Air") && (distance < 100 || distance > 1000)) ||
+                            (raceType.equals("Terrestrial") && distance <= 0)) {
+                        JOptionPane.showMessageDialog(parentFrame, "Invalid distance for " + raceType + " race. Please enter a valid distance.");
+                        return;
+                    }
+
+                    // Create the composite key
+                    String compositeKey = createCompositeKey(raceType, selectedRace.getRacePath());
+
+                    // Check if the selected path is already occupied
+                    if (occupiedPaths.containsKey(compositeKey)) {
+                        JOptionPane.showMessageDialog(parentFrame, "The selected path is already occupied by another race. Please choose a different path.");
+                        return;
+                    }
+
+                    // Mark the path as occupied
+                    occupiedPaths.put(compositeKey, selectedRace.getRacePath());
+
+                    setAnimalsToMoving(animals);
+                    activeRegularAnimals.addAll(animals); // Add these animals to the active list
+                    RegularTournament tournament = new RegularTournament(selectedRace.toAnimalTeams(), distance, raceName,occupiedPaths,compositeKey); // Create a new tournament for each race
+                    new Thread(() -> {
+                        tournament.startRace();
+
+                    }).start(); // Start each race in a separate thread
 
                     startedRegularRaces.add(selectedRace); // Add to the list of started races
                     regularRace.remove(selectedRace); // Remove the selected race from the start list
@@ -173,6 +222,21 @@ public class CompetitionPanel extends JPanel {
         }
     }
 
+    private boolean allAnimalsNotMoving(List<Animal> animals) {
+        for (Animal animal : animals) {
+            if (animal.isMoving()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void setAnimalsToMoving(List<Animal> animals) {
+        for (Animal animal : animals) {
+            animal.setMoving();
+        }
+    }
+
     private void startCourierRace(String raceName) {
         CourierRace selectedRace = courierRace.stream()
                 .filter(race -> race.getName().equals(raceName))
@@ -180,10 +244,28 @@ public class CompetitionPanel extends JPanel {
                 .orElse(null);
 
         if (selectedRace != null) {
-            // Prompt the user for the required distance
+            // Check if all animals are not moving
+            List<Animal> animals = collectAnimals(selectedRace.getAnimalGroups());
+            if (!allAnimalsNotMoving(animals)) {
+                JOptionPane.showMessageDialog(parentFrame, "All animals must be stationary before starting the race.");
+                return;
+            }
+
+            // Determine the valid distance range based on race type
+            String raceType = selectedRace.getType();
+            String distanceHint = "";
+            if (raceType.equals("Water")) {
+                distanceHint = " (100-800 meters)";
+            } else if (raceType.equals("Air")) {
+                distanceHint = " (100-1000 meters)";
+            } else if (raceType.equals("Terrestrial")) {
+                distanceHint = " (any positive number)";
+            }
+
+            // Prompt the user for the required distance with the hint
             String distanceInput = JOptionPane.showInputDialog(
                     parentFrame,
-                    "Enter the required distance for the race:",
+                    "Enter the required distance for the " + raceType + " race" + distanceHint + ":",
                     "Distance Input",
                     JOptionPane.PLAIN_MESSAGE);
 
@@ -191,10 +273,33 @@ public class CompetitionPanel extends JPanel {
                 try {
                     int distance = Integer.parseInt(distanceInput);
 
-                    Animal[][] animalTeams = selectedRace.getAnimalGroups();
-                    activeCourierAnimals.addAll(collectAnimals(animalTeams)); // Add these animals to the active list
-                    currentCourier = new CourierTournament(animalTeams, distance, raceName); // Pass the distance
-                    new Thread(() -> currentCourier.startRace()).start();
+                    // Validate the distance based on the type of race
+                    if ((raceType.equals("Water") && (distance < 100 || distance > 800)) ||
+                            (raceType.equals("Air") && (distance < 100 || distance > 1000)) ||
+                            (raceType.equals("Terrestrial") && distance <= 0)) {
+                        JOptionPane.showMessageDialog(parentFrame, "Invalid distance for " + raceType + " race. Please enter a valid distance.");
+                        return;
+                    }
+
+                    // Create the composite key
+                    String compositeKey = createCompositeKey(raceType, selectedRace.getRacePath());
+
+                    // Check if the selected path is already occupied
+                    if (occupiedPaths.containsKey(compositeKey)) {
+                        JOptionPane.showMessageDialog(parentFrame, "The path of the race is already taken by other race wait for the race to end.");
+                        return;
+                    }
+
+                    // Mark the path as occupied
+                    occupiedPaths.put(compositeKey, selectedRace.getRacePath());
+
+                    setAnimalsToMoving(animals);
+                    activeCourierAnimals.addAll(animals); // Add these animals to the active list
+                    currentCourier = new CourierTournament(selectedRace.getAnimalGroups(), distance, raceName,occupiedPaths,compositeKey); // Pass the distance
+                    new Thread(() -> {
+                        currentCourier.startRace();
+
+                    }).start();
 
                     startedCourierRaces.add(selectedRace); // Add to the list of started races
                     courierRace.remove(selectedRace); // Remove the selected race from the start list

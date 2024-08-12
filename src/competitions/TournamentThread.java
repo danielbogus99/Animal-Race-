@@ -14,16 +14,20 @@ public class TournamentThread implements Runnable {
     private AtomicBoolean startSignal; // Special flag to start all animals
     private int groups; // Number of competing groups
     private Map<String, Date> raceResults;// Store the results for UI updates
+    private String compositeKey;
+    private Map<String, Integer> occupiedPaths;
     private String raceName;
 
     // Update the format to include both date and time
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    public TournamentThread(Scores scores, AtomicBoolean startSignal, int groups,String raceName) {
+    public TournamentThread(Scores scores, AtomicBoolean startSignal, int groups,String raceName,Map<String, Integer> occupiedPaths,String compositeKey) {
         this.scores = scores;
         this.startSignal = startSignal;
         this.groups = groups;
         this.raceName = raceName;
+        this.occupiedPaths = occupiedPaths;
+        this.compositeKey = compositeKey;
         this.raceResults = new ConcurrentHashMap<>();
     }
 
@@ -60,7 +64,7 @@ public class TournamentThread implements Runnable {
 
                 // Show results in a new panel
                 SwingUtilities.invokeLater(() -> showResultsPanel(raceResults));
-
+                occupiedPaths.remove(compositeKey);
                 break;
             }
 
@@ -77,9 +81,10 @@ public class TournamentThread implements Runnable {
     private void showResultsPanel(Map<String, Date> raceResults) {
         JFrame resultsFrame = new JFrame("Race Results");
         resultsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        resultsFrame.setContentPane(new RaceResultsPanel(raceResults));
+        resultsFrame.setContentPane(new RaceResultsPanel(raceName, raceResults)); // Pass the raceName here
         resultsFrame.pack();
         resultsFrame.setLocationRelativeTo(null); // Center the frame on screen
         resultsFrame.setVisible(true);
     }
+
 }

@@ -2,6 +2,8 @@ package competitions;
 
 import Graphics.ImagePanel;
 import animals.Animal;
+
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class RegularTournament extends Tournament {
@@ -10,14 +12,17 @@ public class RegularTournament extends Tournament {
     private int numberOfGroups;
     private Animal[][] animals;
     private String raceName;
-
+    private String compositeKey;
+    private Map<String, Integer> occupiedPaths;
     private int neededDistance;// Reference to ImagePanel
 
-    public RegularTournament(Animal[][] animalGroups, int neededDistance,String raceName) {
+    public RegularTournament(Animal[][] animalGroups, int neededDistance, String raceName, Map<String, Integer> occupiedPaths,String compositeKey) {
         super(animalGroups, neededDistance);
         this.startFlag = new AtomicBoolean(false);
         this.neededDistance = neededDistance;
        this.raceName = raceName;
+       this.occupiedPaths = occupiedPaths;
+       this.compositeKey = compositeKey;
         setup(animalGroups, neededDistance);
     }
 
@@ -41,7 +46,7 @@ public class RegularTournament extends Tournament {
         }
 
         // Start the main tournament thread and ensure it has the correct startFlag
-        TournamentThread tournamentThread = new TournamentThread(scores, startFlag, numberOfGroups,raceName);
+        TournamentThread tournamentThread = new TournamentThread(scores, startFlag, numberOfGroups,raceName,occupiedPaths,compositeKey);
         new Thread(tournamentThread).start();
     }
 
@@ -52,7 +57,5 @@ public class RegularTournament extends Tournament {
         }
     }
 
-    public Animal[][] getAnimalTeams() {
-        return animals;
-    }
+
 }

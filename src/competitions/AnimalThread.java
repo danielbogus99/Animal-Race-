@@ -56,9 +56,10 @@ public class AnimalThread implements Runnable {
                     finishFlag.notifyAll(); // Notify that this participant has finished
                 }
                 System.out.println(participant.getAnimalName() + " finished");
-                int high = imagePanel.getHeight2();
-                participant.resetPosition(participant,high);
+                int width = imagePanel.getWidth2()/14;
+                participant.resetPosition(participant,width);
                 participant.setTotalDistance();
+                participant.setNotMoving();
                 break;
             }
 

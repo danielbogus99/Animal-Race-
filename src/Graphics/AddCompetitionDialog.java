@@ -234,16 +234,15 @@ public class AddCompetitionDialog extends JDialog {
     private void processRegularCompetition(int path) {
         if (selectedCompetitionType.equals("Regular")) {
             boolean raceCreated = false;
-            RegularRace race = new RegularRace(competitionName, selectedRaceType);
+            RegularRace race = new RegularRace(competitionName, selectedRaceType, path); // Pass the path here
 
             List<Animal> eligibleAnimals = new ArrayList<>();
 
             // Gather all eligible animals from groups of the selected race type
             for (String groupKey : competitionManager.getGroupMap().keySet()) {
-                String groupType = groupKey.substring(groupKey.indexOf("(") + 1, groupKey.indexOf(")"));
+                String groupType = extractGroupType(groupKey);
                 List<Animal> animals = competitionManager.getGroupMap().get(groupKey);
 
-                // Check if the current group's type matches the selected race type
                 if (groupType.equals(selectedRaceType)) {
                     eligibleAnimals.addAll(animals);
                 }
@@ -252,24 +251,22 @@ public class AddCompetitionDialog extends JDialog {
             // Select animals from the accumulated list
             List<Animal> chosenAnimals = selectAnimals(eligibleAnimals);
 
-            // Add only selected animals to the race
             if (!chosenAnimals.isEmpty()) {
-                int yPosition = calculateYPositionBasedOnType(path); // Calculate Y position based on selected path
+                int yPosition = calculateYPositionBasedOnType(path);
                 for (Animal animal : chosenAnimals) {
-                    animal.setY(yPosition); // Update the Y position of the animal
+                    animal.setY(yPosition);
                 }
-                race.addAnimals(chosenAnimals); // Add animals to the race
+                race.addAnimals(chosenAnimals);
                 raceCreated = true;
             }
 
             if (raceCreated) {
                 RegularRace.addRace(race);
-                JOptionPane.showMessageDialog(AddCompetitionDialog.this, "The race \"" + competitionName + "\" was created successfully!");
+                JOptionPane.showMessageDialog(this, "The race \"" + competitionName + "\" was created successfully!");
                 addAnimalFlag = false;
                 dispose();
             } else {
-                JOptionPane.showMessageDialog(AddCompetitionDialog.this,
-                        "No animals of the selected type (" + selectedRaceType + ") were added to the race.");
+                JOptionPane.showMessageDialog(this, "No animals of the selected type (" + selectedRaceType + ") were added to the race.");
             }
         }
     }
@@ -277,49 +274,41 @@ public class AddCompetitionDialog extends JDialog {
     private void processCourierCompetition(int path) {
         if (selectedCompetitionType.equals("Courier")) {
             boolean raceCreated = false;
-            CourierRace race = new CourierRace(competitionName, selectedRaceType);
+            CourierRace race = new CourierRace(competitionName, selectedRaceType, path); // Pass the path here
 
-            // Ask user for the number of animals desired in each group
-            String input = JOptionPane.showInputDialog(AddCompetitionDialog.this,
-                    "Enter the number of animals per group:");
-            if (input == null) {
-                return; // User cancelled
-            }
+            String input = JOptionPane.showInputDialog(this, "Enter the number of animals per group:");
+            if (input == null) return;
 
             int animalsPerGroup;
             try {
                 animalsPerGroup = Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(AddCompetitionDialog.this,
-                        "Invalid number. Please enter a valid integer.");
+                JOptionPane.showMessageDialog(this, "Invalid number. Please enter a valid integer.");
                 return;
             }
 
             List<String> eligibleGroupNames = new ArrayList<>();
 
-            // Gather all eligible groups from the selected race type
             for (String groupKey : competitionManager.getGroupMap().keySet()) {
-                String groupType = groupKey.substring(groupKey.indexOf("(") + 1, groupKey.indexOf(")"));
+                String groupType = extractGroupType(groupKey);
                 List<Animal> animals = competitionManager.getGroupMap().get(groupKey);
 
-                // Check if the current group's type matches the selected race type and size
                 if (groupType.equals(selectedRaceType) && animals.size() == animalsPerGroup) {
                     eligibleGroupNames.add(groupKey);
                 }
             }
 
-            // Let user select groups to add to the race
             if (!eligibleGroupNames.isEmpty()) {
                 List<String> selectedGroupNames = selectGroups(eligibleGroupNames);
 
                 for (String groupName : selectedGroupNames) {
                     List<Animal> animals = competitionManager.getGroupMap().get(groupName);
                     if (animals != null) {
-                        int yPosition = calculateYPositionBasedOnType(path); // Calculate Y position based on selected path
+                        int yPosition = calculateYPositionBasedOnType(path);
                         for (Animal animal : animals) {
-                            animal.setY(yPosition); // Update the Y position of the animal
+                            animal.setY(yPosition);
                         }
-                        race.addGroup(groupName, animals); // Add the group to the race
+                        race.addGroup(groupName, animals);
                     }
                 }
 
@@ -328,19 +317,17 @@ public class AddCompetitionDialog extends JDialog {
                 }
             }
 
-            // Notify user about the added groups
             if (raceCreated) {
                 CourierRace.addRace(race);
-                JOptionPane.showMessageDialog(AddCompetitionDialog.this,
-                        "The courier race \"" + competitionName + "\" was created successfully!\n");
+                JOptionPane.showMessageDialog(this, "The courier race \"" + competitionName + "\" was created successfully!\n");
                 addAnimalFlag = false;
                 dispose();
             } else {
-                JOptionPane.showMessageDialog(AddCompetitionDialog.this,
-                        "No groups of the selected type and size were added to the race.");
+                JOptionPane.showMessageDialog(this, "No groups of the selected type and size were added to the race.");
             }
         }
     }
+
 
     private int promptForWaterPath() {
         Integer[] paths = {1, 2, 3, 4}; // Define the available paths for water
@@ -539,16 +526,16 @@ public class AddCompetitionDialog extends JDialog {
             return 0;
         }
         if (path == 2) {
-            return high / 8 + high / 10;
+            return high / 8 + high / 10+high/30;
         }
         if (path == 3) {
-            return high / 3 + high / 10;
+            return high / 3 + high / 10+high/25;
         }
         if (path == 4) {
-            return high / 2 + high / 7;
+            return high / 2 + high / 7+high / 20;
         }
         if (path == 5) {
-            return high / 2 + high / 3;
+            return high / 2 + high / 3+high/15;
         }
         return 0;
     }

@@ -4,6 +4,7 @@ import Graphics.ImagePanel;
 import animals.Animal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CourierTournament extends Tournament {
@@ -13,11 +14,17 @@ public class CourierTournament extends Tournament {
     private ImagePanel imagePanel; // Reference to the ImagePanel for updates
     private Animal[][] animals;
     private String raceName;// Reference to the animal groups
+    private String compositeKey;
+    private Map<String, Integer> occupiedPaths;
     private int neededDistance;
 
     // Constructor that takes the animal groups, additional info, and the ImagePanel
-    public CourierTournament(Animal[][] animalGroups, int neededDistance,String raceName) {
+    public CourierTournament(Animal[][] animalGroups, int neededDistance,String raceName, Map<String, Integer> occupiedPaths,String compositeKey) {
         super(animalGroups, neededDistance);
+        this.startFlag = new AtomicBoolean(false);
+        this.neededDistance = neededDistance;
+        this.occupiedPaths = occupiedPaths;
+        this.compositeKey = compositeKey;
         this.raceName = raceName;
         setup(animalGroups, neededDistance); // Call setup with the provided parameters
     }
@@ -56,7 +63,7 @@ public class CourierTournament extends Tournament {
         }
 
         // Store the startFlag, scores, and number of groups in the tournament thread
-        this.tournamentThread = new TournamentThread(scores, startFlag, numberOfGroups,raceName);
+        this.tournamentThread = new TournamentThread(scores, startFlag, numberOfGroups,raceName,occupiedPaths,compositeKey);
         new Thread(this.tournamentThread).start(); // Start the tournament thread
     }
 
@@ -68,8 +75,6 @@ public class CourierTournament extends Tournament {
         }
     }
 
-    // Method to retrieve the animal teams
-    public Animal[][] getAnimalTeams() {
-        return animals;
-    }
+
+
 }
