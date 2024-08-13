@@ -20,6 +20,7 @@ public class Alligator extends WaterAnimal implements IReptile, ITerrestrailAnim
     private WaterAnimal waterAnimal;
     private BufferedImage img1,img2,img3,img4;
 
+
     /**
      * Constructor to initialize an Alligator object.
      *
@@ -43,6 +44,7 @@ public class Alligator extends WaterAnimal implements IReptile, ITerrestrailAnim
         super(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,diveDept,competitionPanel);
         terrestrialAnimals = new TerrestrialAnimals(x,y, totalDistance, gender, name, weight, speed, medals,orien,maxEnergy,energyPerMeter,noLegs,competitionPanel);
         this.AreaOfLiving = AreaOfLiving;
+
         loadImages("animals/" + name + ".png");
     }
 
@@ -103,6 +105,7 @@ public class Alligator extends WaterAnimal implements IReptile, ITerrestrailAnim
         addSpeed(speeds);
         return true;
     }
+
 
     /**
      * Gets the number of legs of the alligator.
