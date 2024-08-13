@@ -1,63 +1,106 @@
 package Graphics;
+
 import animals.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Represents a courier race, which consists of multiple groups of animals competing on a specified path.
+ */
 public class CourierRace {
-    private String name;
-    private String type;
-    private int racePath; // New field to store the path
-    private Map<String, List<Animal>> groups;
+    private String name; // Name of the race
+    private String type; // Type of the race (e.g., Air, Water, Terrestrial)
+    private int racePath; // Path of the race
+    private Map<String, List<Animal>> groups; // Map of group names to their respective animals
 
     // Static list to store all created races
     private static List<CourierRace> allRaces = new ArrayList<>();
 
-    // Constructor
-    public CourierRace(String name, String type, int racePath) { // Updated constructor
+    /**
+     * Constructs a new CourierRace with the specified name, type, and race path.
+     *
+     * @param name     The name of the race.
+     * @param type     The type of the race (Air, Water, Terrestrial).
+     * @param racePath The path of the race.
+     */
+    public CourierRace(String name, String type, int racePath) {
         this.name = name;
         this.type = type;
-        this.racePath = racePath; // Store the path
+        this.racePath = racePath;
         this.groups = new HashMap<>();
     }
 
-    // Method to add a group of animals to the race
+    /**
+     * Adds a group of animals to the race.
+     *
+     * @param groupName The name of the group.
+     * @param animals   The list of animals in the group.
+     */
     public void addGroup(String groupName, List<Animal> animals) {
         groups.put(groupName, new ArrayList<>(animals));
     }
 
-    // Method to add the race to the list of all races
+    /**
+     * Adds the race to the static list of all races.
+     *
+     * @param race The CourierRace to add.
+     */
     public static void addRace(CourierRace race) {
         allRaces.add(race);
     }
 
-    // Method to retrieve all created races
+    /**
+     * Retrieves a list of all created races.
+     *
+     * @return A list of all CourierRace instances.
+     */
     public static List<CourierRace> getAllRaces() {
         return new ArrayList<>(allRaces);
     }
 
-    // Method to get the name of the race
+    /**
+     * Gets the name of the race.
+     *
+     * @return The name of the race.
+     */
     public String getName() {
         return name;
     }
 
-    // Method to get the type of the race
+    /**
+     * Gets the type of the race.
+     *
+     * @return The type of the race.
+     */
     public String getType() {
         return type;
     }
 
-    // Method to get the path of the race
+    /**
+     * Gets the path of the race.
+     *
+     * @return The path of the race.
+     */
     public int getRacePath() {
         return racePath;
     }
 
-    // Method to set the path of the race
+    /**
+     * Sets the path of the race.
+     *
+     * @param racePath The path to set.
+     */
     public void setRacePath(int racePath) {
         this.racePath = racePath;
     }
 
-    // Method to get the list of all animals in the race
+    /**
+     * Gets a list of all animals participating in the race.
+     *
+     * @return A list of all animals in the race.
+     */
     public List<Animal> getAnimals() {
         List<Animal> allAnimals = new ArrayList<>();
         for (List<Animal> group : groups.values()) {
@@ -66,12 +109,15 @@ public class CourierRace {
         return allAnimals;
     }
 
-    // Method to return the animals grouped by their group in a 2D array
+    /**
+     * Returns the animals grouped by their group in a 2D array.
+     *
+     * @return A 2D array of animals grouped by their respective groups.
+     */
     public Animal[][] getAnimalGroups() {
         Animal[][] animalGroups = new Animal[groups.size()][];
         int index = 0;
 
-        // Populate the 2D array with groups of animals
         for (List<Animal> group : groups.values()) {
             animalGroups[index++] = group.toArray(new Animal[0]);
         }
@@ -79,13 +125,16 @@ public class CourierRace {
         return animalGroups;
     }
 
-    // Method to print race details
+    /**
+     * Returns a string representation of the race, including its name, type, path, and groups.
+     *
+     * @return A string representation of the CourierRace.
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("CourierRace{name='").append(name).append("', type='").append(type).append("', path=").append(racePath).append(", groups=\n");
 
-        // Get groups of animals
         for (Map.Entry<String, List<Animal>> entry : groups.entrySet()) {
             sb.append("  Group '").append(entry.getKey()).append("':\n");
 

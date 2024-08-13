@@ -34,7 +34,6 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
     private BufferedImage img1, img2, img3, img4;
     private boolean moving = false;
 
-
     /**
      * Constructor to initialize an Animal object.
      *
@@ -204,7 +203,9 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
     /**
      * Enum representing the gender of the animal.
      */
-    public enum gender {Male, Female, Hermaphrodite}
+    public enum gender {
+        Male, Female, Hermaphrodite
+    }
 
     /**
      * Gets the type of the animal.
@@ -222,7 +223,7 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
      */
     public void loadImages(String nm) {
         try {
-            img1 = ImageIO.read(new File(""));
+            img1 = ImageIO.read(new File(nm));
         } catch (IOException e) {
             System.out.println("Cannot load image");
         }
@@ -235,20 +236,23 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
      */
     public synchronized void drawObject(Graphics g) {
         if (orien == Orientation.EAST) {
-            g.drawImage(img1, getLocation().getX(), getLocation().getY() - size / 10, size , size, pan);
+            g.drawImage(img1, getLocation().getX(), getLocation().getY() - size / 10, size, size, pan);
         } else if (orien == Orientation.SOUTH) {
             g.drawImage(img2, getLocation().getX(), getLocation().getY() - size / 10, size, size, pan);
         } else if (orien == Orientation.WEST) {
-            g.drawImage(img3, getLocation().getX(), getLocation().getY() - size / 10, size , size, pan);
+            g.drawImage(img3, getLocation().getX(), getLocation().getY() - size / 10, size, size, pan);
         } else if (orien == Orientation.NORTH) {
-            g.drawImage(img4, getLocation().getX() , getLocation().getY()-size/10, size, size, pan);
+            g.drawImage(img4, getLocation().getX(), getLocation().getY() - size / 10, size, size, pan);
         }
     }
 
-    public boolean isOutOfEnergy()
-    {
-        if (currentEnergy < 0)
-        {
+    /**
+     * Checks if the animal is out of energy.
+     *
+     * @return True if the animal is out of energy, false otherwise.
+     */
+    public boolean isOutOfEnergy() {
+        if (currentEnergy < 0) {
             currentEnergy = 0;
             return true;
         }
@@ -270,12 +274,21 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
         currentEnergy += energy;
         return true;
     }
+
+    /**
+     * Resets the animal's state.
+     */
     public void resetAnimal() {
         this.totalConsumption = 0;
         this.setLocation(new Point(0, 0)); // Reset position to the starting point or any desired location
         this.currentEnergy = this.maxEnergy; // Reset energy if needed
     }
 
+    /**
+     * Moves the animal and updates its position.
+     *
+     * @return The distance moved.
+     */
     public synchronized double move() {
         if (currentEnergy <= 0) {
             return 0;
@@ -283,7 +296,6 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
 
         int x = getLocation().getX();
         int y = getLocation().getY();
-
 
         switch (orien) {
             case EAST:
@@ -309,65 +321,80 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
 
         return speed;
     }
-    public void setY(int y)
-    {
-       location.setY(y);
+
+    /**
+     * Sets the Y-coordinate of the animal.
+     *
+     * @param y The Y-coordinate to set.
+     */
+    public void setY(int y) {
+        location.setY(y);
     }
 
-
+    /**
+     * Checks the bounds and changes the animal's direction if necessary.
+     *
+     * @param animal The animal to check.
+     */
     public void checkBoundsAndChangeDirection(Animal animal) {
         int x = animal.getLocation().getX();
         int y = animal.getLocation().getY();
         int backgroundWidth = new ImagePanel(null).getWidth2();
         int backgroundHeight = new ImagePanel(null).getHeight2();
 
-
-         if (animal instanceof TerrestrialAnimals || animal instanceof ITerrestrailAnimal)
-        {
-            if (x >= backgroundWidth - 75 && y >= backgroundHeight - 75)
-            {
+        if (animal instanceof TerrestrialAnimals || animal instanceof ITerrestrailAnimal) {
+            if (x >= backgroundWidth - 75 && y >= backgroundHeight - 75) {
                 animal.setOrientation(Orientation.WEST);
-            } else if (x >= backgroundWidth - 75)
-            {
+            } else if (x >= backgroundWidth - 75) {
                 animal.setOrientation(Orientation.SOUTH);
-            } else if (x <= 15 && y >= backgroundHeight - 155)
-            {
+            } else if (x <= 15 && y >= backgroundHeight - 155) {
                 animal.setOrientation(Orientation.NORTH);
-            }
-            else if (x <= 0 && y <= 0)
-            {
+            } else if (x <= 0 && y <= 0) {
                 animal.setOrientation(Orientation.EAST);
             }
         }
     }
 
-
-    public void resetPosition(Animal animal,int x)
-    {
-        if(animal instanceof AirAnimal || animal instanceof TerrestrialAnimals)
-        {
+    /**
+     * Resets the animal's position.
+     *
+     * @param animal The animal to reset.
+     * @param x      The X-coordinate to reset to.
+     */
+    public void resetPosition(Animal animal, int x) {
+        if (animal instanceof AirAnimal || animal instanceof TerrestrialAnimals) {
             setLocation(new Point(0, location.getY()));
-        }
-        else
-        {
+        } else {
             setLocation(new Point(x, location.getY()));
         }
     }
-    public boolean isMoving()
-    {
-        if(moving)
-            return true;
-        return false;
+
+    /**
+     * Checks if the animal is moving.
+     *
+     * @return True if the animal is moving, false otherwise.
+     */
+    public boolean isMoving() {
+        return moving;
     }
-    public void setMoving()
-    {
+
+    /**
+     * Sets the animal to moving state.
+     */
+    public void setMoving() {
         moving = true;
     }
-    public void setNotMoving()
-    {
+
+    /**
+     * Sets the animal to not moving state.
+     */
+    public void setNotMoving() {
         moving = false;
     }
 
+    /**
+     * Decreases the animal's energy.
+     */
     public void decreaseEnergy() {
         currentEnergy -= energyPerMeter;
     }

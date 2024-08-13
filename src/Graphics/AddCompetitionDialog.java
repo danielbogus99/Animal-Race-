@@ -12,6 +12,10 @@ import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
 
+/**
+ * A dialog for adding a new competition, where the user can specify competition details,
+ * add animals to groups, and configure race settings.
+ */
 public class AddCompetitionDialog extends JDialog {
     private static final String[] animalTypes = {"Air", "Water", "Terrestrial"};
     private final JTextField competitionNameField;
@@ -32,6 +36,11 @@ public class AddCompetitionDialog extends JDialog {
     // Use CompetitionManager to manage groups
     private final CompetitionManager competitionManager = CompetitionManager.getInstance();
 
+    /**
+     * Constructs a new AddCompetitionDialog.
+     *
+     * @param parent The parent JFrame to which this dialog is attached.
+     */
     public AddCompetitionDialog(JFrame parent) {
         super(parent, "Add Competition", true);
         this.imagePanel = ((CompetitionFrame) parent).getImagePanel();
@@ -220,8 +229,10 @@ public class AddCompetitionDialog extends JDialog {
         checkCompetitionEligibility(); // Initial check to set confirm button state
     }
 
+    /**
+     * Loads existing groups from the CompetitionManager into the dialog's table.
+     */
     private void loadExistingGroups() {
-        // Load existing groups from the manager into the dialog's table
         Map<String, List<Animal>> existingGroups = competitionManager.getGroupMap();
         for (String groupKey : existingGroups.keySet()) {
             if (!tableModel.getDataVector().stream().anyMatch(row -> ((Vector) row).contains(groupKey))) {
@@ -231,6 +242,11 @@ public class AddCompetitionDialog extends JDialog {
         updateTable();
     }
 
+    /**
+     * Processes the creation of a regular competition.
+     *
+     * @param path The selected path for the race.
+     */
     private void processRegularCompetition(int path) {
         if (selectedCompetitionType.equals("Regular")) {
             boolean raceCreated = false;
@@ -271,6 +287,11 @@ public class AddCompetitionDialog extends JDialog {
         }
     }
 
+    /**
+     * Processes the creation of a courier competition.
+     *
+     * @param path The selected path for the race.
+     */
     private void processCourierCompetition(int path) {
         if (selectedCompetitionType.equals("Courier")) {
             boolean raceCreated = false;
@@ -328,7 +349,11 @@ public class AddCompetitionDialog extends JDialog {
         }
     }
 
-
+    /**
+     * Prompts the user to select a path for water races.
+     *
+     * @return The selected path or -1 if the selection was cancelled.
+     */
     private int promptForWaterPath() {
         Integer[] paths = {1, 2, 3, 4}; // Define the available paths for water
         JComboBox<Integer> pathCombo = new JComboBox<>(paths);
@@ -340,6 +365,11 @@ public class AddCompetitionDialog extends JDialog {
         }
     }
 
+    /**
+     * Prompts the user to select a path for air races.
+     *
+     * @return The selected path or -1 if the selection was cancelled.
+     */
     private int promptForAirPath() {
         Integer[] paths = {1, 2, 3, 4, 5}; // Define the available paths for air
         JComboBox<Integer> pathCombo = new JComboBox<>(paths);
@@ -351,7 +381,12 @@ public class AddCompetitionDialog extends JDialog {
         }
     }
 
-    // Method to present a selection dialog for choosing groups
+    /**
+     * Presents a selection dialog for choosing groups.
+     *
+     * @param eligibleGroupNames The list of eligible group names.
+     * @return A list of selected group names.
+     */
     private List<String> selectGroups(List<String> eligibleGroupNames) {
         List<String> selectedGroups = new ArrayList<>();
         JPanel panel = new JPanel();
@@ -379,6 +414,9 @@ public class AddCompetitionDialog extends JDialog {
         return selectedGroups;
     }
 
+    /**
+     * Updates the group table with the current data.
+     */
     private void updateTable() {
         tableModel.setRowCount(0); // Clear existing data
 
@@ -413,7 +451,9 @@ public class AddCompetitionDialog extends JDialog {
         }
     }
 
-    // Method to check if a regular race can be created
+    /**
+     * Checks if a regular or courier competition can be created based on the current group data.
+     */
     private void checkCompetitionEligibility() {
         boolean regularEligible = false;
         boolean courierEligible = false;
@@ -460,6 +500,12 @@ public class AddCompetitionDialog extends JDialog {
         confirm.setEnabled(courierEligible || regularEligible);
     }
 
+    /**
+     * Adds a new group to the competition manager.
+     *
+     * @param name The name of the group.
+     * @param type The type of the group (Air, Water, Terrestrial).
+     */
     private void addGroup(String name, String type) {
         String groupKey = name + " (" + type + ")";
         if (!competitionManager.getGroupMap().containsKey(groupKey)) {
@@ -471,6 +517,12 @@ public class AddCompetitionDialog extends JDialog {
         }
     }
 
+    /**
+     * Extracts the group type (Air, Water, Terrestrial) from the group key.
+     *
+     * @param groupKey The key of the group.
+     * @return The type of the group.
+     */
     private String extractGroupType(String groupKey) {
         int typeStart = groupKey.lastIndexOf('(') + 1;
         int typeEnd = groupKey.lastIndexOf(')');
@@ -481,6 +533,12 @@ public class AddCompetitionDialog extends JDialog {
         }
     }
 
+    /**
+     * Presents a dialog for selecting animals from a list.
+     *
+     * @param availableAnimals The list of available animals.
+     * @return A list of selected animals.
+     */
     private List<Animal> selectAnimals(List<Animal> availableAnimals) {
         List<Animal> selectedAnimals = new ArrayList<>();
         JPanel panel = new JPanel();
@@ -508,11 +566,17 @@ public class AddCompetitionDialog extends JDialog {
         return selectedAnimals;
     }
 
+    /**
+     * Calculates the Y position for the animal based on the selected path for water races.
+     *
+     * @param path The selected path.
+     * @return The Y position.
+     */
     private int calculateYPosition(int path) {
         if (path == 1) {
             return high / 8;
         } else if (path == 2) {
-            return high / 3 + high/45;
+            return high / 3 + high / 45;
         } else if (path == 3) {
             return high / 3 + high / 6 + high / 15;
         } else if (path == 4) {
@@ -521,25 +585,37 @@ public class AddCompetitionDialog extends JDialog {
         return 0;
     }
 
+    /**
+     * Calculates the Y position for the animal based on the selected path for air races.
+     *
+     * @param path The selected path.
+     * @return The Y position.
+     */
     private int calculateYAirPosition(int path) {
         if (path == 1) {
             return 0;
         }
         if (path == 2) {
-            return high / 8 + high / 10+high/30;
+            return high / 8 + high / 10 + high / 30;
         }
         if (path == 3) {
-            return high / 3 + high / 10+high/25;
+            return high / 3 + high / 10 + high / 25;
         }
         if (path == 4) {
-            return high / 2 + high / 7+high / 20;
+            return high / 2 + high / 7 + high / 20;
         }
         if (path == 5) {
-            return high / 2 + high / 3+high/15;
+            return high / 2 + high / 3 + high / 15;
         }
         return 0;
     }
 
+    /**
+     * Calculates the Y position for the animal based on the selected race type and path.
+     *
+     * @param path The selected path.
+     * @return The Y position.
+     */
     private int calculateYPositionBasedOnType(int path) {
         if (selectedRaceType.equals("Water")) {
             return calculateYPosition(path);
@@ -549,34 +625,72 @@ public class AddCompetitionDialog extends JDialog {
         return 0; // Default fallback
     }
 
+    /**
+     * Returns a list of all regular races.
+     *
+     * @return A list of RegularRace objects.
+     */
     public List<RegularRace> getAllRegularRaces() {
         return RegularRace.getAllRaces();
     }
 
+    /**
+     * Returns a list of all courier races.
+     *
+     * @return A list of CourierRace objects.
+     */
     public List<CourierRace> getAllCourierRaces() {
         return CourierRace.getAllRaces();
     }
 
+    /**
+     * Returns the selected competition type (Regular or Courier).
+     *
+     * @return The selected competition type.
+     */
     public String getSelectedCompetitionType() {
         return selectedCompetitionType;
     }
 
+    /**
+     * Returns the name of the competition.
+     *
+     * @return The competition name.
+     */
     public String getCompetitionName() {
         return competitionName;
     }
 
+    /**
+     * Returns the selected race type (Air, Water, Terrestrial).
+     *
+     * @return The selected race type.
+     */
     public String getSelectedRaceType() {
         return selectedRaceType;
     }
 
+    /**
+     * Checks whether an animal should be added to the competition.
+     *
+     * @return True if an animal should be added, false otherwise.
+     */
     public boolean shouldAddAnimal() {
         return addAnimalFlag;
     }
 
+    /**
+     * A custom table header renderer that includes a button for adding animals to groups.
+     */
     class HeaderRenderer extends JPanel implements TableCellRenderer {
         private final JTableHeader header;
         private final JTable table;
 
+        /**
+         * Constructs a HeaderRenderer for the specified table.
+         *
+         * @param table The JTable to which this header renderer is attached.
+         */
         public HeaderRenderer(JTable table) {
             super(new FlowLayout(FlowLayout.RIGHT, 0, 0));
             this.table = table;
@@ -611,6 +725,11 @@ public class AddCompetitionDialog extends JDialog {
             return this;
         }
 
+        /**
+         * Adds an animal to the specified group.
+         *
+         * @param fullGroupName The full name of the group.
+         */
         private void addAnimalToGroup(String fullGroupName) {
             if (!fullGroupName.equals("Add Animal to Group")) {
                 // Check if the group exists

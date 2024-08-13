@@ -1,3 +1,8 @@
+/**
+ * Daniel Boguslavsky:207915729
+ * Shain Simon:214223299
+ */
+
 package Graphics;
 
 import javax.swing.*;

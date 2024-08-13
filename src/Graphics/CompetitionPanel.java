@@ -1,6 +1,5 @@
 package Graphics;
 
-import javax.swing.Timer;
 import animals.*;
 import competitions.*;
 import javax.swing.*;
@@ -12,6 +11,7 @@ import java.util.Map;
 
 /**
  * Represents a panel for managing competitions and animals within a competition.
+ * The panel allows the user to add and start competitions, as well as manage the energy of animals.
  */
 public class CompetitionPanel extends JPanel {
 
@@ -29,6 +29,12 @@ public class CompetitionPanel extends JPanel {
     private RegularTournament currentTournament;
     private CourierTournament currentCourier;
 
+    /**
+     * Constructs a new CompetitionPanel with the specified parent frame and image panel.
+     *
+     * @param parentFrame The parent frame of the competition panel.
+     * @param imagePanel  The image panel used for displaying the animals.
+     */
     public CompetitionPanel(CompetitionFrame parentFrame, ImagePanel imagePanel) {
         this.parentFrame = parentFrame;
         setLayout(new GridLayout(1, 0));
@@ -63,6 +69,9 @@ public class CompetitionPanel extends JPanel {
         setDoubleBuffered(true);
     }
 
+    /**
+     * Updates the competition panel by collecting all active animals and repainting the image panel.
+     */
     private void updateCompetition() {
         List<Animal> allAnimals = new ArrayList<>();
 
@@ -81,6 +90,12 @@ public class CompetitionPanel extends JPanel {
         imagePanel.repaint();
     }
 
+    /**
+     * Collects all animals from the provided animal teams.
+     *
+     * @param animalTeams The animal teams to collect from.
+     * @return A list of all animals.
+     */
     private List<Animal> collectAnimals(Animal[][] animalTeams) {
         List<Animal> allAnimals = new ArrayList<>();
         for (Animal[] team : animalTeams) {
@@ -91,6 +106,9 @@ public class CompetitionPanel extends JPanel {
         return allAnimals;
     }
 
+    /**
+     * Starts a competition by prompting the user to select a race and then starting it.
+     */
     private void startCompetition() {
         List<String> raceNames = collectRaceNames(false); // Only show races that haven't started
         if (raceNames.isEmpty()) {
@@ -116,6 +134,12 @@ public class CompetitionPanel extends JPanel {
         }
     }
 
+    /**
+     * Collects the names of all races, optionally including started races.
+     *
+     * @param includeStarted Whether to include started races.
+     * @return A list of race names.
+     */
     private List<String> collectRaceNames(boolean includeStarted) {
         List<String> raceNames = new ArrayList<>();
         if (regularRace != null) {
@@ -141,10 +165,22 @@ public class CompetitionPanel extends JPanel {
         return raceNames;
     }
 
+    /**
+     * Creates a composite key based on race type and path.
+     *
+     * @param raceType The type of the race (e.g., "Water", "Air").
+     * @param path     The path of the race.
+     * @return A composite key string.
+     */
     private String createCompositeKey(String raceType, int path) {
         return raceType + "-" + path;
     }
 
+    /**
+     * Starts a regular race based on the selected race name.
+     *
+     * @param raceName The name of the race to start.
+     */
     private void startRegularRace(String raceName) {
         RegularRace selectedRace = regularRace.stream()
                 .filter(race -> race.getRaceName().equals(raceName))
@@ -203,7 +239,7 @@ public class CompetitionPanel extends JPanel {
 
                     setAnimalsToMoving(animals);
                     activeRegularAnimals.addAll(animals); // Add these animals to the active list
-                    RegularTournament tournament = new RegularTournament(selectedRace.toAnimalTeams(), distance, raceName,occupiedPaths,compositeKey); // Create a new tournament for each race
+                    RegularTournament tournament = new RegularTournament(selectedRace.toAnimalTeams(), distance, raceName, occupiedPaths, compositeKey); // Create a new tournament for each race
                     new Thread(() -> {
                         tournament.startRace();
 
@@ -222,6 +258,12 @@ public class CompetitionPanel extends JPanel {
         }
     }
 
+    /**
+     * Checks if all animals are stationary (not moving).
+     *
+     * @param animals The list of animals to check.
+     * @return True if all animals are stationary, false otherwise.
+     */
     private boolean allAnimalsNotMoving(List<Animal> animals) {
         for (Animal animal : animals) {
             if (animal.isMoving()) {
@@ -231,12 +273,22 @@ public class CompetitionPanel extends JPanel {
         return true;
     }
 
+    /**
+     * Sets all animals to a moving state.
+     *
+     * @param animals The list of animals to set as moving.
+     */
     private void setAnimalsToMoving(List<Animal> animals) {
         for (Animal animal : animals) {
             animal.setMoving();
         }
     }
 
+    /**
+     * Starts a courier race based on the selected race name.
+     *
+     * @param raceName The name of the race to start.
+     */
     private void startCourierRace(String raceName) {
         CourierRace selectedRace = courierRace.stream()
                 .filter(race -> race.getName().equals(raceName))
@@ -286,7 +338,7 @@ public class CompetitionPanel extends JPanel {
 
                     // Check if the selected path is already occupied
                     if (occupiedPaths.containsKey(compositeKey)) {
-                        JOptionPane.showMessageDialog(parentFrame, "The path of the race is already taken by other race wait for the race to end.");
+                        JOptionPane.showMessageDialog(parentFrame, "The path of the race is already taken by another race. Please wait for the race to end.");
                         return;
                     }
 
@@ -295,7 +347,7 @@ public class CompetitionPanel extends JPanel {
 
                     setAnimalsToMoving(animals);
                     activeCourierAnimals.addAll(animals); // Add these animals to the active list
-                    currentCourier = new CourierTournament(selectedRace.getAnimalGroups(), distance, raceName,occupiedPaths,compositeKey); // Pass the distance
+                    currentCourier = new CourierTournament(selectedRace.getAnimalGroups(), distance, raceName, occupiedPaths, compositeKey); // Pass the distance
                     new Thread(() -> {
                         currentCourier.startRace();
 
@@ -314,6 +366,9 @@ public class CompetitionPanel extends JPanel {
         }
     }
 
+    /**
+     * Allows the user to add energy to a selected animal in a race.
+     */
     private void eatAnimals() {
         List<String> raceNames = collectRaceNames(true); // Show all races including started ones
         if (raceNames.isEmpty()) {
@@ -380,6 +435,12 @@ public class CompetitionPanel extends JPanel {
         }
     }
 
+    /**
+     * Retrieves the list of animals from a regular race.
+     *
+     * @param raceName The name of the race.
+     * @return A list of animals in the race.
+     */
     private List<Animal> getAnimalsFromRegularRace(String raceName) {
         RegularRace selectedRace = regularRace.stream()
                 .filter(race -> race.getRaceName().equals(raceName))
@@ -401,6 +462,12 @@ public class CompetitionPanel extends JPanel {
         }
     }
 
+    /**
+     * Retrieves the list of animals from a courier race.
+     *
+     * @param raceName The name of the race.
+     * @return A list of animals in the race.
+     */
     private List<Animal> getAnimalsFromCourierRace(String raceName) {
         CourierRace selectedRace = courierRace.stream()
                 .filter(race -> race.getName().equals(raceName))
@@ -418,6 +485,9 @@ public class CompetitionPanel extends JPanel {
         return selectedRace != null ? collectAnimals(selectedRace.getAnimalGroups()) : new ArrayList<>();
     }
 
+    /**
+     * Opens the AddCompetitionDialog to allow the user to add a new competition.
+     */
     private void addCompetition() {
         AddCompetitionDialog addCompetitionDialog = new AddCompetitionDialog(parentFrame);
         addCompetitionDialog.setVisible(true);

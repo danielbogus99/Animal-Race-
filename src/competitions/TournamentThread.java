@@ -9,19 +9,33 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+/**
+ * Represents a thread responsible for managing and monitoring the entire tournament.
+ * It starts the race, tracks the results, and displays them once all participants have finished.
+ */
 public class TournamentThread implements Runnable {
     private Scores scores; // Holds the final results of each group
     private AtomicBoolean startSignal; // Special flag to start all animals
     private int groups; // Number of competing groups
-    private Map<String, Date> raceResults;// Store the results for UI updates
-    private String compositeKey;
-    private Map<String, Integer> occupiedPaths;
-    private String raceName;
+    private Map<String, Date> raceResults; // Stores the results for UI updates
+    private String compositeKey; // Key used to track occupied paths in the tournament
+    private Map<String, Integer> occupiedPaths; // Map to track occupied paths
+    private String raceName; // Name of the race
 
     // Update the format to include both date and time
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    public TournamentThread(Scores scores, AtomicBoolean startSignal, int groups,String raceName,Map<String, Integer> occupiedPaths,String compositeKey) {
+    /**
+     * Constructs a TournamentThread with the specified parameters.
+     *
+     * @param scores        The Scores object to store the final results of each group.
+     * @param startSignal   The flag to start all animals in the tournament.
+     * @param groups        The number of competing groups in the tournament.
+     * @param raceName      The name of the race.
+     * @param occupiedPaths The map to track occupied paths.
+     * @param compositeKey  The key used to track the specific race in the occupied paths.
+     */
+    public TournamentThread(Scores scores, AtomicBoolean startSignal, int groups, String raceName, Map<String, Integer> occupiedPaths, String compositeKey) {
         this.scores = scores;
         this.startSignal = startSignal;
         this.groups = groups;
@@ -31,6 +45,10 @@ public class TournamentThread implements Runnable {
         this.raceResults = new ConcurrentHashMap<>();
     }
 
+    /**
+     * The main logic of the tournament thread. It starts the race, monitors the results,
+     * and displays the results once all participants have finished.
+     */
     @Override
     public void run() {
         // Start the race by setting the startSignal to true
@@ -78,6 +96,11 @@ public class TournamentThread implements Runnable {
         }
     }
 
+    /**
+     * Displays the race results in a new panel.
+     *
+     * @param raceResults The map containing the results of the race.
+     */
     private void showResultsPanel(Map<String, Date> raceResults) {
         JFrame resultsFrame = new JFrame("Race Results");
         resultsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -86,5 +109,4 @@ public class TournamentThread implements Runnable {
         resultsFrame.setLocationRelativeTo(null); // Center the frame on screen
         resultsFrame.setVisible(true);
     }
-
 }
