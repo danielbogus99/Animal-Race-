@@ -71,7 +71,8 @@ public class ImagePanel extends JPanel {
                 for (Animal animal : animals) {
                     synchronized (animal) {
                         // Only draw the animal if it is moving
-                        if (animal.isMoving()) {
+                        if (animal.isMoving())
+                        {
                             animal.drawObject(g2d);
                         }
                     }

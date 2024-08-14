@@ -338,18 +338,29 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
         int backgroundWidth = new ImagePanel(null).getWidth2();
         int backgroundHeight = new ImagePanel(null).getHeight2();
 
-        if (animal instanceof TerrestrialAnimals || animal instanceof ITerrestrailAnimal) {
-            if (x >= backgroundWidth - 75 && y >= backgroundHeight - 75) {
+        if (animal instanceof TerrestrialAnimals || animal instanceof ITerrestrailAnimal)
+        {
+            if (x >= backgroundWidth - 75 && y >= backgroundHeight - 75)
+            {
                 animal.setOrientation(Orientation.WEST);
-            } else if (x >= backgroundWidth - 75) {
+            }
+            else if (x >= backgroundWidth - 75 )
+            {
                 animal.setOrientation(Orientation.SOUTH);
-            } else if (x <= 15 && y >= backgroundHeight - 155) {
+            }
+            else if (x <= 15 && y >= backgroundHeight - 155)
+            {
                 animal.setOrientation(Orientation.NORTH);
-            } else if (x <= 0 && y <= 0) {
+            }
+            else if (x <= 30 && y <= 30) {
                 animal.setOrientation(Orientation.EAST);
             }
         }
     }
+    public void setX(int x) {
+        location.setX(x);
+    }
+
 
     /**
      * Resets the animal's position.
@@ -371,6 +382,10 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
             setLocation(new Point(x, location.getY()));
         }
     }
+    public void setStartPosition(Point startPosition) {
+        this.setLocation(startPosition);
+    }
+
 
     /**
      * Checks if the animal is moving.

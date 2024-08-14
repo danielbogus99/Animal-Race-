@@ -1,6 +1,8 @@
 package competitions;
 
+import Graphics.ImagePanel;
 import Graphics.RaceResultsPanel;
+import animals.Animal;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,6 +23,8 @@ public class TournamentThread implements Runnable {
     private String compositeKey; // Key used to track occupied paths in the tournament
     private Map<String, Integer> occupiedPaths; // Map to track occupied paths
     private String raceName; // Name of the race
+    private Animal[][]animals;
+    private ImagePanel imagePanel; // Reference to the ImagePanel for updates
 
     // Update the format to include both date and time
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -35,7 +39,7 @@ public class TournamentThread implements Runnable {
      * @param occupiedPaths The map to track occupied paths.
      * @param compositeKey  The key used to track the specific race in the occupied paths.
      */
-    public TournamentThread(Scores scores, AtomicBoolean startSignal, int groups, String raceName, Map<String, Integer> occupiedPaths, String compositeKey) {
+    public TournamentThread(Scores scores, AtomicBoolean startSignal, int groups, String raceName, Map<String, Integer> occupiedPaths, String compositeKey,Animal[][]animals) {
         this.scores = scores;
         this.startSignal = startSignal;
         this.groups = groups;
@@ -43,6 +47,8 @@ public class TournamentThread implements Runnable {
         this.occupiedPaths = occupiedPaths;
         this.compositeKey = compositeKey;
         this.raceResults = new ConcurrentHashMap<>();
+        this.animals = animals;
+        this.imagePanel = new ImagePanel(null);
     }
 
     /**
@@ -68,7 +74,8 @@ public class TournamentThread implements Runnable {
             // Display race results for each group
             for (String groupName : raceResults.keySet()) {
                 Date finishTime = raceResults.get(groupName);
-                if (finishTime != null) {
+                if (finishTime != null)
+                {
                     // Print the group name and its finish time in the formatted output
                     System.out.println(groupName + " finished at: " + dateFormat.format(finishTime));
                 } else {
@@ -77,10 +84,17 @@ public class TournamentThread implements Runnable {
             }
 
             // Break the loop if all groups have finished
-            if (raceResults.size() == groups) {
+            if (raceResults.size() == groups)
+            {
+                int width = imagePanel.getWidth2() / 14;
+                for(int i = 0;animals.length > i; i++) {
+                    for (Animal animal : animals[i]) {
+                        animal.resetPosition(animal,width);
+                        animal.setOrientation(Animal.Orientation.EAST);
+                    }
+                }
                 System.out.println("All groups have finished the race.");
 
-                // Show results in a new panel
                 SwingUtilities.invokeLater(() -> showResultsPanel(raceResults));
                 occupiedPaths.remove(compositeKey);
                 break;

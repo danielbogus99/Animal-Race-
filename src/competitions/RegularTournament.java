@@ -2,6 +2,7 @@ package competitions;
 
 import Graphics.ImagePanel;
 import animals.Animal;
+import mobility.Point;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -52,12 +53,18 @@ public class RegularTournament extends Tournament {
         this.animals = animalGroups;
 
         for (Animal[] group : animalGroups) {
-            for (Animal animal : group) {
+            AtomicBoolean previousFinishFlag = startFlag; // The first animal in the group waits on the startFlag
+
+            for (int i = 0; i < group.length; i++) {
+                Animal animal = group[i];
                 AtomicBoolean finishFlag = new AtomicBoolean(false);
+                Point startPosition = (i == 0) ? new Point(0, 0) : group[i - 1].getLocation(); // Get the final position from the previous animal
 
                 // Create and start a thread for each animal
-                AnimalThread animalThread = new AnimalThread(animal, neededDistance, startFlag, finishFlag);
+                AnimalThread animalThread = new AnimalThread(animal, neededDistance / group.length, previousFinishFlag, finishFlag, startPosition,animal);
                 new Thread(animalThread).start();
+
+                previousFinishFlag = finishFlag; // The next animal waits for the current animal to finish
 
                 // Create and start a referee thread to monitor each animal
                 Referee referee = new Referee(animal.getAnimalName(), scores, finishFlag);
@@ -66,7 +73,7 @@ public class RegularTournament extends Tournament {
         }
 
         // Start the main tournament thread with the correct startFlag
-        TournamentThread tournamentThread = new TournamentThread(scores, startFlag, numberOfGroups, raceName, occupiedPaths, compositeKey);
+        TournamentThread tournamentThread = new TournamentThread(scores, startFlag, numberOfGroups, raceName, occupiedPaths, compositeKey,animalGroups);
         new Thread(tournamentThread).start();
     }
 

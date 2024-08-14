@@ -2,6 +2,7 @@ package Graphics;
 
 import animals.*;
 import competitions.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -47,23 +48,29 @@ public class CompetitionPanel extends JPanel {
         this.activeCourierAnimals = new ArrayList<>();
         this.occupiedPaths = new HashMap<>(); // Initialize the map
 
-        JButton addCompetitionButton = new JButton("Add Competition");
+        JButton addCompetitionButton = new JButton("Add Competition/Add Animal");
         JButton startCompetitionButton = new JButton("Start Competition");
         JButton eatButton = new JButton("Eat");
+        JButton clearButton = new JButton("Clear");
+        JButton infoButton = new JButton("Info");
         JButton exitButton = new JButton("Exit");
 
         // Initialize the timer with a faster delay for smoother animation
-        timer = new Timer(200, e -> updateCompetition()); // ~60 FPS
+        timer = new Timer(50, e -> updateCompetition()); // ~60 FPS
 
         add(addCompetitionButton);
         add(startCompetitionButton);
         add(eatButton);
+        add(clearButton);
+        add(infoButton);  // Add Info button to the panel
         add(exitButton);
 
         exitButton.addActionListener(e -> System.exit(0));
         addCompetitionButton.addActionListener(e -> addCompetition());
         startCompetitionButton.addActionListener(e -> startCompetition());
         eatButton.addActionListener(e -> eatAnimals());
+        clearButton.addActionListener(e -> clearAnimalFromRace());
+        infoButton.addActionListener(e -> showAnimalInfo()); // Attach the Info button action
 
         // Enable double buffering to prevent flickering
         setDoubleBuffered(true);
@@ -237,7 +244,6 @@ public class CompetitionPanel extends JPanel {
                     // Mark the path as occupied
                     occupiedPaths.put(compositeKey, selectedRace.getRacePath());
 
-                    setAnimalsToMoving(animals);
                     activeRegularAnimals.addAll(animals); // Add these animals to the active list
                     RegularTournament tournament = new RegularTournament(selectedRace.toAnimalTeams(), distance, raceName, occupiedPaths, compositeKey); // Create a new tournament for each race
                     new Thread(() -> {
@@ -345,7 +351,6 @@ public class CompetitionPanel extends JPanel {
                     // Mark the path as occupied
                     occupiedPaths.put(compositeKey, selectedRace.getRacePath());
 
-                    setAnimalsToMoving(animals);
                     activeCourierAnimals.addAll(animals); // Add these animals to the active list
                     currentCourier = new CourierTournament(selectedRace.getAnimalGroups(), distance, raceName, occupiedPaths, compositeKey); // Pass the distance
                     new Thread(() -> {
@@ -493,5 +498,183 @@ public class CompetitionPanel extends JPanel {
         addCompetitionDialog.setVisible(true);
         regularRace = addCompetitionDialog.getAllRegularRaces();
         courierRace = addCompetitionDialog.getAllCourierRaces();
+    }
+
+    /**
+     * Clears a selected animal from a specific race.
+     */
+    private void clearAnimalFromRace() {
+        List<String> raceNames = collectRaceNames(true); // Show all races including started ones
+        if (raceNames.isEmpty()) {
+            JOptionPane.showMessageDialog(parentFrame, "No races are available.");
+            return;
+        }
+
+        String selectedRaceName = (String) JOptionPane.showInputDialog(
+                parentFrame,
+                "Select a race to view animals:",
+                "Clear Animal",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                raceNames.toArray(),
+                raceNames.get(0));
+
+        if (selectedRaceName != null) {
+            List<Animal> animals;
+            boolean isRegularRace = selectedRaceName.endsWith("(Regular)");
+
+            if (isRegularRace) {
+                animals = getAnimalsFromRegularRace(selectedRaceName.replace(" (Regular)", ""));
+            } else {
+                animals = getAnimalsFromCourierRace(selectedRaceName.replace(" (Courier)", ""));
+            }
+
+            if (animals != null && !animals.isEmpty()) {
+                // Check if any animal is moving
+                boolean anyAnimalMoving = animals.stream().anyMatch(Animal::isMoving);
+                if (anyAnimalMoving) {
+                    JOptionPane.showMessageDialog(parentFrame, "Cannot remove animals while they are running.");
+                    return; // Exit the method if any animal is moving
+                }
+
+                String[] animalNames = animals.stream().map(Animal::getAnimalName).toArray(String[]::new);
+                String selectedAnimalName = (String) JOptionPane.showInputDialog(
+                        parentFrame,
+                        "Select an animal to remove:",
+                        "Select Animal",
+                        JOptionPane.PLAIN_MESSAGE,
+                        null,
+                        animalNames,
+                        animalNames[0]);
+
+                if (selectedAnimalName != null) {
+                    Animal selectedAnimal = animals.stream()
+                            .filter(animal -> animal.getAnimalName().equals(selectedAnimalName))
+                            .findFirst()
+                            .orElse(null);
+
+                    if (selectedAnimal != null) {
+                        // Stop the race if an animal is removed
+                        if (isRegularRace) {
+                            stopRegularRace(selectedRaceName.replace(" (Regular)", ""));
+                        } else {
+                            stopCourierRace(selectedRaceName.replace(" (Courier)", ""));
+                        }
+
+                        // Remove the animal from the active lists and the race
+                        activeRegularAnimals.remove(selectedAnimal);
+                        activeCourierAnimals.remove(selectedAnimal);
+                        animals.remove(selectedAnimal);
+
+                        // Also remove the animal from the CompetitionManager's group map
+                        CompetitionManager.getInstance().removeAnimalFromAllGroups(selectedAnimal);
+
+                        // Update the image panel and repaint
+                        updateCompetition();
+                        JOptionPane.showMessageDialog(parentFrame, selectedAnimal.getAnimalName() + " has been removed from the race.");
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(parentFrame, "No animals found in the selected race.");
+            }
+        }
+    }
+
+    /**
+     * Stops a regular race.
+     *
+     * @param raceName The name of the race to stop.
+     */
+    private void stopRegularRace(String raceName) {
+        RegularRace selectedRace = startedRegularRaces.stream()
+                .filter(race -> race.getRaceName().equals(raceName))
+                .findFirst()
+                .orElse(null);
+
+        if (selectedRace != null) {
+            // Perform necessary steps to stop the race, such as interrupting threads
+            // This may depend on how your RegularTournament and AnimalThread classes are structured
+            startedRegularRaces.remove(selectedRace);
+            JOptionPane.showMessageDialog(parentFrame, "The race '" + raceName + "' has been stopped.");
+        }
+    }
+
+    /**
+     * Stops a courier race.
+     *
+     * @param raceName The name of the race to stop.
+     */
+    private void stopCourierRace(String raceName) {
+        CourierRace selectedRace = startedCourierRaces.stream()
+                .filter(race -> race.getName().equals(raceName))
+                .findFirst()
+                .orElse(null);
+
+        if (selectedRace != null) {
+            // Perform necessary steps to stop the race, such as interrupting threads
+            // This may depend on how your CourierTournament and AnimalThread classes are structured
+            startedCourierRaces.remove(selectedRace);
+            JOptionPane.showMessageDialog(parentFrame, "The race '" + raceName + "' has been stopped.");
+        }
+    }
+
+    /**
+     * Displays information about animals in a selected competition.
+     */
+    private void showAnimalInfo() {
+        JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+
+        List<String> raceNames = collectRaceNames(true); // Get all race names including started ones
+        if (raceNames.isEmpty()) {
+            JOptionPane.showMessageDialog(parentFrame, "No races are available to view.");
+            return;
+        }
+
+        String selectedRaceName = (String) JOptionPane.showInputDialog(
+                parentFrame,
+                "Select a race to view animals:",
+                "Animal Info",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                raceNames.toArray(),
+                raceNames.get(0));
+
+        if (selectedRaceName != null) {
+            List<Animal> animals;
+            if (selectedRaceName.endsWith("(Regular)")) {
+                animals = getAnimalsFromRegularRace(selectedRaceName.replace(" (Regular)", ""));
+            } else {
+                animals = getAnimalsFromCourierRace(selectedRaceName.replace(" (Courier)", ""));
+            }
+
+            if (animals != null && !animals.isEmpty()) {
+                JTable table;
+                JFrame frame = new JFrame();
+
+                // Frame Title
+                frame.setTitle("Animal Information");
+
+                Object[][] data = new Object[animals.size()][6];
+                for (int i = 0; i < animals.size(); i++) {
+                    Animal animal = animals.get(i);
+                    data[i][0] = animal.getAnimalName();
+                    data[i][1] = animal.animalCategory();
+                    data[i][2] = animal.animalType();
+                    data[i][3] = animal.getSpeed();
+                    data[i][4] = animal.getCurrentEnergy();
+                    data[i][5] = animal.getTotalDistance();
+                }
+
+                String[] columnNames = {"Animal", "Category", "Type", "Speed", "Energy", "Distance"};
+
+                table = new JTable(data, columnNames);
+                JScrollPane sp = new JScrollPane(table);
+                frame.add(sp);
+                frame.setSize(600, 400);
+                frame.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(parentFrame, "No animals found in the selected race.");
+            }
+        }
     }
 }

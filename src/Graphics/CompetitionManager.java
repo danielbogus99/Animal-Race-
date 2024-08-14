@@ -54,6 +54,17 @@ public class CompetitionManager {
     }
 
     /**
+     * Removes an animal from all groups.
+     *
+     * @param animal The animal to be removed.
+     */
+    public void removeAnimalFromAllGroups(Animal animal) {
+        for (List<Animal> group : groupMap.values()) {
+            group.remove(animal);
+        }
+    }
+
+    /**
      * Clears all groups from the manager.
      */
     public void clearGroups() {

@@ -186,11 +186,23 @@ public class AddAnimalDialog extends JDialog {
         panel.add(EnergyPerMeter);
     }
 
-    /**
-     * Creates a Dog object using user input.
-     *
-     * @return The created Dog object.
-     */
+    // Inside the AddAnimalDialog class, add the validation methods
+
+    private void validateSpeed(int speed) throws Exception {
+        if (speed < 1 || speed > 30) {
+            throw new Exception("Speed must be between 1 and 30.");
+        }
+    }
+
+    private void validateEnergy(int maxEnergy, int energyPerMeter) throws Exception {
+        if (energyPerMeter >= maxEnergy) {
+            throw new Exception("Energy per meter must be less than max energy.");
+        }
+    }
+
+// Update all the animal creation methods:
+
+    // Updated CreateDog method
     public Animal CreateDog() {
         JDialog dogDialog = new JDialog(this, "Dog Input Panel", true);
         dogDialog.setSize(500, 300);
@@ -215,17 +227,18 @@ public class AddAnimalDialog extends JDialog {
                 try {
                     String name = nameField.getText();
                     int speed = Integer.parseInt(speedField.getText());
-                    if (speed < 0) {
-                        throw new Exception("Speed cannot be negative.");
-                    }
+                    validateSpeed(speed); // Check the speed
+
                     double weight = Double.parseDouble(weightField.getText());
-                    int MaxEnergy = Integer.parseInt(MaxEnergyField.getText());
-                    int Energy = Integer.parseInt(EnergyPerMeter.getText());
+                    int maxEnergy = Integer.parseInt(MaxEnergyField.getText());
+                    int energy = Integer.parseInt(EnergyPerMeter.getText());
+                    validateEnergy(maxEnergy, energy); // Check the energy
+
                     Animal.gender gender = getGender();
                     int noLegs = Integer.parseInt(noLegsField.getText());
                     String breed = breedField.getText();
                     Medal[] medals = new Medal[0];
-                    selectedAnimalObject = new Dog(0, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, noLegs, breed, competitionPanel);
+                    selectedAnimalObject = new Dog(0, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, maxEnergy, energy, noLegs, breed, competitionPanel);
                     dogDialog.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(dogDialog, ex.getMessage());
@@ -237,11 +250,7 @@ public class AddAnimalDialog extends JDialog {
         return selectedAnimalObject;
     }
 
-    /**
-     * Creates a Cat object using user input.
-     *
-     * @return The created Cat object.
-     */
+    // Updated CreateCat method
     public Animal CreateCat() {
         JDialog CatDialog = new JDialog(this, "Cat Input Panel", true);
         CatDialog.setSize(500, 400);
@@ -265,14 +274,18 @@ public class AddAnimalDialog extends JDialog {
                 try {
                     String name = nameField.getText();
                     int speed = Integer.parseInt(speedField.getText());
+                    validateSpeed(speed); // Check the speed
+
                     double weight = Double.parseDouble(weightField.getText());
-                    int MaxEnergy = Integer.parseInt(MaxEnergyField.getText());
-                    int Energy = Integer.parseInt(EnergyPerMeter.getText());
+                    int maxEnergy = Integer.parseInt(MaxEnergyField.getText());
+                    int energy = Integer.parseInt(EnergyPerMeter.getText());
+                    validateEnergy(maxEnergy, energy); // Check the energy
+
                     Animal.gender gender = getGender();
                     boolean Castrated = CastratedComboBox.getSelectedItem().equals("Yes");
                     int noLegs = Integer.parseInt(noLegsField.getText());
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new Cat(0, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, noLegs, Castrated, competitionPanel);
+                    selectedAnimalObject = new Cat(0, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, maxEnergy, energy, noLegs, Castrated, competitionPanel);
                     CatDialog.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(CatDialog, "Invalid input. Please check your entries.");
@@ -284,11 +297,7 @@ public class AddAnimalDialog extends JDialog {
         return selectedAnimalObject;
     }
 
-    /**
-     * Creates an Alligator object using user input.
-     *
-     * @return The created Alligator object.
-     */
+    // Updated CreateAlligator method
     public Animal CreateAlligator(String raceType) {
         JDialog AlligatorDialog = new JDialog(this, "Alligator Input Panel", true);
         AlligatorDialog.setSize(500, 400);
@@ -316,19 +325,20 @@ public class AddAnimalDialog extends JDialog {
                 try {
                     String name = nameField.getText();
                     int speed = Integer.parseInt(speedField.getText());
-                    if (speed > 5) {
-                        throw new Exception("Alligator speed cannot be greater than 5.");
-                    }
+                    validateSpeed(speed); // Check the speed
+
                     double weight = Double.parseDouble(weightField.getText());
-                    int MaxEnergy = Integer.parseInt(MaxEnergyField.getText());
-                    int Energy = Integer.parseInt(EnergyPerMeter.getText());
+                    int maxEnergy = Integer.parseInt(MaxEnergyField.getText());
+                    int energy = Integer.parseInt(EnergyPerMeter.getText());
+                    validateEnergy(maxEnergy, energy); // Check the energy
+
                     double DiveDepth = Double.parseDouble(DiveDepthField.getText());
                     Animal.gender gender = getGender();
                     String AreaOfLiving = AreaOfLivingField.getText();
                     int noLegs = Integer.parseInt(noLegsField.getText());
 
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new Alligator(width/14, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, DiveDepth, noLegs, AreaOfLiving, competitionPanel);
+                    selectedAnimalObject = new Alligator(width/14, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, maxEnergy, energy, DiveDepth, noLegs, AreaOfLiving, competitionPanel);
                     AlligatorDialog.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(AlligatorDialog, ex.getMessage());
@@ -340,12 +350,7 @@ public class AddAnimalDialog extends JDialog {
         return selectedAnimalObject;
     }
 
-
-    /**
-     * Creates a Dolphin object using user input.
-     *
-     * @return The created Dolphin object.
-     */
+    // Updated CreateDolphin method
     public Animal CreateDolphin() {
         JDialog DolphinDialog = new JDialog(this, "Dolphin Input Panel", true);
         DolphinDialog.setSize(500, 400);
@@ -372,15 +377,19 @@ public class AddAnimalDialog extends JDialog {
                 try {
                     String name = nameField.getText();
                     int speed = Integer.parseInt(speedField.getText());
+                    validateSpeed(speed); // Check the speed
+
                     double weight = Double.parseDouble(weightField.getText());
-                    int MaxEnergy = Integer.parseInt(MaxEnergyField.getText());
-                    int Energy = Integer.parseInt(EnergyPerMeter.getText());
+                    int maxEnergy = Integer.parseInt(MaxEnergyField.getText());
+                    int energy = Integer.parseInt(EnergyPerMeter.getText());
+                    validateEnergy(maxEnergy, energy); // Check the energy
+
                     double DiveDepth = Double.parseDouble(DiveDepthField.getText());
                     Animal.gender gender = getGender();
                     Dolphin.WaterType waterType = WaterType.getSelectedItem().equals("Sea") ? Dolphin.WaterType.Sea : Dolphin.WaterType.Sweet;
 
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new Dolphin(width/14, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, DiveDepth, waterType, competitionPanel);
+                    selectedAnimalObject = new Dolphin(width/14, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, maxEnergy, energy, DiveDepth, waterType, competitionPanel);
                     DolphinDialog.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(DolphinDialog, "Invalid input. Please check your entries.");
@@ -392,11 +401,7 @@ public class AddAnimalDialog extends JDialog {
         return selectedAnimalObject;
     }
 
-    /**
-     * Creates a Whale object using user input.
-     *
-     * @return The created Whale object.
-     */
+    // Updated CreateWhale method
     public Animal CreateWhale() {
         JDialog WhaleDialog = new JDialog(this, "Whale Input Panel", true);
         WhaleDialog.setSize(500, 400);
@@ -423,15 +428,19 @@ public class AddAnimalDialog extends JDialog {
                 try {
                     String name = nameField.getText();
                     int speed = Integer.parseInt(speedField.getText());
+                    validateSpeed(speed); // Check the speed
+
                     double weight = Double.parseDouble(weightField.getText());
-                    int MaxEnergy = Integer.parseInt(MaxEnergyField.getText());
-                    int Energy = Integer.parseInt(EnergyPerMeter.getText());
+                    int maxEnergy = Integer.parseInt(MaxEnergyField.getText());
+                    int energy = Integer.parseInt(EnergyPerMeter.getText());
+                    validateEnergy(maxEnergy, energy); // Check the energy
+
                     double DiveDepth = Double.parseDouble(DiveDepthField.getText());
                     String foodType = Foodtype.getText();
                     Animal.gender gender = getGender();
 
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new Whale(width/14, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, DiveDepth, foodType, competitionPanel);
+                    selectedAnimalObject = new Whale(width/14, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, maxEnergy, energy, DiveDepth, foodType, competitionPanel);
                     WhaleDialog.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(WhaleDialog, "Invalid input. Please check your entries.");
@@ -443,12 +452,7 @@ public class AddAnimalDialog extends JDialog {
         return selectedAnimalObject;
     }
 
-
-    /**
-     * Creates an Eagle object using user input.
-     *
-     * @return The created Eagle object.
-     */
+    // Updated CreateEagle method
     public Animal CreateEagle() {
         JDialog EagleDialog = new JDialog(this, "Eagle Input Panel", true);
         EagleDialog.setSize(500, 400);
@@ -476,15 +480,19 @@ public class AddAnimalDialog extends JDialog {
                 try {
                     String name = nameField.getText();
                     int speed = Integer.parseInt(speedField.getText());
+                    validateSpeed(speed); // Check the speed
+
                     double weight = Double.parseDouble(weightField.getText());
-                    int MaxEnergy = Integer.parseInt(MaxEnergyField.getText());
-                    int Energy = Integer.parseInt(EnergyPerMeter.getText());
+                    int maxEnergy = Integer.parseInt(MaxEnergyField.getText());
+                    int energy = Integer.parseInt(EnergyPerMeter.getText());
+                    validateEnergy(maxEnergy, energy); // Check the energy
+
                     double Wingspan = Double.parseDouble(WingspanField.getText());
                     double AltitudeOfFlight = Double.parseDouble(altitudeOfFlight.getText());
                     Animal.gender gender = getGender();
 
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new Eagle(0, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, Wingspan, AltitudeOfFlight, competitionPanel);
+                    selectedAnimalObject = new Eagle(0, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, maxEnergy, energy, Wingspan, AltitudeOfFlight, competitionPanel);
                     EagleDialog.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(EagleDialog, "Invalid input. Please check your entries.");
@@ -496,12 +504,7 @@ public class AddAnimalDialog extends JDialog {
         return selectedAnimalObject;
     }
 
-
-    /**
-     * Creates a Pigeon object using user input.
-     *
-     * @return The created Pigeon object.
-     */
+    // Updated CreatePigeon method
     public Animal CreatePigeon() {
         JDialog PigeonDialog = new JDialog(this, "Pigeon Input Panel", true);
         PigeonDialog.setSize(500, 400);
@@ -529,15 +532,19 @@ public class AddAnimalDialog extends JDialog {
                 try {
                     String name = nameField.getText();
                     int speed = Integer.parseInt(speedField.getText());
+                    validateSpeed(speed); // Check the speed
+
                     double weight = Double.parseDouble(weightField.getText());
-                    int MaxEnergy = Integer.parseInt(MaxEnergyField.getText());
-                    int Energy = Integer.parseInt(EnergyPerMeter.getText());
+                    int maxEnergy = Integer.parseInt(MaxEnergyField.getText());
+                    int energy = Integer.parseInt(EnergyPerMeter.getText());
+                    validateEnergy(maxEnergy, energy); // Check the energy
+
                     double Wingspan = Double.parseDouble(WingspanField.getText());
                     String Family = FamilyField.getText();
                     Animal.gender gender = getGender();
 
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new Pigeon(0, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, Wingspan, Family, competitionPanel);
+                    selectedAnimalObject = new Pigeon(0, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, maxEnergy, energy, Wingspan, Family, competitionPanel);
                     PigeonDialog.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(PigeonDialog, "Invalid input. Please check your entries.");
@@ -549,13 +556,7 @@ public class AddAnimalDialog extends JDialog {
         return selectedAnimalObject;
     }
 
-
-    /**
-     * Creates a Snake object using user input.
-     *
-     * @return The created Snake object.
-     */
-    // Snake Creation with Speed Limit
+    // Updated CreateSnake method
     public Animal CreateSnake() {
         JDialog SnakeDialog = new JDialog(this, "Snake Input Panel", true);
         SnakeDialog.setSize(500, 400);
@@ -584,12 +585,13 @@ public class AddAnimalDialog extends JDialog {
                 try {
                     String name = nameField.getText();
                     int speed = Integer.parseInt(speedField.getText());
-                    if (speed > 5) {
-                        throw new Exception("Snake speed cannot be greater than 5.");
-                    }
+                    validateSpeed(speed); // Check the speed
+
                     double weight = Double.parseDouble(weightField.getText());
-                    int MaxEnergy = Integer.parseInt(MaxEnergyField.getText());
-                    int Energy = Integer.parseInt(EnergyPerMeter.getText());
+                    int maxEnergy = Integer.parseInt(MaxEnergyField.getText());
+                    int energy = Integer.parseInt(EnergyPerMeter.getText());
+                    validateEnergy(maxEnergy, energy); // Check the energy
+
                     Animal.gender gender = getGender();
                     int noLegs = Integer.parseInt(noLegsField.getText());
                     double length = Double.parseDouble(LengthField.getText());
@@ -603,7 +605,7 @@ public class AddAnimalDialog extends JDialog {
                         poisonous = Snake.Poisonous.HIGH;
                     }
                     Medal[] medals = new Medal[2];
-                    selectedAnimalObject = new Snake(0, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, MaxEnergy, Energy, noLegs, poisonous, length, competitionPanel);
+                    selectedAnimalObject = new Snake(0, 0, 0, gender, name, weight, speed, medals, Animal.Orientation.EAST, maxEnergy, energy, noLegs, poisonous, length, competitionPanel);
                     SnakeDialog.dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(SnakeDialog, ex.getMessage());
@@ -614,6 +616,5 @@ public class AddAnimalDialog extends JDialog {
         SnakeDialog.setVisible(true);
         return selectedAnimalObject;
     }
-
 
 }

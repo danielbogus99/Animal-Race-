@@ -2,6 +2,8 @@ package competitions;
 
 import Graphics.ImagePanel;
 import animals.Animal;
+import mobility.Point;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +49,7 @@ public class CourierTournament extends Tournament {
      * @param animalGroups   The groups of animals participating in the tournament.
      * @param additionalInfo Additional information needed for the setup.
      */
+
     @Override
     protected void setup(Animal[][] animalGroups, Object additionalInfo) {
         this.startFlag = new AtomicBoolean(false); // Initialize the start flag to false
@@ -56,34 +59,39 @@ public class CourierTournament extends Tournament {
 
         for (int groupIndex = 0; groupIndex < animalGroups.length; groupIndex++) {
             Animal[] group = animalGroups[groupIndex];
-            int n = group.length; // Number of animals in the group
+            int n = group.length;
             List<AtomicBoolean> flags = new ArrayList<>(n);
+            List<AnimalThread> animalThreads = new ArrayList<>(n);
 
-            // Initialize all flags to false
             for (int i = 0; i < n; i++) {
                 flags.add(new AtomicBoolean(false));
             }
 
-            // Create and start AnimalThread for each animal in the group
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
+            {
                 AtomicBoolean currentStartFlag = (i == 0) ? startFlag : flags.get(i - 1);
                 AtomicBoolean currentFinishFlag = flags.get(i);
-                double neededDistance = this.neededDistances / n; // Calculate needed distance
-
-                // Pass the imagePanel reference to the AnimalThread
-                AnimalThread animalThread = new AnimalThread(group[i], neededDistance, currentStartFlag, currentFinishFlag);
+                double neededDistance = this.neededDistances / n;
+                Point startPosition = (i == 0) ? new Point(0, 0) : animalThreads.get(i - 1).getFinalPosition();
+                AnimalThread animalThread;// Get the start position from the previous animal
+                if (i==0)
+                 animalThread = new AnimalThread(group[i], neededDistance, currentStartFlag, currentFinishFlag, startPosition,group[i]);
+                else {
+                    animalThread = new AnimalThread(group[i], neededDistance, currentStartFlag, currentFinishFlag, startPosition,group[i-1]);
+                }
+                animalThreads.add(animalThread);
                 new Thread(animalThread).start();
             }
 
-            // Create and start a Referee for the group
             Referee referee = new Referee("Group " + (groupIndex + 1), scores, flags.get(n - 1));
             new Thread(referee).start();
         }
 
         // Store the startFlag, scores, and number of groups in the tournament thread
-        this.tournamentThread = new TournamentThread(scores, startFlag, numberOfGroups, raceName, occupiedPaths, compositeKey);
+        this.tournamentThread = new TournamentThread(scores, startFlag, numberOfGroups, raceName, occupiedPaths, compositeKey,animalGroups);
         new Thread(this.tournamentThread).start(); // Start the tournament thread
     }
+
 
     /**
      * Starts the race by setting the start flag to true and notifying all threads.
