@@ -278,11 +278,7 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
     /**
      * Resets the animal's state.
      */
-    public void resetAnimal() {
-        this.totalConsumption = 0;
-        this.setLocation(new Point(0, 0)); // Reset position to the starting point or any desired location
-        this.currentEnergy = this.maxEnergy; // Reset energy if needed
-    }
+
 
     /**
      * Moves the animal and updates its position.

@@ -18,7 +18,7 @@ public abstract class Tournament {
      * @param additionalInfo Additional information needed for the tournament setup.
      */
     public Tournament(Animal[][] animalGroups, Object additionalInfo) {
-        setup(animalGroups, additionalInfo);
+
     }
 
     /**

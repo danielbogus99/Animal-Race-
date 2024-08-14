@@ -53,15 +53,15 @@ public class ImagePanel extends JPanel {
      * @param g The Graphics context to use for painting.
      */
     @Override
-    protected void paintComponent(Graphics g)
-    {
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        if (backgroundImage != null)
-        {
+        // Draw the background image
+        if (backgroundImage != null) {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
 
+        // Draw only the animals that are moving
         if (animals != null) {
             Graphics2D g2d = (Graphics2D) g.create();
             double scaleX = getWidth() / (double) preferredWidth;
@@ -70,7 +70,10 @@ public class ImagePanel extends JPanel {
             synchronized (this) {
                 for (Animal animal : animals) {
                     synchronized (animal) {
-                        animal.drawObject(g2d); // Draw each animal
+                        // Only draw the animal if it is moving
+                        if (animal.isMoving()) {
+                            animal.drawObject(g2d);
+                        }
                     }
                 }
             }
