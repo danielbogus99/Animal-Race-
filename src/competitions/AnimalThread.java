@@ -70,6 +70,7 @@ public class AnimalThread implements Runnable {
                 int width = imagePanel.getWidth2() / 14;
                 participant.resetPosition(participant, width);
                 participant.setTotalDistance();
+                participant.setOrientation(Animal.Orientation.EAST);
                 participant.setNotMoving();
                 break;
             }

@@ -358,9 +358,16 @@ public abstract class Animal extends Mobile implements IDrawable, IAnimal, IMove
      * @param x      The X-coordinate to reset to.
      */
     public void resetPosition(Animal animal, int x) {
-        if (animal instanceof AirAnimal || animal instanceof TerrestrialAnimals) {
+        if (animal instanceof TerrestrialAnimals)
+        {
+            setLocation(new Point(0, 0));
+        }
+        else if (animal instanceof AirAnimal)
+        {
             setLocation(new Point(0, location.getY()));
-        } else {
+        }
+        else
+        {
             setLocation(new Point(x, location.getY()));
         }
     }

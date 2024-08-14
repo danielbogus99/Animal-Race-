@@ -20,7 +20,7 @@ public class CourierTournament extends Tournament {
     private String raceName; // Name of the race
     private String compositeKey; // Composite key for the race
     private Map<String, Integer> occupiedPaths; // Map to track occupied paths
-    private int neededDistance; // Distance that needs to be covered in the race
+    private int neededDistances; // Distance that needs to be covered in the race
 
     /**
      * Constructs a CourierTournament with the specified parameters.
@@ -34,7 +34,7 @@ public class CourierTournament extends Tournament {
     public CourierTournament(Animal[][] animalGroups, int neededDistance, String raceName, Map<String, Integer> occupiedPaths, String compositeKey) {
         super(animalGroups, neededDistance);
         this.startFlag = new AtomicBoolean(false);
-        this.neededDistance = neededDistance;
+        this.neededDistances = neededDistance;
         this.occupiedPaths = occupiedPaths;
         this.compositeKey = compositeKey;
         this.raceName = raceName;
@@ -68,7 +68,7 @@ public class CourierTournament extends Tournament {
             for (int i = 0; i < n; i++) {
                 AtomicBoolean currentStartFlag = (i == 0) ? startFlag : flags.get(i - 1);
                 AtomicBoolean currentFinishFlag = flags.get(i);
-                double neededDistance = 10000 / n; // Calculate needed distance
+                double neededDistance = this.neededDistances / n; // Calculate needed distance
 
                 // Pass the imagePanel reference to the AnimalThread
                 AnimalThread animalThread = new AnimalThread(group[i], neededDistance, currentStartFlag, currentFinishFlag);
